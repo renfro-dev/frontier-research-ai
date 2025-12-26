@@ -1,0 +1,123 @@
+# Weekly Systems Thinking Brief - Cursor Rules
+
+## User Context
+**IMPORTANT:** The user is not a developer. When explaining technical concepts:
+- Use plain English, not jargon
+- Explain what commands do before showing them
+- Break complex tasks into simple steps
+- Use analogies to explain technical concepts
+- Show exactly where to click/type/paste
+- Don't assume prior technical knowledge
+
+## Project Context
+This system generates weekly briefings that synthesize AI/systems thinking content from trusted sources into accessible 1-2 page essays for non-technical operators and founders.
+
+## Core Principles (Hard Constraints)
+
+### Conservative Synthesis Only
+- NO speculation beyond source material
+- "Unknown / Insufficient Evidence" is a valid and preferred outcome
+- Conflicting views MUST be surfaced, not resolved
+- No prescriptions without evidence
+
+### Citation Requirements
+- Every claim must be cited (APA style)
+- Paraphrase by default, quote sparingly
+- Always link to original sources
+- Source cards required for every referenced document
+
+### Model Behavior
+- Readability > verbatim fidelity
+- Plain language for non-technical audience
+- Concrete metaphors and tangible examples required
+- Neutral teacher tone, no hype
+
+### Guardrails
+- Structured intermediate outputs (JSON) before prose
+- Reviewer gate must pass before publication
+- Zero hallucinated claims tolerance
+- Reading time ≤10 minutes per brief
+
+## Agent-Specific Guidelines
+
+### Ingest Agent
+- Fetch long-form content only (blogs, official posts)
+- Preserve raw content indefinitely
+- No interpretation at this stage
+- Excluded: Twitter, podcasts, YouTube, replies
+- v1: Use RSS feed parsers for accessible sources
+- v2: Add Firecrawl MCP for bot-protected sources (e.g., OpenAI Research)
+- Implement fallback strategy: RSS → HTML scraping → Firecrawl
+
+### Extraction Agent
+- Clean HTML → structured text
+- Section segmentation only
+- NO analysis or interpretation
+
+### Analysis Agent
+Output structured JSON with:
+- `claims`: Factual assertions from source
+- `metaphors`: Analogies used by author
+- `examples`: Concrete instances
+- `uncertainties`: Where author expressed doubt
+- `conflicts`: Points of disagreement with other sources
+
+### Synthesis Agent
+- Translate structured data → readable prose
+- No new claims beyond source material
+- Force concrete examples for abstract concepts
+- Surface tradeoffs explicitly
+- Include "What this means for builders" section
+
+### Reviewer Agent (Gate)
+Check for:
+- Citation coverage (every idea cited)
+- Hallucination detection
+- "Unknown" properly surfaced where needed
+- Reading time ≤10 minutes
+- ≥3 primary sources cited
+
+## Output Format Requirements
+
+Every weekly brief must include:
+1. Executive framing (what changed and why it matters)
+2. Key ideas (3-6 max)
+3. Concrete metaphors and plain-language explanations
+4. Conflicts & tensions where applicable
+5. "What this means for builders" section
+6. Source cards with APA citations
+
+## Architecture Notes
+
+### Storage
+- Supabase Postgres: Raw content, extractions, summaries, briefs
+- pgvector: Semantic search, deduplication, theme clustering
+
+### Pipeline
+1. Weekly cron → Ingest Agent
+2. Extraction Agent → Clean content
+3. Vector similarity check → Detect repetition
+4. Analysis Agent → Structured JSON
+5. Synthesis Agent → Draft prose
+6. Reviewer Agent → Gate approval
+7. Manual publish step
+
+## Success Criteria
+- M1: Weekly brief published consistently (≥4 consecutive weeks)
+- M2: Each brief cites ≥3 primary sources (APA)
+- M3: Zero hallucinated claims (Reviewer passes)
+- M4: Reading time ≤10 minutes
+
+## Code Style
+- Conservative error handling
+- Explicit type checking
+- Document all agent prompts
+- Log intermediate outputs for debugging
+- Preserve raw source data indefinitely
+
+## What NOT to Build (v1)
+- Text search UI
+- Email newsletter automation
+- Social posting automation
+- Multi-author submissions
+- Tutorials or how-to guides

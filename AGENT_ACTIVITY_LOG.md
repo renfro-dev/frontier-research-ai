@@ -1,16 +1,19 @@
 # Agent Activity Log
-Generated: 2025-12-28 10:22:09
+Generated: 2025-12-28 11:57:04
 
 This log tracks all agent operations performed on resources in the system.
 
 ## Summary Statistics
 
-- Total documents ingested: 33
-- Total extractions created: 33
-- Total summaries generated: 33
+- Total documents ingested: 92
+- Total extractions created: 87
+- Total summaries generated: 87
 
 ### Documents by Source
-- Simon Willison's Weblog: 30 documents
+- OpenAI Blog: 42 documents
+- Simon Willison's Weblog: 35 documents
+- Google DeepMind Blog: 8 documents
+- Interconnects (Nathan Lambert): 4 documents
 - Sebastian Raschka's Blog: 2 documents
 - Vicki Boykis: 1 documents
 
@@ -645,6 +648,1072 @@ This log tracks all agent operations performed on resources in the system.
   - Dimensions: 1,536
 
 **[2025-12-27 15:44:04] ANALYSIS AGENT** → Extracted insights → `57032651...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 34. Substack Network error = security content they don't allow t
+
+**[2025-12-28 16:02:24] INGEST AGENT** → Fetched document → `cfca680d...`
+  - Source: Simon Willison's Weblog
+  - URL: https://simonwillison.net/2025/Dec/28/substack-network-error/#atom-everything
+
+**[2025-12-28 16:39:41] EXTRACTION AGENT** → Cleaned text → `ffd1580e...`
+  - Word count: 137 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:41] EMBEDDING GENERATOR** → Generated vector → `ffd1580e...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:53:08] ANALYSIS AGENT** → Extracted insights → `c6bbf819...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 35. Pluribus training data
+
+**[2025-12-28 16:02:26] INGEST AGENT** → Fetched document → `1e91b329...`
+  - Source: Simon Willison's Weblog
+  - URL: https://simonwillison.net/2025/Dec/27/john-cena/#atom-everything
+
+**[2025-12-28 16:39:46] EXTRACTION AGENT** → Cleaned text → `18402ef8...`
+  - Word count: 74 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:46] EMBEDDING GENERATOR** → Generated vector → `18402ef8...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:47:15] ANALYSIS AGENT** → Extracted insights → `5e70bb91...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 36. Quoting Boris Cherny
+
+**[2025-12-28 16:02:28] INGEST AGENT** → Fetched document → `9aa2dc91...`
+  - Source: Simon Willison's Weblog
+  - URL: https://simonwillison.net/2025/Dec/27/boris-cherny/#atom-everything
+
+**[2025-12-28 16:39:47] EXTRACTION AGENT** → Cleaned text → `d9799d53...`
+  - Word count: 84 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:47] EMBEDDING GENERATOR** → Generated vector → `d9799d53...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:46:14] ANALYSIS AGENT** → Extracted insights → `8df44a92...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 37. textarea.my on GitHub
+
+**[2025-12-28 16:02:29] INGEST AGENT** → Fetched document → `be266484...`
+  - Source: Simon Willison's Weblog
+  - URL: https://simonwillison.net/2025/Dec/27/textarea-my/#atom-everything
+
+**[2025-12-28 16:39:49] EXTRACTION AGENT** → Cleaned text → `4b3fe2ed...`
+  - Word count: 249 words
+  - Reading time: 1 minutes
+
+**[2025-12-28 16:39:49] EMBEDDING GENERATOR** → Generated vector → `4b3fe2ed...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:55:32] ANALYSIS AGENT** → Extracted insights → `50f45670...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 38. How uv got so fast
+
+**[2025-12-28 16:02:31] INGEST AGENT** → Fetched document → `713afe63...`
+  - Source: Simon Willison's Weblog
+  - URL: https://simonwillison.net/2025/Dec/26/how-uv-got-so-fast/#atom-everything
+
+**[2025-12-28 16:39:51] EXTRACTION AGENT** → Cleaned text → `f48af42b...`
+  - Word count: 446 words
+  - Reading time: 2 minutes
+
+**[2025-12-28 16:39:51] EMBEDDING GENERATOR** → Generated vector → `f48af42b...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:47:45] ANALYSIS AGENT** → Extracted insights → `5a749059...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 39. One in a million: celebrating the customers shaping AI’s fut
+
+**[2025-12-28 16:03:23] INGEST AGENT** → Fetched document → `2353e942...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/one-in-a-million-customers
+
+**[2025-12-28 16:39:52] EXTRACTION AGENT** → Cleaned text → `7a650626...`
+  - Word count: 42 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:52] EMBEDDING GENERATOR** → Generated vector → `7a650626...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:47:54] ANALYSIS AGENT** → Extracted insights → `c6ec98a7...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 40. Continuously hardening ChatGPT Atlas against prompt injectio
+
+**[2025-12-28 16:03:24] INGEST AGENT** → Fetched document → `3cf3cf7e...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/hardening-atlas-against-prompt-injection
+
+**[2025-12-28 16:39:54] EXTRACTION AGENT** → Cleaned text → `65869e25...`
+  - Word count: 37 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:54] EMBEDDING GENERATOR** → Generated vector → `65869e25...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:48:04] ANALYSIS AGENT** → Extracted insights → `48fb0681...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 41. Evaluating chain-of-thought monitorability
+
+**[2025-12-28 16:03:26] INGEST AGENT** → Fetched document → `926e9a4f...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/evaluating-chain-of-thought-monitorability
+
+**[2025-12-28 16:39:42] EXTRACTION AGENT** → Cleaned text → `ad2766de...`
+  - Word count: 47 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:42] EMBEDDING GENERATOR** → Generated vector → `ad2766de...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:46:51] ANALYSIS AGENT** → Extracted insights → `252df324...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 42. Deepening our collaboration with the U.S. Department of Ener
+
+**[2025-12-28 16:03:27] INGEST AGENT** → Fetched document → `bb6ce5e3...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/us-department-of-energy-collaboration
+
+**[2025-12-28 16:39:37] EXTRACTION AGENT** → Cleaned text → `77eefd1c...`
+  - Word count: 50 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:37] EMBEDDING GENERATOR** → Generated vector → `77eefd1c...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:52:53] ANALYSIS AGENT** → Extracted insights → `b1e319ec...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 43. AI literacy resources for teens and parents
+
+**[2025-12-28 16:03:29] INGEST AGENT** → Fetched document → `d4f99c75...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/ai-literacy-resources-for-teens-and-parents
+
+**[2025-12-28 16:39:39] EXTRACTION AGENT** → Cleaned text → `ac91b4b1...`
+  - Word count: 38 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:39] EMBEDDING GENERATOR** → Generated vector → `ac91b4b1...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:46:42] ANALYSIS AGENT** → Extracted insights → `d11e8333...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 44. Updating our Model Spec with teen protections
+
+**[2025-12-28 16:03:31] INGEST AGENT** → Fetched document → `083293e4...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/updating-model-spec-with-teen-protections
+
+**[2025-12-28 16:39:58] EXTRACTION AGENT** → Cleaned text → `ab98d734...`
+  - Word count: 48 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:58] EMBEDDING GENERATOR** → Generated vector → `ab98d734...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:48:25] ANALYSIS AGENT** → Extracted insights → `1011fdf4...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 45. Introducing GPT-5.2-Codex
+
+**[2025-12-28 16:03:32] INGEST AGENT** → Fetched document → `15758f03...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/introducing-gpt-5-2-codex
+
+**[2025-12-28 16:39:59] EXTRACTION AGENT** → Cleaned text → `35bcd6e8...`
+  - Word count: 17 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:59] EMBEDDING GENERATOR** → Generated vector → `35bcd6e8...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:48:34] ANALYSIS AGENT** → Extracted insights → `c00b6dfd...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 46. Introducing GPT-5.2-Codex
+
+**[2025-12-28 16:03:34] INGEST AGENT** → Fetched document → `d2115c83...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/gpt-5-2-codex
+
+**[2025-12-28 16:40:01] EXTRACTION AGENT** → Cleaned text → `309382b3...`
+  - Word count: 17 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:01] EMBEDDING GENERATOR** → Generated vector → `309382b3...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:48:43] ANALYSIS AGENT** → Extracted insights → `9237708a...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 47. Addendum to GPT-5.2 System Card: GPT-5.2-Codex
+
+**[2025-12-28 16:03:35] INGEST AGENT** → Fetched document → `cd83a40e...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/gpt-5-2-codex-system-card
+
+**[2025-12-28 16:40:02] EXTRACTION AGENT** → Cleaned text → `666ddfe6...`
+  - Word count: 37 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:02] EMBEDDING GENERATOR** → Generated vector → `666ddfe6...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:48:54] ANALYSIS AGENT** → Extracted insights → `08274230...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 48. Introducing OpenAI Academy for News Organizations
+
+**[2025-12-28 16:03:37] INGEST AGENT** → Fetched document → `33da1a1a...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/openai-academy-for-news-organizations
+
+**[2025-12-28 16:40:04] EXTRACTION AGENT** → Cleaned text → `26df5759...`
+  - Word count: 54 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:04] EMBEDDING GENERATOR** → Generated vector → `26df5759...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:55:42] ANALYSIS AGENT** → Extracted insights → `6a137516...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 49. Developers can now submit apps to ChatGPT
+
+**[2025-12-28 16:03:38] INGEST AGENT** → Fetched document → `da4a2147...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/developers-can-now-submit-apps-to-chatgpt
+
+**[2025-12-28 16:40:06] EXTRACTION AGENT** → Cleaned text → `439f9513...`
+  - Word count: 42 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:06] EMBEDDING GENERATOR** → Generated vector → `439f9513...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:49:04] ANALYSIS AGENT** → Extracted insights → `40e36b0c...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 50. Evaluating AI’s ability to perform scientific research tasks
+
+**[2025-12-28 16:03:40] INGEST AGENT** → Fetched document → `013b942a...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/frontierscience
+
+**[2025-12-28 16:40:07] EXTRACTION AGENT** → Cleaned text → `897d5b63...`
+  - Word count: 20 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:07] EMBEDDING GENERATOR** → Generated vector → `897d5b63...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:52:45] ANALYSIS AGENT** → Extracted insights → `71db1388...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 51. Measuring AI’s capability to accelerate biological research
+
+**[2025-12-28 16:03:41] INGEST AGENT** → Fetched document → `b98c61b4...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/accelerating-biological-research-in-the-wet-lab
+
+**[2025-12-28 16:40:09] EXTRACTION AGENT** → Cleaned text → `cb2f1e97...`
+  - Word count: 37 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:09] EMBEDDING GENERATOR** → Generated vector → `cb2f1e97...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:55:53] ANALYSIS AGENT** → Extracted insights → `88b7a370...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 52. The new ChatGPT Images is here
+
+**[2025-12-28 16:03:43] INGEST AGENT** → Fetched document → `c3562daf...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/new-chatgpt-images-is-here
+
+**[2025-12-28 16:40:11] EXTRACTION AGENT** → Cleaned text → `410f4b48...`
+  - Word count: 45 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:11] EMBEDDING GENERATOR** → Generated vector → `410f4b48...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:49:14] ANALYSIS AGENT** → Extracted insights → `5abb1876...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 53. BNY builds “AI for everyone, everywhere” with OpenAI
+
+**[2025-12-28 16:03:44] INGEST AGENT** → Fetched document → `2ef292a8...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/bny
+
+**[2025-12-28 16:40:12] EXTRACTION AGENT** → Cleaned text → `22672e83...`
+  - Word count: 27 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:12] EMBEDDING GENERATOR** → Generated vector → `22672e83...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:49:23] ANALYSIS AGENT** → Extracted insights → `45db54c1...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 54. How We Used Codex to Ship Sora for Android in 28 Days
+
+**[2025-12-28 16:03:46] INGEST AGENT** → Fetched document → `435d746d...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/shipping-sora-for-android-with-codex
+
+**[2025-12-28 16:39:44] EXTRACTION AGENT** → Cleaned text → `53509a07...`
+  - Word count: 25 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:44] EMBEDDING GENERATOR** → Generated vector → `53509a07...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:47:00] ANALYSIS AGENT** → Extracted insights → `e1679464...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 55. BBVA and OpenAI collaborate to transform global banking
+
+**[2025-12-28 16:03:48] INGEST AGENT** → Fetched document → `afa991d5...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/bbva-collaboration-expansion
+
+**[2025-12-28 16:39:56] EXTRACTION AGENT** → Cleaned text → `c7e7f8e0...`
+  - Word count: 41 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:39:56] EMBEDDING GENERATOR** → Generated vector → `c7e7f8e0...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:48:15] ANALYSIS AGENT** → Extracted insights → `87ed3d97...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 56. Advancing science and math with GPT-5.2
+
+**[2025-12-28 16:03:49] INGEST AGENT** → Fetched document → `43f2edb2...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/gpt-5-2-for-science-and-math
+
+**[2025-12-28 16:40:14] EXTRACTION AGENT** → Cleaned text → `77dc49c4...`
+  - Word count: 43 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:14] EMBEDDING GENERATOR** → Generated vector → `77dc49c4...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:49:33] ANALYSIS AGENT** → Extracted insights → `a5eb1508...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 57. Update to GPT-5 System Card: GPT-5.2
+
+**[2025-12-28 16:03:51] INGEST AGENT** → Fetched document → `c6b7376e...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/gpt-5-system-card-update-gpt-5-2
+
+**[2025-12-28 16:40:16] EXTRACTION AGENT** → Cleaned text → `6b013984...`
+  - Word count: 77 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:16] EMBEDDING GENERATOR** → Generated vector → `6b013984...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:56:05] ANALYSIS AGENT** → Extracted insights → `cd2c4392...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 58. Increasing revenue 300% by bringing AI to SMBs
+
+**[2025-12-28 16:03:52] INGEST AGENT** → Fetched document → `8d6a73e9...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/podium
+
+**[2025-12-28 16:40:18] EXTRACTION AGENT** → Cleaned text → `c4b47478...`
+  - Word count: 23 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:18] EMBEDDING GENERATOR** → Generated vector → `c4b47478...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:49:43] ANALYSIS AGENT** → Extracted insights → `58bba163...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 59. Introducing GPT-5.2
+
+**[2025-12-28 16:03:54] INGEST AGENT** → Fetched document → `1aa973da...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/introducing-gpt-5-2
+
+**[2025-12-28 16:40:19] EXTRACTION AGENT** → Cleaned text → `6908cb7e...`
+  - Word count: 34 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:19] EMBEDDING GENERATOR** → Generated vector → `6908cb7e...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:49:53] ANALYSIS AGENT** → Extracted insights → `17d30de8...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 60. The Walt Disney Company and OpenAI reach landmark agreement 
+
+**[2025-12-28 16:03:55] INGEST AGENT** → Fetched document → `67051916...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/disney-sora-agreement
+
+**[2025-12-28 16:40:21] EXTRACTION AGENT** → Cleaned text → `d24b3921...`
+  - Word count: 44 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:21] EMBEDDING GENERATOR** → Generated vector → `d24b3921...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:50:02] ANALYSIS AGENT** → Extracted insights → `3636e6e5...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 61. Ten years
+
+**[2025-12-28 16:03:57] INGEST AGENT** → Fetched document → `c53b6894...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/ten-years
+
+**[2025-12-28 16:40:23] EXTRACTION AGENT** → Cleaned text → `b91148ae...`
+  - Word count: 40 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:23] EMBEDDING GENERATOR** → Generated vector → `b91148ae...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:50:12] ANALYSIS AGENT** → Extracted insights → `68b04b58...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 62. Strengthening cyber resilience as AI capabilities advance
+
+**[2025-12-28 16:03:58] INGEST AGENT** → Fetched document → `7414904f...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/strengthening-cyber-resilience
+
+**[2025-12-28 16:40:24] EXTRACTION AGENT** → Cleaned text → `7cbd56ce...`
+  - Word count: 35 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:24] EMBEDDING GENERATOR** → Generated vector → `7cbd56ce...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:50:20] ANALYSIS AGENT** → Extracted insights → `b53c757a...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 63. How Scout24 is building the next generation of real-estate s
+
+**[2025-12-28 16:04:00] INGEST AGENT** → Fetched document → `9fd1b620...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/scout24
+
+**[2025-12-28 16:40:26] EXTRACTION AGENT** → Cleaned text → `92c0926d...`
+  - Word count: 22 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:26] EMBEDDING GENERATOR** → Generated vector → `92c0926d...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:50:30] ANALYSIS AGENT** → Extracted insights → `569a2aa4...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 64. OpenAI co-founds Agentic AI Foundation, donates AGENTS.md
+
+**[2025-12-28 16:04:02] INGEST AGENT** → Fetched document → `ae77d7a6...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/agentic-ai-foundation
+
+**[2025-12-28 16:40:27] EXTRACTION AGENT** → Cleaned text → `0c75488d...`
+  - Word count: 22 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:27] EMBEDDING GENERATOR** → Generated vector → `0c75488d...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:50:39] ANALYSIS AGENT** → Extracted insights → `47553a58...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 65. Launching our first OpenAI Certifications courses
+
+**[2025-12-28 16:04:03] INGEST AGENT** → Fetched document → `8e02ba7d...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/openai-certificate-courses
+
+**[2025-12-28 16:40:29] EXTRACTION AGENT** → Cleaned text → `6d5d5acc...`
+  - Word count: 25 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:29] EMBEDDING GENERATOR** → Generated vector → `6d5d5acc...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:47:24] ANALYSIS AGENT** → Extracted insights → `dc29dc6c...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 66. OpenAI appoints Denise Dresser as Chief Revenue Officer
+
+**[2025-12-28 16:04:05] INGEST AGENT** → Fetched document → `23249a80...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/openai-appoints-denise-dresser
+
+**[2025-12-28 16:40:31] EXTRACTION AGENT** → Cleaned text → `8874eadd...`
+  - Word count: 36 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:31] EMBEDDING GENERATOR** → Generated vector → `8874eadd...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:46:24] ANALYSIS AGENT** → Extracted insights → `5f8da52b...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 67. Building AI fluency at scale with ChatGPT Enterprise
+
+**[2025-12-28 16:04:06] INGEST AGENT** → Fetched document → `1a957ada...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/commonwealth-bank-of-australia
+
+**[2025-12-28 16:40:32] EXTRACTION AGENT** → Cleaned text → `655d8daa...`
+  - Word count: 27 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:32] EMBEDDING GENERATOR** → Generated vector → `655d8daa...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:46:33] ANALYSIS AGENT** → Extracted insights → `ade4aec0...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 68. Bringing powerful AI to millions across Europe with Deutsche
+
+**[2025-12-28 16:04:08] INGEST AGENT** → Fetched document → `432d0e0d...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/deutsche-telekom-collaboration
+
+**[2025-12-28 16:40:34] EXTRACTION AGENT** → Cleaned text → `467bffee...`
+  - Word count: 35 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:34] EMBEDDING GENERATOR** → Generated vector → `467bffee...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:50:55] ANALYSIS AGENT** → Extracted insights → `2fcd73e9...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 69. Instacart and OpenAI partner on AI shopping experiences
+
+**[2025-12-28 16:04:09] INGEST AGENT** → Fetched document → `5467c165...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/instacart-partnership
+
+**[2025-12-28 16:40:35] EXTRACTION AGENT** → Cleaned text → `b7f29b89...`
+  - Word count: 23 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:35] EMBEDDING GENERATOR** → Generated vector → `b7f29b89...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:50:46] ANALYSIS AGENT** → Extracted insights → `4ea35212...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 70. The state of enterprise AI
+
+**[2025-12-28 16:04:11] INGEST AGENT** → Fetched document → `4ea31db5...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/the-state-of-enterprise-ai-2025-report
+
+**[2025-12-28 16:40:37] EXTRACTION AGENT** → Cleaned text → `98e115c6...`
+  - Word count: 20 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:37] EMBEDDING GENERATOR** → Generated vector → `98e115c6...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:51:03] ANALYSIS AGENT** → Extracted insights → `d35324f9...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 71. How Virgin Atlantic uses AI to enhance every step of travel
+
+**[2025-12-28 16:04:13] INGEST AGENT** → Fetched document → `66169e1a...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/virgin-atlantic-oliver-byers
+
+**[2025-12-28 16:40:39] EXTRACTION AGENT** → Cleaned text → `1698b699...`
+  - Word count: 22 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:39] EMBEDDING GENERATOR** → Generated vector → `1698b699...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:51:13] ANALYSIS AGENT** → Extracted insights → `cc8690db...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 72. Introducing OpenAI for Australia
+
+**[2025-12-28 16:04:14] INGEST AGENT** → Fetched document → `4d808fde...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/global-affairs/openai-for-australia
+
+**[2025-12-28 16:40:40] EXTRACTION AGENT** → Cleaned text → `c3add17e...`
+  - Word count: 26 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:40] EMBEDDING GENERATOR** → Generated vector → `c3add17e...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:51:22] ANALYSIS AGENT** → Extracted insights → `e6cdc1bc...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 73. OpenAI to acquire Neptune
+
+**[2025-12-28 16:04:16] INGEST AGENT** → Fetched document → `8c2712ec...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/openai-to-acquire-neptune
+
+**[2025-12-28 16:40:42] EXTRACTION AGENT** → Cleaned text → `b1b5e8e5...`
+  - Word count: 22 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:42] EMBEDDING GENERATOR** → Generated vector → `b1b5e8e5...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:51:30] ANALYSIS AGENT** → Extracted insights → `527d8a26...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 74. How confessions can keep language models honest
+
+**[2025-12-28 16:04:17] INGEST AGENT** → Fetched document → `5e82c14d...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/how-confessions-can-keep-language-models-honest
+
+**[2025-12-28 16:40:43] EXTRACTION AGENT** → Cleaned text → `322e89c4...`
+  - Word count: 29 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:43] EMBEDDING GENERATOR** → Generated vector → `322e89c4...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:51:39] ANALYSIS AGENT** → Extracted insights → `73495d97...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 75. Announcing the initial People-First AI Fund grantees
+
+**[2025-12-28 16:04:19] INGEST AGENT** → Fetched document → `496b8e0f...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/people-first-ai-fund-grantees
+
+**[2025-12-28 16:40:45] EXTRACTION AGENT** → Cleaned text → `a46c33ea...`
+  - Word count: 25 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:45] EMBEDDING GENERATOR** → Generated vector → `a46c33ea...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:51:48] ANALYSIS AGENT** → Extracted insights → `19de1ee3...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 76. Inside Mirakl's agentic commerce vision
+
+**[2025-12-28 16:04:21] INGEST AGENT** → Fetched document → `288da2bb...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/mirakl
+
+**[2025-12-28 16:40:46] EXTRACTION AGENT** → Cleaned text → `5ac69229...`
+  - Word count: 23 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:46] EMBEDDING GENERATOR** → Generated vector → `5ac69229...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:51:57] ANALYSIS AGENT** → Extracted insights → `f1447602...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 77. Funding grants for new research into AI and mental health
+
+**[2025-12-28 16:04:22] INGEST AGENT** → Fetched document → `5aafa975...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/ai-mental-health-research-grants
+
+**[2025-12-28 16:40:48] EXTRACTION AGENT** → Cleaned text → `d3b13ec9...`
+  - Word count: 35 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:48] EMBEDDING GENERATOR** → Generated vector → `d3b13ec9...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:52:05] ANALYSIS AGENT** → Extracted insights → `f627d102...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 78. OpenAI and NORAD team up to bring new magic to “NORAD Tracks
+
+**[2025-12-28 16:04:24] INGEST AGENT** → Fetched document → `6b884828...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/norad-holiday-collaboration
+
+**[2025-12-28 16:40:50] EXTRACTION AGENT** → Cleaned text → `99f32a28...`
+  - Word count: 29 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:50] EMBEDDING GENERATOR** → Generated vector → `99f32a28...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:52:18] ANALYSIS AGENT** → Extracted insights → `8f4efc39...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 79. Accenture and OpenAI accelerate enterprise AI success
+
+**[2025-12-28 16:04:25] INGEST AGENT** → Fetched document → `50480c74...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/accenture-partnership
+
+**[2025-12-28 16:40:51] EXTRACTION AGENT** → Cleaned text → `7c8b0691...`
+  - Word count: 24 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:51] EMBEDDING GENERATOR** → Generated vector → `7c8b0691...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:52:27] ANALYSIS AGENT** → Extracted insights → `fb4d1bd1...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 80. OpenAI takes an ownership stake in Thrive Holdings to accele
+
+**[2025-12-28 16:04:27] INGEST AGENT** → Fetched document → `53c6ab0c...`
+  - Source: OpenAI Blog
+  - URL: https://openai.com/index/thrive-holdings
+
+**[2025-12-28 16:40:53] EXTRACTION AGENT** → Cleaned text → `74f1d914...`
+  - Word count: 38 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:53] EMBEDDING GENERATOR** → Generated vector → `74f1d914...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:52:37] ANALYSIS AGENT** → Extracted insights → `d2af34f0...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 81. Open models: Hot or Not with Nathan Lambert & Florian Brand
+
+**[2025-12-28 16:04:38] INGEST AGENT** → Fetched document → `178190c1...`
+  - Source: Interconnects (Nathan Lambert)
+  - URL: https://www.interconnects.ai/p/open-models-hot-or-not-with-nathan
+
+**[2025-12-28 16:40:54] EXTRACTION AGENT** → Cleaned text → `9d800c2a...`
+  - Word count: 121 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:40:54] EMBEDDING GENERATOR** → Generated vector → `9d800c2a...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:46:01] ANALYSIS AGENT** → Extracted insights → `4a9aae9e...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 82. 2025 Interconnects year in review
+
+**[2025-12-28 16:04:41] INGEST AGENT** → Fetched document → `5ce95035...`
+  - Source: Interconnects (Nathan Lambert)
+  - URL: https://www.interconnects.ai/p/2025-interconnects-year-in-review
+
+**[2025-12-28 16:40:56] EXTRACTION AGENT** → Cleaned text → `ea4be75d...`
+  - Word count: 2,036 words
+  - Reading time: 10 minutes
+
+**[2025-12-28 16:40:56] EMBEDDING GENERATOR** → Generated vector → `ea4be75d...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:53:37] ANALYSIS AGENT** → Extracted insights → `891f4d5c...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 83. 2025 Open Models Year in Review
+
+**[2025-12-28 16:04:42] INGEST AGENT** → Fetched document → `b8375f46...`
+  - Source: Interconnects (Nathan Lambert)
+  - URL: https://www.interconnects.ai/p/2025-open-models-year-in-review
+
+**[2025-12-28 16:40:58] EXTRACTION AGENT** → Cleaned text → `a900d92c...`
+  - Word count: 1,963 words
+  - Reading time: 9 minutes
+
+**[2025-12-28 16:40:58] EMBEDDING GENERATOR** → Generated vector → `a900d92c...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:54:42] ANALYSIS AGENT** → Extracted insights → `4a979e15...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 84. New Talk: Building Olmo 3 Think
+
+**[2025-12-28 16:04:44] INGEST AGENT** → Fetched document → `5a63c646...`
+  - Source: Interconnects (Nathan Lambert)
+  - URL: https://www.interconnects.ai/p/building-olmo-3-think
+
+**[2025-12-28 16:41:00] EXTRACTION AGENT** → Cleaned text → `a061350f...`
+  - Word count: 126 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:41:00] EMBEDDING GENERATOR** → Generated vector → `a061350f...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:54:56] ANALYSIS AGENT** → Extracted insights → `a97eaad4...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 85. Google's year in review: 8 areas with research breakthroughs
+
+**[2025-12-28 16:04:49] INGEST AGENT** → Fetched document → `0b26fa16...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/googles-year-in-review-8-areas-with-research-breakthroughs-in-2025/
+
+---
+
+### 86. Gemini 3 Flash: frontier intelligence built for speed
+
+**[2025-12-28 16:04:50] INGEST AGENT** → Fetched document → `baf58e20...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/
+
+---
+
+### 87. Gemma Scope 2: helping the AI safety community deepen unders
+
+**[2025-12-28 16:04:52] INGEST AGENT** → Fetched document → `8a671750...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/gemma-scope-2-helping-the-ai-safety-community-deepen-understanding-of-complex-language-model-behavior/
+
+**[2025-12-28 16:41:01] EXTRACTION AGENT** → Cleaned text → `7c40095c...`
+  - Word count: 22 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:41:01] EMBEDDING GENERATOR** → Generated vector → `7c40095c...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:55:04] ANALYSIS AGENT** → Extracted insights → `3b203141...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 88. Improved Gemini audio models for powerful voice experiences
+
+**[2025-12-28 16:04:53] INGEST AGENT** → Fetched document → `4d80ae65...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/improved-gemini-audio-models-for-powerful-voice-experiences/
+
+---
+
+### 89. Deepening our partnership with the UK AI Security Institute
+
+**[2025-12-28 16:04:55] INGEST AGENT** → Fetched document → `598032cd...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/deepening-our-partnership-with-the-uk-ai-security-institute/
+
+**[2025-12-28 16:41:03] EXTRACTION AGENT** → Cleaned text → `1230658a...`
+  - Word count: 17 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:41:03] EMBEDDING GENERATOR** → Generated vector → `1230658a...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:55:13] ANALYSIS AGENT** → Extracted insights → `c65d07e6...`
+  - Model: claude-3-7-sonnet-20250219
+
+---
+
+### 90. Strengthening our partnership with the UK government to supp
+
+**[2025-12-28 16:04:57] INGEST AGENT** → Fetched document → `afc89681...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/strengthening-our-partnership-with-the-uk-government-to-support-prosperity-and-security-in-the-ai-era/
+
+---
+
+### 91. FACTS Benchmark Suite: Systematically evaluating the factual
+
+**[2025-12-28 16:04:59] INGEST AGENT** → Fetched document → `df385996...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/facts-benchmark-suite-systematically-evaluating-the-factuality-of-large-language-models/
+
+---
+
+### 92. Engineering more resilient crops for a warming climate
+
+**[2025-12-28 16:05:00] INGEST AGENT** → Fetched document → `df35516e...`
+  - Source: Google DeepMind Blog
+  - URL: https://deepmind.google/blog/engineering-more-resilient-crops-for-a-warming-climate/
+
+**[2025-12-28 16:41:04] EXTRACTION AGENT** → Cleaned text → `284cf40d...`
+  - Word count: 13 words
+  - Reading time: 0 minutes
+
+**[2025-12-28 16:41:04] EMBEDDING GENERATOR** → Generated vector → `284cf40d...`
+  - Model: text-embedding-3-small
+  - Dimensions: 1,536
+
+**[2025-12-28 11:55:20] ANALYSIS AGENT** → Extracted insights → `bdbc8c4f...`
   - Model: claude-3-7-sonnet-20250219
 
 ---

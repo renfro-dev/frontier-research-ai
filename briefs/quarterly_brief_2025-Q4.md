@@ -46,6 +46,8 @@ Major U.S. companies formed strategic partnerships to secure the computing infra
 
 By December, the open model ecosystem had become incredibly active, with approximately 1,000-2,000 models uploaded to HuggingFace each day [19]. This represented 30,000-60,000 models monthly, highlighting the scale and diversity of development efforts [19]. Models like Moondream became leading players in the vision space, while others like Parakeet 3 for speech-to-text were faster than cloud-based platforms in terms of end-to-end latency [19].
 
+Late December saw Meta acquire Manus, a Singapore-based AI agent startup with Chinese roots, for over $2 billion [63, 64]. The deal highlighted geopolitical tensions in AI development, with Meta explicitly stating that "there will be no continuing Chinese ownership interest in Manus AI following the transaction" [65]. Manus, which had been backed by Chinese investors including Tencent and ZhenFund, would wind down its operations in China following the acquisition [66].
+
 ## Evolution of Agentic AI and Coding Agents
 
 ### The Rise of Agentic AI
@@ -229,3 +231,7 @@ The quarter's developments suggested that AI was entering a new phase of maturit
 [60] OpenAI upgrading GPT-5 series with customization options
 [61] OpenAI's gpt-oss-safeguard introduction
 [62] Technical report on gpt-oss-safeguard models
+[63] Meta's acquisition of Manus for over $2 billion - https://techcrunch.com/2025/12/29/meta-just-bought-manus-an-ai-startup-everyone-has-been-talking-about/
+[64] Meta acquires Manus AI startup - https://www.cnbc.com/2025/12/30/meta-acquires-singapore-ai-agent-firm-manus-china-butterfly-effect-monicai.html
+[65] Meta statement on no continuing Chinese ownership interest in Manus - https://www.cbc.ca/news/business/meta-manus-acquisition-two-billion-explained-9.7030180
+[66] Manus winding down China operations following Meta acquisition - https://www.aljazeera.com/economy/2025/12/30/tech-giant-meta-buys-chinese-founded-ai-firm-manus

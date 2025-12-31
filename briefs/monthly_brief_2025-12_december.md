@@ -20,6 +20,8 @@ Despite benchmark parity, closed models still dominate in real-world usage [16].
 
 The open model ecosystem has become incredibly active, with approximately 1,000-2,000 models uploaded to HuggingFace each day [16]. This represents 30,000-60,000 models monthly, highlighting the scale and diversity of development efforts [16]. Models like Moondream have become leading players in the vision space, while others like Parakeet 3 for speech-to-text are faster than cloud-based platforms in terms of end-to-end latency [16].
 
+Late December saw Meta acquire Manus, a Singapore-based AI agent startup with Chinese roots, for over $2 billion [95, 96]. The deal highlighted geopolitical tensions in AI development, with Meta explicitly stating that "there will be no continuing Chinese ownership interest in Manus AI following the transaction" [97]. Manus, which had been backed by Chinese investors including Tencent and ZhenFund, would wind down its operations in China following the acquisition [98].
+
 ### Coding Agents Transform Software Development
 
 Coding agents—AI tools that can actively execute code they're working with to check functionality and iterate on problems—represent the most important trend in LLMs in 2025 [87]. These tools are fundamentally changing how software is developed, shifting programmers from writing lines of code to managing the context the model has access to, pruning irrelevant information, adding useful material, and writing detailed specifications [5].
@@ -267,3 +269,11 @@ The growing capabilities of open models are democratizing access to powerful AI,
 [93] Simon Willison. (2025, December 25). A new way to extract detailed transcripts from Claude Code. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/25/claude-code-transcripts/
 
 [94] Simon Willison. (2025, December 26). How Rob Pike got spammed with an AI slop "act of kindness". Simon Willison's Weblog. https://simonwillison.net/2025/Dec/26/slop-acts-of-kindness/
+
+[95] TechCrunch. (2025, December 29). Meta just bought Manus, an AI startup everyone has been talking about. https://techcrunch.com/2025/12/29/meta-just-bought-manus-an-ai-startup-everyone-has-been-talking-about/
+
+[96] CNBC. (2025, December 30). Meta acquires intelligent agent firm Manus, capping year of aggressive AI moves. https://www.cnbc.com/2025/12/30/meta-acquires-singapore-ai-agent-firm-manus-china-butterfly-effect-monicai.html
+
+[97] CBC News. (2025, December 30). Meta acquires Chinese-founded AI startup Manus for $2B. https://www.cbc.ca/news/business/meta-manus-acquisition-two-billion-explained-9.7030180
+
+[98] Al Jazeera. (2025, December 30). Tech giant Meta buys Chinese-founded AI firm Manus. https://www.aljazeera.com/economy/2025/12/30/tech-giant-meta-buys-chinese-founded-ai-firm-manus

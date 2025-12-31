@@ -4,7 +4,7 @@ An automated briefing system that aggregates and synthesizes long-form content f
 
 ## Overview
 
-This system automatically collects, analyzes, and synthesizes new content from trusted sources (e.g., Simon Willison, Eugene Yan, Nathan Lambert) into monthly and quarterly briefings that translate abstract AI concepts into concrete mental models and actionable insights.
+This system automatically collects, analyzes, and synthesizes new content from trusted sources (e.g., Simon Willison, Eugene Yan, Nathan Lambert, OpenAI, Anthropic, etc) into monthly and quarterly briefings that translate abstract AI concepts into concrete mental models and actionable insights.
 
 **Status:** v1 (Python scripts, manual execution, 6 agents with 5 implemented)
 

@@ -1,4 +1,4 @@
-name: Weekly Brief Pipeline
+name: Weekly Briefs Pipeline (Dual Synthesis)
 
 on:
   # Run every Monday at 9:00 AM UTC (1:00 AM PST / 4:00 AM EST)
@@ -86,27 +86,41 @@ jobs:
           echo "🤖 Running Analysis Agent..."
           python3 scripts/analysis_agent.py
       
-      - name: Run Synthesis Agent
+      - name: Run Systems Thinking Synthesis Agent
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          echo "✍️ Running Synthesis Agent..."
+          echo "✍️ Running Systems Thinking Synthesis Agent..."
           python3 scripts/synthesis_agent.py \
             --start-date ${{ steps.dates.outputs.start_date }} \
             --end-date ${{ steps.dates.outputs.end_date }}
-      
+
+      - name: Run Context Orchestration Synthesis Agent
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "🎯 Running Context Orchestration Synthesis Agent..."
+          python3 scripts/synthesis_agent_orchestration.py \
+            --start-date ${{ steps.dates.outputs.start_date }} \
+            --end-date ${{ steps.dates.outputs.end_date }}
+
       - name: Commit generated briefs
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add briefs/
-          git diff --staged --quiet || git commit -m "🤖 Auto-generated weekly brief for ${{ steps.dates.outputs.start_date }}"
+          git diff --staged --quiet || git commit -m "🤖 Auto-generated weekly briefs (systems thinking + context orchestration) for ${{ steps.dates.outputs.start_date }}"
           git push
         continue-on-error: true
       
       - name: Summary
         run: |
-          echo "✅ Weekly brief pipeline completed!"
+          echo "✅ Weekly briefs pipeline completed!"
           echo "📅 Date range: ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
+          echo "📊 Generated:"
+          echo "  - Systems Thinking Brief → briefs/systems_thinking/"
+          echo "  - Context Orchestration Brief → briefs/context_orchestration/"

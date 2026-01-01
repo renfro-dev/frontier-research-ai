@@ -1,0 +1,112 @@
+name: Weekly Brief Pipeline
+
+on:
+  # Run every Monday at 9:00 AM UTC (1:00 AM PST / 4:00 AM EST)
+  schedule:
+    - cron: '0 9 * * 1'
+  
+  # Allow manual triggering from GitHub UI
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Start date (YYYY-MM-DD) - optional, defaults to last Monday'
+        required: false
+        type: string
+      end_date:
+        description: 'End date (YYYY-MM-DD) - optional, defaults to last Sunday'
+        required: false
+        type: string
+
+jobs:
+  generate-weekly-brief:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Calculate date range
+        id: dates
+        run: |
+          if [ -n "${{ github.event.inputs.start_date }}" ]; then
+            echo "start_date=${{ github.event.inputs.start_date }}" >> $GITHUB_OUTPUT
+            echo "end_date=${{ github.event.inputs.end_date }}" >> $GITHUB_OUTPUT
+          else
+            # Calculate last week's Monday-Sunday
+            last_monday=$(date -d "last monday - 7 days" +%Y-%m-%d)
+            last_sunday=$(date -d "last sunday" +%Y-%m-%d)
+            echo "start_date=$last_monday" >> $GITHUB_OUTPUT
+            echo "end_date=$last_sunday" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Run Ingest Agent
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "📥 Running Ingest Agent..."
+          python3 scripts/ingest_agent.py
+      
+      - name: Run Extraction Agent
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "🔍 Running Extraction Agent..."
+          python3 scripts/extraction_agent.py
+      
+      - name: Run Embedding Agent
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "🧮 Running Embedding Agent..."
+          python3 scripts/embedding_agent.py
+      
+      - name: Run Analysis Agent
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "🤖 Running Analysis Agent..."
+          python3 scripts/analysis_agent.py
+      
+      - name: Run Synthesis Agent
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "✍️ Running Synthesis Agent..."
+          python3 scripts/synthesis_agent.py \
+            --start-date ${{ steps.dates.outputs.start_date }} \
+            --end-date ${{ steps.dates.outputs.end_date }}
+      
+      - name: Commit generated briefs
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add briefs/
+          git diff --staged --quiet || git commit -m "🤖 Auto-generated weekly brief for ${{ steps.dates.outputs.start_date }}"
+          git push
+        continue-on-error: true
+      
+      - name: Summary
+        run: |
+          echo "✅ Weekly brief pipeline completed!"
+          echo "📅 Date range: ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"

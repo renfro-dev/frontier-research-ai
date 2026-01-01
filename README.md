@@ -1,10 +1,10 @@
 # Systems Thinking Brief
 
-An automated briefing system that aggregates and synthesizes long-form content from leading AI and systems thinkers into accessible monthly and quarterly essays for non-technical operators and founders.
+An automated briefing system that aggregates and synthesizes long-form content from leading AI and systems thinkers into accessible weekly essays for non-technical operators and founders.
 
 ## Overview
 
-This system automatically collects, analyzes, and synthesizes new content from trusted sources (e.g., Simon Willison, Eugene Yan, Nathan Lambert, OpenAI, Anthropic, etc) into monthly and quarterly briefings that translate abstract AI concepts into concrete mental models and actionable insights.
+This system automatically collects, analyzes, and synthesizes new content from trusted sources (e.g., Simon Willison, Eugene Yan, Nathan Lambert, OpenAI, Anthropic, LangChain, Weaviate) into weekly, monthly, and quarterly briefings that translate abstract AI concepts into concrete mental models and actionable insights.
 
 **Status:** v1 (Python scripts, manual execution, 6 agents with 5 implemented)
 
@@ -18,11 +18,11 @@ Non-technical founders, operators, RevOps leaders, and product managers who:
 
 ## Success Metrics
 
-- **M1:** Monthly briefs generated with all 5 agents functioning
+- **M1:** Weekly briefs generated with all 5 agents functioning
 - **M2:** Each brief cites primary sources with APA-style citations
 - **M3:** Conservative synthesis maintained (no speculation beyond sources)
 - **M4:** Plain English accessible to semi-technical readers (non-developers)
-- **M5:** Quarterly briefs connect insights across multiple months
+- **M5:** Weekly briefs consistently delivered on schedule
 
 ## Architecture
 
@@ -81,21 +81,17 @@ The system uses six specialized agents, five of which are currently implemented:
 - **Cost:** ~$0.038 per document (~$1.50/month for typical volume)
 
 #### 5. Synthesis Agent
-- **Input:** Structured JSON from multiple summaries (analysis outputs) OR completed monthly briefs for quarterly synthesis
-- **Output:** Readable prose essays (monthly briefs or quarterly reports)
+- **Input:** Structured JSON from multiple summaries (analysis outputs)
+- **Output:** Readable prose essays (weekly briefs)
 - **Implementation:** Calls Claude Sonnet 4 API with synthesis prompt
-- **Two Modes:**
-  - **Monthly Briefs:** Synthesize structured JSON from 40-100 analyzed documents covering one month
-  - **Quarterly Reports:** Synthesize three completed monthly briefs to show evolution of themes over the quarter
 - **Features:**
-  - Context-aware timeframe detection (weekly vs monthly based on date range)
   - Plain English writing for semi-technical audiences
   - Mandatory jargon definitions on first use
   - Implications-first structure in executive summary
-  - Sequential citation numbering (quarterly reports renumber citations [1], [2], [3]...)
+  - Sequential citation numbering
 - **Tone:** Neutral teacher, accessible to non-developers
 - **Constraint:** Every claim must have citation, no new claims beyond source material
-- **Cost:** ~$0.17-$0.44 per monthly brief, ~$0.50-$0.70 per quarterly report
+- **Cost:** ~$0.17-$0.44 per weekly brief
 
 #### 6. Reviewer Agent (Planned)
 - **Status:** Not yet implemented
@@ -109,7 +105,7 @@ The system uses six specialized agents, five of which are currently implemented:
 
 ## Brief Output Format
 
-Each monthly or quarterly brief includes:
+Each weekly brief includes:
 
 1. **Executive Summary: Why This Matters**
    - Lead with implications and practical significance BEFORE summarizing events
@@ -258,11 +254,9 @@ Each monthly or quarterly brief includes:
    → Stores JSON in summaries table
 
 5. Synthesis Agent (manual execution with date range)
-   → Monthly Mode: Reads structured JSON from summaries table
-   → Quarterly Mode: Reads three completed monthly briefs
+   → Reads structured JSON from summaries table
    → Calls Claude Sonnet 4 API to generate prose
-   → Creates monthly briefs (40-100 docs) or quarterly reports (synthesizes 3 months)
-   → Renumbers citations sequentially for quarterly reports
+   → Creates weekly briefs from analyzed documents
    → Stores essays in weekly_briefs table
    → Exports markdown files to briefs/ directory
 ```
@@ -279,6 +273,35 @@ Each monthly or quarterly brief includes:
 ```
 
 **Note:** All agents run as standalone Python scripts. No automated scheduling currently implemented.
+
+## Automation (GitHub Actions)
+
+The pipeline can run automatically on a weekly schedule using GitHub Actions:
+
+### Setup
+
+1. **Push to GitHub**: Push this repository to GitHub (public or private)
+2. **Configure Secrets**: Add API keys as repository secrets:
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `OPENAI_API_KEY`
+   - `ANTHROPIC_API_KEY`
+3. **Enable Actions**: GitHub Actions will automatically run every Monday at 9 AM UTC
+
+See [AUTOMATION_SETUP.md](file:///Users/JoshR/Desktop/fun/Frontier%20AI/AUTOMATION_SETUP.md) for detailed setup instructions.
+
+### Schedule
+
+- **Automatic**: Every Monday at 9:00 AM UTC
+- **Manual**: Trigger from GitHub Actions UI with custom date ranges
+- **Cost**: ~$0.25-0.35 per weekly run
+
+The workflow automatically:
+1. Ingests new content from RSS feeds
+2. Processes and analyzes articles
+3. Generates weekly brief
+4. Commits brief to repository
+
 
 ## Risk Mitigation
 
@@ -352,8 +375,7 @@ Each monthly or quarterly brief includes:
 6. **Review Output**
    - Generated briefs saved to `briefs/` directory
    - Also stored in Supabase `weekly_briefs` table
-   - Monthly briefs: `monthly_brief_2025-11_november.md`
-   - Quarterly reports: `quarterly_brief_2025-Q4.md`
+   - Weekly briefs: `weekly_brief_2025-12-28.md`
 
 ## Contributing
 

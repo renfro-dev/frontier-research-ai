@@ -51,7 +51,13 @@ Accessibility principles:
 5. EXPLAIN DYNAMICS - Clarify why parties are aligned or competing; explain shared incentives in partnerships
 
 Essay structure:
-1. Title: Use format "Systems Thinking Brief: [Descriptive Title]" or "Monthly Systems Thinking Brief: [Month Year]" for monthly briefs
+1. Title (H1 heading): Generate an SEO-optimized thematic title (3-6 words) that captures the week's key developments
+   - Use keyword-rich, descriptive phrases (e.g., "Open Models & Safety Tools", "AI Reasoning Breakthroughs", "Enterprise AI Adoption")
+   - Focus on the primary theme or most significant development
+   - Avoid generic phrases like "AI Updates" or "Weekly Roundup"
+   - Good examples: "Multimodal AI Advances", "Open Source Model Competition", "AI Safety & Interpretability"
+   - Bad examples: "This Week in AI", "AI News", "Latest Developments"
+   - The system will automatically append the date range for the final title
 2. Executive Summary (2-3 paragraphs): Lead with WHY THIS MATTERS before summarizing what happened
    - Answer: "Why should a non-technical operator care about these developments?"
    - Connect technical changes to business/strategy/decision-making impact
@@ -355,12 +361,32 @@ class SynthesisAgent:
             start_date = min(dates).split('T')[0]
             end_date = max(dates).split('T')[0]
 
-        # Extract title from markdown (first # heading)
+        # Extract thematic title from markdown (first # heading) and format with date range
         essay_content = brief_data['brief_markdown']
-        title = "AI Systems Weekly Brief"
+        thematic_title = "AI Systems Brief"  # Fallback
+        
         if essay_content.startswith('#'):
             first_line = essay_content.split('\n')[0]
-            title = first_line.replace('#', '').strip()
+            thematic_title = first_line.replace('#', '').strip()
+        
+        # Format date range based on timeframe
+        from datetime import datetime
+        start_dt = datetime.strptime(start_date, '%Y-%m-%d')
+        end_dt = datetime.strptime(end_date, '%Y-%m-%d')
+        days_span = (end_dt - start_dt).days
+        
+        if days_span <= 10:
+            # Weekly format: "December 22-28, 2025"
+            if start_dt.month == end_dt.month:
+                date_range = f"{start_dt.strftime('%B %d')}-{end_dt.strftime('%d, %Y')}"
+            else:
+                date_range = f"{start_dt.strftime('%B %d')} - {end_dt.strftime('%B %d, %Y')}"
+        else:
+            # Monthly format: "December 2025"
+            date_range = start_dt.strftime('%B %Y')
+        
+        # Combine thematic title with date range for SEO-optimized title
+        title = f"{thematic_title}: AI Brief for {date_range}"
 
         # Collect source document IDs
         source_document_ids = []

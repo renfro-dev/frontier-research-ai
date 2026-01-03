@@ -51,13 +51,13 @@ Accessibility principles:
 5. EXPLAIN DYNAMICS - Clarify why parties are aligned or competing; explain shared incentives in partnerships
 
 Essay structure:
-1. Title (H1 heading): Generate an SEO-optimized thematic title (3-6 words) that captures the week's key developments
+1. Title (H1 heading): Generate an SEO-optimized thematic title (3-6 words) that captures the key developments
    - Use keyword-rich, descriptive phrases (e.g., "Open Models & Safety Tools", "AI Reasoning Breakthroughs", "Enterprise AI Adoption")
    - Focus on the primary theme or most significant development
    - Avoid generic phrases like "AI Updates" or "Weekly Roundup"
    - Good examples: "Multimodal AI Advances", "Open Source Model Competition", "AI Safety & Interpretability"
    - Bad examples: "This Week in AI", "AI News", "Latest Developments"
-   - The system will automatically append the date range for the final title
+   - DO NOT include dates, time periods, or "Week of X" in the title
 2. Executive Summary (2-3 paragraphs): Lead with WHY THIS MATTERS before summarizing what happened
    - Answer: "Why should a non-technical operator care about these developments?"
    - Connect technical changes to business/strategy/decision-making impact
@@ -430,7 +430,7 @@ class SynthesisAgent:
 
         return brief_id
 
-    def _save_to_file(self, content: str, start_date: str, days_span: int):
+    def _save_to_file(self, content: str, start_date: str, days_span: int, word_count: int = None, reading_time: int = None):
         """Save brief to markdown file in systems_thinking folder"""
         briefs_dir = Path(__file__).parent.parent / 'briefs' / 'systems_thinking'
         briefs_dir.mkdir(parents=True, exist_ok=True)
@@ -447,6 +447,11 @@ class SynthesisAgent:
             filename = f"monthly_brief_{start_dt.strftime('%Y-%m_%B').lower()}.md"
 
         filepath = briefs_dir / filename
+
+        # Add metadata at the top if provided
+        if word_count and reading_time:
+            metadata = f"*{word_count:,} words · {reading_time} min read*\n\n"
+            content = metadata + content
 
         with open(filepath, 'w') as f:
             f.write(content)

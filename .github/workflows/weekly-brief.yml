@@ -1,9 +1,9 @@
 name: Weekly Briefs Pipeline (Dual Synthesis)
 
 on:
-  # Run every Monday at 9:00 AM UTC (1:00 AM PST / 4:00 AM EST)
+  # Run every Monday at 11:00 AM PST (7:00 PM UTC / 2:00 PM EST)
   schedule:
-    - cron: '0 9 * * 1'
+    - cron: '0 19 * * 1'
   
   # Allow manual triggering from GitHub UI
   workflow_dispatch:

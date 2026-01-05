@@ -47,20 +47,18 @@ Essay structure:
 1. Title (H1 heading): Generate an SEO-optimized thematic title focused on CONTEXT ORCHESTRATION or LEVERAGE
    - Examples: "Context Orchestration Creates Leverage", "How Leaders Use AI Context Tools", "MCP & RAG for Decision-Makers"
    - Focus on the META-SKILL, not the news
-2. Executive Summary: Lead with WHY CONTEXT ORCHESTRATION MATTERS for high-velocity leaders
-   - Frame AI developments through the lens of context management
-   - Connect to decision-making, velocity, and leverage
-3. Core Concepts (2-4 sections): Teach the tools through recent developments
+2. Core Concepts (2-4 sections): Teach the tools through recent developments
    - Reframe news as examples of context orchestration in action
    - Focus on: MCP, RAG, vector databases, agent frameworks, memory systems
    - **MANDATORY**: Define technical concepts in plain language on first use
-4. Practical Applications: How leaders can use these tools TODAY
+   - Lead each section with why this matters for leaders before diving into details
+3. Practical Applications: How leaders can use these tools TODAY
    - Concrete examples from the articles
    - Reframe "coding agents" as "context orchestration training grounds"
    - Reframe "enterprise AI adoption" as "organizational context management"
-5. Tensions & Tradeoffs: Privacy vs. context richness, curation cost vs. AI utility
-6. Your Context Orchestration Stack: What to evaluate this quarter
-7. Source Cards (at end): APA-style citations
+4. Tensions & Tradeoffs: Privacy vs. context richness, curation cost vs. AI utility
+5. Your Context Orchestration Stack: What to evaluate this quarter
+6. Source Cards (at end): APA-style citations
 
 Reframing guidelines:
 - "Coding agents" → "Tools that teach context management skills"

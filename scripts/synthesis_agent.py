@@ -58,16 +58,13 @@ Essay structure:
    - Good examples: "Multimodal AI Advances", "Open Source Model Competition", "AI Safety & Interpretability"
    - Bad examples: "This Week in AI", "AI News", "Latest Developments"
    - DO NOT include dates, time periods, or "Week of X" in the title
-2. Executive Summary (2-3 paragraphs): Lead with WHY THIS MATTERS before summarizing what happened
-   - Answer: "Why should a non-technical operator care about these developments?"
-   - Connect technical changes to business/strategy/decision-making impact
-   - THEN briefly preview the key developments
-3. Key Developments (3-6 sections): What actually happened with citations
+2. Key Developments (3-6 sections): What actually happened with citations
    - **MANDATORY**: Define ALL jargon on first use (open model, RL, MoE, parameters, fine-tuning, etc.)
    - Example: "Reinforcement learning (RL)—a training method where AI learns through trial and error, similar to how humans learn from rewards and penalties—is becoming..."
-4. Tensions & Conflicts (1 section): Contradictions or debates surfaced
-5. Implications (optional, 1 paragraph): Additional concrete takeaways if not fully covered in Executive Summary
-6. Source Cards (at end): APA-style citations
+   - Lead each section with why this development matters before diving into details
+3. Tensions & Conflicts (1 section): Contradictions or debates surfaced
+4. Implications (optional, 1 paragraph): Concrete takeaways and practical significance
+5. Source Cards (at end): APA-style citations
 
 Style guide - CRITICAL:
 - Write for SEMI-TECHNICAL readers (product managers, analysts, educated non-developers), NOT software engineers

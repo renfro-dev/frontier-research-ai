@@ -117,12 +117,14 @@ ARTICLES & ANALYSIS:
 {articles_json}
 
 INSTRUCTIONS:
-1. Identify 3-6 key themes across these articles
-2. For each theme, synthesize claims and examples into prose
-3. Use [N] citations for EVERY factual claim
-4. Include "Tensions & Conflicts" section if contradictions exist
-5. Keep total length under 2000 words (≤10 min read)
-6. End with numbered source cards matching your citations
+1. **FOCUS ON NEW DEVELOPMENTS ONLY**: Cover developments, announcements, releases, and insights that were NEWLY PUBLISHED or ANNOUNCED during {time_period}
+2. **EXCLUDE RETROSPECTIVES**: Skip content about earlier time periods, year-end reviews, and historical summaries unless they contain NEW forward-looking insights
+3. Identify 3-6 key themes across these articles
+4. For each theme, synthesize claims and examples into prose
+5. Use [N] citations for EVERY factual claim
+6. Include "Tensions & Conflicts" section if contradictions exist
+7. Keep total length under 2000 words (≤10 min read)
+8. End with numbered source cards matching your citations
 
 CRITICAL CONSTRAINTS:
 - DO NOT add your own interpretation or speculation
@@ -130,6 +132,8 @@ CRITICAL CONSTRAINTS:
 - DO NOT use "perhaps", "might", "could be" - cite or omit
 - Every paragraph MUST have at least one [N] citation
 - Use the correct timeframe reference: "{timeframe_reference}" (NOT "this week" for monthly briefs)
+- If an article is a retrospective (e.g., "2025 in review"), only cite it if discussing NEW predictions or insights for the future
+- If there are insufficient NEW developments in the time period, state this clearly rather than padding with retrospective content
 
 Return the markdown essay now."""
 
@@ -203,7 +207,22 @@ class SynthesisAgent:
                         filtered_summaries.append(summary)
             summaries = filtered_summaries
 
-            # Apply limit after date filtering if specified
+            # Balance sources - limit articles per source to prevent single-source domination
+            from collections import Counter
+            MAX_ARTICLES_PER_SOURCE = 5
+            source_counts = Counter()
+            balanced_summaries = []
+
+            for summary in summaries:
+                source_name = summary['extractions']['documents']['sources']['name']
+                if source_counts[source_name] < MAX_ARTICLES_PER_SOURCE:
+                    balanced_summaries.append(summary)
+                    source_counts[source_name] += 1
+
+            summaries = balanced_summaries
+            self.logger.info(f"Source distribution after balancing: {dict(source_counts)}")
+
+            # Apply limit after date filtering and balancing if specified
             if self.limit:
                 summaries = summaries[:self.limit]
 

@@ -1,131 +1,177 @@
-# Context Orchestration: The Meta-Skill That Unlocks AI's True Value
+# Context Orchestration: The Meta-Skill That Unlocked AI Leverage in December 2025
 
 ## Executive Summary
 
-This month's AI developments reveal a critical insight: the bottleneck isn't AI capability—it's humans' ability to orchestrate context effectively. While frontier models like GPT-5.2 [51] and Gemini 3 Flash [98] continue advancing, the real competitive advantage comes from mastering context orchestration—the meta-skill of curating, sequencing, and surfacing information to AI systems for better decision-making.
+This month marked a significant shift in how high-velocity leaders approach AI: the focus moved from model capabilities to **context orchestration** - the meta-skill of curating, sequencing, and surfacing information to AI systems for better decision-making. The bottleneck isn't AI capability—it's humans' ability to orchestrate context effectively. December's developments revealed that the most successful AI implementations weren't driven by better models, but by better context management strategies. From Claude Code generating in an hour what Google built in a year [3] to Boris Cherny shipping 259 PRs in 30 days [32], the pattern is clear: context orchestration creates leverage.
 
-Boris Cherny shipped 259 PRs in 30 days not by typing faster, but by learning to orchestrate context for his AI assistant [72]. Commonwealth Bank of Australia isn't just "deploying ChatGPT"—they're solving the context orchestration problem of which 50,000 employees get access to which organizational knowledge [70]. These examples highlight why context orchestration has emerged as the defining meta-skill for high-velocity leaders in December 2025.
+## The November 2025 Inflection Point: Context Matters More Than Models
 
-## The Six Pillars of Context Orchestration
+While GPT-5.2 and Claude Opus 4.5 crossed an "invisible capability line" in November [15], December's developments revealed that the real breakthrough wasn't the models themselves but how leaders learned to manage their context. The most successful implementations came from those who mastered the meta-skill of context orchestration - deciding what information to give AI access to, what to hide, and when to surface it [16].
 
-Context engineering is about treating the context window as a scarce resource and designing everything around it [5]. It's the discipline of building bridges that connect a disconnected model to the outside world through retrieval, tools, and memory [5]. This month's developments reveal six interdependent components that control what information reaches the model and when:
+This month, we saw Jaana Dogan, Principal Engineer at Google, demonstrate this principle dramatically. She gave Claude Code a three-paragraph description of a distributed agent orchestration problem, and it generated in an hour what Google had been trying to build for a year [3]. The key wasn't the model's raw capability, but Dogan's ability to distill and sequence the right context.
 
-1. **Agents**: Agents are quickly becoming the foundation for building AI applications [5]. They orchestrate decisions, dynamically defining knowledge bases, tool use, and information flow within an entire system. LangChain's Agent Builder, now in public beta, allows non-technical users to create agents without writing code [7]. The key insight: agents are different from traditional AI workflow builders because they reason on the fly and adapt to new information rather than following fixed paths [7].
+Similarly, Boris Cherny, creator of Claude Code, landed 259 PRs and made 497 commits in just thirty days using Claude Code + Opus 4.5 [32]. This productivity explosion wasn't about typing faster—it was about learning to curate, prune, and sequence information effectively.
 
-2. **Query Augmentation**: This process refines the user's initial input for downstream tasks [5]. Weaviate's Query Agent demonstrates how natural language prompts can be structured appropriately for database queries [5]. The bottleneck isn't in the AI's capability but in how we frame our questions.
+## Core Concepts: The Context Orchestration Toolkit
 
-3. **Retrieval**: The most important decision in retrieval is your chunking strategy—a classic engineering trade-off between precision and context [5]. Small chunks provide precision but lack context, while large chunks offer rich context but can have "noisy" embeddings [5]. Weaviate's v1.35 release introduces features like Object Time-to-Live (TTL) for automatic deletion of objects after a specified time period, helping maintain clean data stores and comply with retention policies [6].
+### 1. Context Management as a Management Problem
 
-4. **Prompting**: In a retrieval system, your prompt is the control layer that tells the LLM how to behave [5]. OpenAI's research on "confessions" shows how prompting techniques can train models to admit mistakes, improving AI honesty and transparency [39]. The key insight: prompt engineering is about "how you ask the question" while context engineering is about "making sure the model has access to the right information before it starts thinking" [5].
+The most profound insight this month came from Ethan Mollick, who observed that "managing agents is really a management problem" [10]. This reframing is critical: the skills that make great managers—communicating clearly, setting achievable goals, providing relevant context—are precisely the skills needed for effective context orchestration [10].
 
-5. **Memory**: Memory transforms the model into something that feels more dynamic and capable of holding onto context, learning from the past, and adapting on the fly [5]. It's structured in layers: short-term memory (the live context window), long-term memory (external storage in vector databases), and working memory (temporary space for multi-step tasks) [5]. This month, LangSmith introduced tools like Polly and LangSmith Fetch that help debug and analyze agent memory across multiple turns [10][11].
+Liz Fong-Jones reinforced this perspective, noting that language models transform you "from a programmer who writes lines of code, to a programmer that manages the context the model has access to, prunes irrelevant things, adds useful material to context, and writes detailed specifications" [23]. This is the essence of context orchestration.
 
-6. **Tools**: If memory lets an agent remember its past, tool use gives it the ability to act in the present [5]. The Model Context Protocol (MCP), introduced by Anthropic in late 2024, provides a universal standard for connecting AI applications to external data sources and tools [5]. This month, Anthropic turned their skills mechanism into an "open standard" with a specification that lives at agentskills.io [94].
+For high-velocity leaders, this means your management experience transfers directly to AI effectiveness. The same skills you use to brief your team before a critical meeting apply to briefing AI systems before a complex task [10].
 
-## Context Orchestration in Action
+### 2. Vector Databases: Making Organizational Memory Searchable
 
-### Enterprise Adoption: From Deployment to Orchestration
+Weaviate's December release highlighted how vector databases are evolving to support better context orchestration. Their v1.35 release introduced Object Time-to-Live (TTL), enabling automatic deletion of objects after a specified time period [18]. This feature addresses a critical context orchestration challenge: ensuring AI systems access fresh, relevant information while automatically pruning outdated context.
 
-The real innovation in enterprise AI isn't just deployment—it's context orchestration. Commonwealth Bank of Australia is rolling out ChatGPT Enterprise to 50,000 employees [70], but the critical question isn't "should we use AI?" but "what context should we give it access to?" Similarly, BBVA is expanding its work with OpenAI through a multi-year AI transformation program, rolling out ChatGPT Enterprise to all 120,000 employees [61]. The key insight: enterprise AI adoption is fundamentally a context orchestration challenge.
+The release also expanded multimodal document embeddings support, making it easier to build powerful document retrieval applications [18]. For leaders, this means organizational knowledge—including images, documents, and text—can be made searchable and surfaced at decision time without manual context-switching.
 
-Fastweb + Vodafone demonstrates this principle with their flagship AI projects: Super TOBi and Super Agent [2]. Super TOBi's architecture consists of two main agents implemented as LangGraph graphs: the Supervisor and the Use Cases [2]. The system achieves a 90% correctness rate and 82% resolution rate by carefully orchestrating context across multiple channels [2]. Super Agent stores all operational knowledge as a graph inside Neo4j, showing how context can be structured for optimal retrieval [2].
+### 3. Model Context Protocol (MCP): Giving AI Access to Your Systems
 
-### Agent Engineering: A New Discipline
+The Model Context Protocol (MCP) specification, widely adopted in early 2025, continues to transform how leaders integrate AI into workflows [16]. MCP allows AI systems to access your tools and data without manual copy-paste, creating significant leverage for decision-makers.
 
-Agent engineering is emerging as the iterative process of refining non-deterministic LLM systems into reliable production experiences [9]. It combines three skillsets: product thinking, engineering, and data science [9]. The key insight: shipping isn't the end goal in agent engineering; it's a way to gain insights and improve the agent [9].
+However, Simon Willison noted that MCP "may be a one-year wonder" as coding agents with shell access provide even more powerful context orchestration capabilities [16]. This suggests leaders should evaluate whether their context orchestration stack should evolve beyond MCP toward more agent-based approaches.
 
-Two fundamental shifts have made agent engineering necessary: LLMs powerful enough to handle complex workflows and the unpredictability that comes with that power [9]. Every input to an agent is an edge case because users can ask anything in natural language [9]. Traditional debugging methods don't work well for agents because much of the logic lives inside the model [9].
+### 4. Retrieval-Augmented Generation (RAG): Surfacing Relevant Knowledge
 
-LangChain's introduction of Polly, an AI-powered assistant built into LangSmith, helps debug, analyze, and improve agents [10]. Polly can debug individual traces, analyze entire conversations, and engineer better prompts [10]. The intelligence comes from LangSmith's comprehensive tracing infrastructure that captures everything an agent does: runs, traces, and threads [10].
+Weaviate's support for multimodal document embeddings demonstrates how RAG systems are becoming more sophisticated in surfacing relevant knowledge at decision time [18]. The ability to search across text and images simultaneously means leaders can provide richer context to AI systems without manual curation.
 
-## Practical Applications for Leaders
+This month also saw Simon Willison create a Software Heritage Repository Retriever tool to access archived Git repositories [1]. This tool demonstrates how RAG systems can now surface context from previously inaccessible sources, expanding the knowledge available for decision-making.
 
-### Coding and Development
+## Practical Applications: Context Orchestration in Action
 
-The hard part of computer programming isn't expressing what we want the machine to do in code—it's turning human thinking into computational thinking [15]. This remains consistent across different programming eras, from punching holes in cards to prompting language models [15]. The key insight: knowing exactly what to ask for has been and will continue to be the hard part of programming [15].
+### Cooking with Claude: A Microcosm of Context Orchestration
 
-Boris Cherny landed 259 PRs in the last thirty days using Claude Code + Opus 4.5 [72]. This extraordinary productivity wasn't about typing faster but about learning to orchestrate context effectively. As Liz Fong-Jones notes, "a language model changes you from a programmer who writes lines of code, to a programmer that manages the context the model has access to, prunes irrelevant things, adds useful material to context, and writes detailed specifications" [17].
+Simon Willison's experiment with "Cooking with Claude" provides a perfect case study in context orchestration for non-technical tasks. He took photos of two recipe cards, had Claude extract the details, then prompted it to build a custom application for cooking timing [37]. The result was a successful meal preparation that finished exactly on schedule.
 
-For junior developers, AI coding assistants are compressing their ramp-up time dramatically [89]. Tasks that used to take days now take hours—not because the AI does the work, but because it collapses the search space [89]. Instead of spending three hours figuring out which API to use, they spend twenty minutes evaluating options the AI surfaced [89].
+The key insight: Willison didn't just ask for a recipe—he orchestrated context by:
+1. Providing visual context (photos of recipe cards)
+2. Requesting extraction of structured information
+3. Defining the problem space (cooking two recipes simultaneously)
+4. Setting constraints (mobile-friendly, persistent timing)
 
-### Content Creation and Management
+This same pattern applies to business decisions. Leaders who master context orchestration can transform complex, multi-faceted problems into structured workflows with clear timing and dependencies [37].
 
-Context orchestration is transforming content creation as well. OpenAI and NORAD collaborated on "NORAD Tracks Santa" with three ChatGPT holiday tools that let families create festive elves, toy coloring pages, and custom Christmas stories [35]. The Walt Disney Company and OpenAI reached an agreement to bring more than 200 Disney, Marvel, Pixar, and Star Wars characters to Sora for fan-inspired short videos [50].
+### Navigating Complex Systems with Context Orchestration
 
-However, this transformation comes with challenges. Merriam-Webster defined "slop" as their 2025 Word of the Year, describing it as "digital content of low quality that is produced usually in quantity by means of artificial intelligence" [87]. Freelance copywriters have had their careers devastated by AI-generated copywriting tools [85]. The key insight: context orchestration skills are becoming essential for distinguishing high-quality content from "slop."
+Another practical example came from Willison using Claude in Chrome to navigate the Cloudflare dashboard—a system he found "really difficult to navigate" [36]. By providing Claude with the right context about what he was looking for (CORS headers for a specific directory), Claude found the information in under two minutes [36].
 
-## Tensions & Tradeoffs
+This demonstrates how context orchestration can help leaders navigate complex systems without becoming technical experts themselves. The meta-skill is knowing what context to provide, not understanding every technical detail [36].
 
-### Privacy vs. Context Richness
+## Tensions & Tradeoffs in Context Orchestration
 
-A fundamental tension exists between privacy and context richness. More context generally leads to better AI performance, but also increases privacy risks. Weaviate's v1.35 release enhances security flexibility by making OIDC authentication settings runtime-configurable [6], while OpenAI is updating its Model Spec with new Under-18 Principles that define how ChatGPT should support teens with safe, age-appropriate guidance [60].
+### 1. Security vs. Context Richness
 
-### Curation Cost vs. AI Utility
+A significant tension emerged around browser agents like ChatGPT Atlas and Claude in Chrome. While these tools provide powerful context orchestration by accessing web interfaces directly, they also introduce security risks through potential prompt injection attacks [28][36].
 
-There's a significant trade-off between the cost of context curation and the utility of AI systems. Finding the sweet spot between precision and context is key to high-performance retrieval-augmented generation [5]. The worst memory system is one that faithfully stores everything [5]. Leaders must decide how much to invest in context curation versus other priorities.
+OpenAI acknowledged this tension, announcing efforts to strengthen ChatGPT Atlas against prompt injection attacks using "automated red teaming trained with reinforcement learning" [28]. Leaders must balance the leverage gained from rich context access against the security risks of exposing sensitive systems to AI tools.
 
-### Human Judgment vs. AI Autonomy
+### 2. Enterprise Adoption: Context Access vs. Organizational Control
 
-A tension exists between human judgment and AI autonomy. Rob Pike received an AI-generated email from an AI system called AI Village, built by Sage, a 501(c)(3) non-profit [106]. The AI agents were given the goal to "Do random acts of kindness" for Christmas day, and Claude Opus 4.5 found Rob Pike's email using the .patch technique on a GitHub commit [106]. After this incident, AI Village updated their prompt to instruct agents not to send unsolicited emails [106]. The key insight: context orchestration requires careful boundaries around AI autonomy.
+Will Larson highlighted that "real AI adoption on real problems is a complex blend of domain context on the problem, domain experience with AI tooling, and old-fashioned IT issues" [13]. This creates a tension in larger organizations, which need three different teams working together on AI adoption [13].
 
-## Your Context Orchestration Stack
+Earlier-stage companies have an advantage because they can often find all three necessary aspects (domain context, AI experience, IT knowledge) in a single person or across two people [13]. This explains why smaller organizations often move faster with AI adoption—they face fewer context orchestration barriers.
 
-As we close December 2025, consider evaluating these components for your context orchestration stack:
+### 3. Process vs. Outcomes in Context Orchestration
 
-1. **Agent Frameworks**: LangChain's Agent Builder [7], DeepAgents CLI [8], and Weaviate's Elysia [5]
-2. **Vector Databases**: Weaviate v1.35 [6], with features like Object TTL and multimodal document embeddings
-3. **Debugging Tools**: LangSmith's Polly [10] and LangSmith Fetch [11]
-4. **Standards and Protocols**: Model Context Protocol (MCP) [5] and Agent Skills [94]
-5. **Evaluation Frameworks**: Harbor for evaluating agents in containerized environments [8]
+Ben Werdmuller predicted a split in the tech industry between outcome-driven and process-driven people [9]. Those who are excited to test with users faster (outcome-driven) will embrace AI tools, while those who derive meaning from the engineering process itself (process-driven) may resist having that process automated [9].
 
-The bottleneck isn't AI capability—it's your ability to orchestrate context effectively. By mastering this meta-skill, you'll unlock the true value of AI for your organization.
+This tension applies to all knowledge work. Leaders must decide whether their organization values the process of creating solutions or the outcomes those solutions deliver. Context orchestration optimizes for outcomes, potentially at the expense of process knowledge [9].
+
+## Your Context Orchestration Stack: What to Evaluate This Quarter
+
+Based on December's developments, high-velocity leaders should evaluate these context orchestration tools:
+
+1. **Coding Agents as Context Management Training Grounds**: Tools like Claude Code and Codex (now called "Codex web" [8]) provide excellent practice for context orchestration skills. Even if you're not a developer, experimenting with these tools teaches valuable meta-skills that transfer to business contexts [10].
+
+2. **Vector Databases with Lifecycle Management**: Solutions like Weaviate with Object TTL capabilities [18] ensure your AI systems access fresh, relevant information while automatically pruning outdated context.
+
+3. **Browser Agents (with Security Guardrails)**: Tools like Claude in Chrome can navigate complex systems on your behalf [36], but require careful security considerations [28].
+
+4. **Custom Context Orchestration Applications**: Following Willison's cooking example [37], consider building custom applications that structure complex workflows with clear timing and dependencies.
+
+The key question isn't "which AI model should we use?" but "what context should we give it access to, and when?" [16] This is the essence of context orchestration—and the meta-skill that will create the most leverage for high-velocity leaders in 2026.
 
 ## Source Cards
 
-[2] LangChain. (2025, December 16). Fastweb + Vodafone: Transforming Customer Experience with AI Agents using LangGraph and LangSmith. LangChain Blog.
+[1] Simon Willison. (2025, December 30). TIL: Downloading archived Git repositories from archive.softwareheritage.org. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/30/software-heritage/#atom-everything
 
-[5] Weaviate Blog. (2025, December 9). Context Engineering for AI Agents. Weaviate Blog.
+[2] Simon Willison. (2026, January 2). December 2025 sponsors-only newsletter. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/2/december/#atom-everything
 
-[6] Weaviate Blog. (2025, December 29). Weaviate 1.35 Release. Weaviate Blog.
+[3] Simon Willison. (2026, January 4). Quoting Jaana Dogan. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/4/jaana-dogan/#atom-everything
 
-[7] LangChain Accounts. (2025, December 2). LangSmith Agent Builder now in Public Beta. LangChain Blog.
+[4] Simon Willison. (2025, December 30). Quoting Armin Ronacher. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/30/armin-ronacher/#atom-everything
 
-[8] LangChain Accounts. (2025, December 5). Evaluating DeepAgents CLI on Terminal Bench 2.0. LangChain Blog.
+[5] OpenAI Blog. (2026, January 2). Announcing OpenAI Grove Cohort 2. OpenAI Blog. https://openai.com/index/openai-grove
 
-[9] LangChain. (2025, December 9). Agent Engineering: A New Discipline. LangChain Blog.
+[6] Sebastian Raschka's Blog. (2025, December 30). LLM Research Papers: The 2025 List (July to December). Sebastian Raschka's Blog. https://sebastianraschka.com/blog/2025/llm-research-papers-2025-part2.html
 
-[10] LangChain Accounts. (2025, December 10). Introducing Polly: Your AI Agent Engineer. LangChain Blog.
+[7] Sebastian Raschka's Blog. (2025, December 30). The State Of LLMs 2025: Progress, Problems, and Predictions. Sebastian Raschka's Blog. https://sebastianraschka.com/blog/2025/state-of-llms-2025.html
 
-[11] LangChain Accounts. (2025, December 10). Introducing LangSmith Fetch: Debug agents from your terminal. LangChain Blog.
+[8] Simon Willison. (2025, December 31). Codex cloud is now called Codex web. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/31/codex-cloud-is-now-called-codex-web/#atom-everything
 
-[15] Simon Willison's Weblog. (2025, December 29). Quoting Jason Gorman. Simon Willison's Weblog.
+[9] Simon Willison. (2026, January 2). Quoting Ben Werdmuller. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/2/ben-werdmuller/#atom-everything
 
-[17] Simon Willison's Weblog. (2025, December 30). Quoting Liz Fong-Jones. Simon Willison's Weblog.
+[10] Simon Willison. (2026, January 4). Helping people write code again. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/4/coding-again/#atom-everything
 
-[35] OpenAI Blog. (2025, December 1). OpenAI and NORAD team up to bring new magic to "NORAD Tracks Santa". OpenAI Blog.
+[11] Simon Willison. (2026, January 4). Quoting Addy Osmani. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/4/addy-osmani/#atom-everything
 
-[39] OpenAI Blog. (2025, December 3). How confessions can keep language models honest. OpenAI Blog.
+[12] Simon Willison. (2026, January 2). The most popular blogs of Hacker News in 2025. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/2/most-popular-blogs-of-hacker-news/#atom-everything
 
-[50] OpenAI Blog. (2025, December 11). The Walt Disney Company and OpenAI reach landmark agreement to bring beloved characters to Sora. OpenAI Blog.
+[13] Simon Willison. (2026, January 2). Quoting Will Larson. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/2/will-larson/#atom-everything
 
-[51] OpenAI Blog. (2025, December 11). Introducing GPT-5.2. OpenAI Blog.
+[14] Simon Willison. (2026, January 3). Was Daft Punk Having a Laugh When They Chose the Tempo of Harder, Better, Faster, Stronger? Simon Willison's Weblog. https://simonwillison.net/2026/Jan/3/daft-punk/#atom-everything
 
-[60] OpenAI Blog. (2025, December 18). Updating our Model Spec with teen protections. OpenAI Blog.
+[15] Simon Willison. (2026, January 4). The November 2025 inflection point. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/4/inflection/#atom-everything
 
-[61] OpenAI Blog. (2025, December 12). BBVA and OpenAI collaborate to transform global banking. OpenAI Blog.
+[16] Simon Willison. (2025, December 31). 2025: The year in LLMs. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/31/the-year-in-llms/#atom-everything
 
-[70] OpenAI Blog. (2025, December 9). Building AI fluency at scale with ChatGPT Enterprise. OpenAI Blog.
+[17] Simon Willison. (2026, January 1). Introducing gisthost.github.io. Simon Willison's Weblog. https://simonwillison.net/2026/Jan/1/gisthost/#atom-everything
 
-[72] Simon Willison's Weblog. (2025, December 27). Quoting Boris Cherny. Simon Willison's Weblog.
+[18] Weaviate Blog. (2025, December 29). Weaviate 1.35 Release. Weaviate Blog. https://weaviate.io/blog/weaviate-1-35-release
 
-[85] Simon Willison's Weblog. (2025, December 14). Copywriters reveal how AI has decimated their industry. Simon Willison's Weblog.
+[19] Simon Willison. (2025, December 28). simonw/actions-latest. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/28/actions-latest/#atom-everything
 
-[87] Simon Willison's Weblog. (2025, December 15). 2025 Word of the Year: Slop. Simon Willison's Weblog.
+[20] Simon Willison. (2025, December 29). Quoting Aaron Levie. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/29/aaron-levie/#atom-everything
 
-[89] Simon Willison's Weblog. (2025, December 16). Quoting Kent Beck. Simon Willison's Weblog.
+[21] Simon Willison. (2025, December 29). Quoting Jason Gorman. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/29/jason-gorman/#atom-everything
 
-[94] Simon Willison's Weblog. (2025, December 19). Agent Skills. Simon Willison's Weblog.
+[22] Simon Willison. (2025, December 29). shot-scraper 1.9. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/29/shot-scraper/#atom-everything
 
-[98] Simon Willison's Weblog. (2025, December 17). Gemini 3 Flash. Simon Willison's Weblog.
+[23] Simon Willison. (2025, December 30). Quoting Liz Fong-Jones. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/30/liz-fong-jones/#atom-everything
 
-[106] Simon Willison's Weblog. (2025, December 26). How Rob Pike got spammed with an AI slop "act of kindness". Simon Willison's Weblog.
+[24] Vicki Boykis. (2025, December 26). Favorite Books of 2025. Vicki Boykis. https://veekaybee.github.io/essays/2025-12-26-favorite-books/
+
+[25] Simon Willison. (2025, December 29). Quoting D. Richard Hipp. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/29/d-richard-hipp/#atom-everything
+
+[26] Simon Willison. (2025, December 27). textarea.my on GitHub. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/27/textarea-my/#atom-everything
+
+[27] Simon Willison. (2025, December 28). Substack Network error = security content they don't allow to be sent. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/28/substack-network-error/#atom-everything
+
+[28] OpenAI Blog. (2025, December 22). Continuously hardening ChatGPT Atlas against prompt injection. OpenAI Blog. https://openai.com/index/hardening-atlas-against-prompt-injection
+
+[29] OpenAI Blog. (2025, December 22). One in a million: celebrating the customers shaping AI's future. OpenAI Blog. https://openai.com/index/one-in-a-million-customers
+
+[30] Simon Willison. (2025, December 26). How uv got so fast. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/26/how-uv-got-so-fast/#atom-everything
+
+[31] Simon Willison. (2025, December 27). Pluribus training data. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/27/john-cena/#atom-everything
+
+[32] Simon Willison. (2025, December 27). Quoting Boris Cherny. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/27/boris-cherny/#atom-everything
+
+[33] Simon Willison. (2025, December 23). Quoting Salvatore Sanfilippo. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/23/salvatore-sanfilippo/#atom-everything
+
+[34] Vicki Boykis. (2025, December 22). 2025 in review. Vicki Boykis. https://veekaybee.github.io/2025/12/22/2025-in-review/
+
+[35] Simon Willison. (2025, December 24). uv-init-demos. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/24/uv-init-demos/#atom-everything
+
+[36] Simon Willison. (2025, December 22). Using Claude in Chrome to navigate out the Cloudflare dashboard. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/22/claude-chrome-cloudflare/#atom-everything
+
+[37] Simon Willison. (2025, December 23). Cooking with Claude. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/23/cooking-with-claude/#atom-everything
+
+[38] Simon Willison. (2025, December 23). MicroQuickJS. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/23/microquickjs/#atom-everything
+
+[39] Simon Willison. (2025, December 25). A new way to extract detailed transcripts from Claude Code. Simon Willison's Weblog. https://simonwillison.net/2025/Dec/25/claude-code-transcripts/#atom-everything
+
+[40] Simon Willison. (2025, December 26). How Rob Pike got spammed with an AI slop "act of kindness". Simon Willison's Weblog. https://simonwillison.net/2025/Dec/26/slop-acts-of-kindness/#atom-everything

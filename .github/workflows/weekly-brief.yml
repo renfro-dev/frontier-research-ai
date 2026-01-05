@@ -4,7 +4,7 @@ on:
   # Run every Monday at 11:00 AM PST (7:00 PM UTC / 2:00 PM EST)
   schedule:
     - cron: '0 19 * * 1'
-  
+
   # Allow manual triggering from GitHub UI
   workflow_dispatch:
     inputs:
@@ -16,6 +16,9 @@ on:
         description: 'End date (YYYY-MM-DD) - optional, defaults to last Sunday'
         required: false
         type: string
+
+permissions:
+  contents: write
 
 jobs:
   generate-weekly-brief:

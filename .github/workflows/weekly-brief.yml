@@ -46,11 +46,11 @@ jobs:
             echo "start_date=${{ github.event.inputs.start_date }}" >> $GITHUB_OUTPUT
             echo "end_date=${{ github.event.inputs.end_date }}" >> $GITHUB_OUTPUT
           else
-            # Calculate last week's Monday-Sunday
-            last_monday=$(date -d "last monday - 7 days" +%Y-%m-%d)
-            last_sunday=$(date -d "last sunday" +%Y-%m-%d)
-            echo "start_date=$last_monday" >> $GITHUB_OUTPUT
-            echo "end_date=$last_sunday" >> $GITHUB_OUTPUT
+            # Calculate last 7 days (from 7 days ago to yesterday)
+            end_date=$(date -d "yesterday" +%Y-%m-%d)
+            start_date=$(date -d "7 days ago" +%Y-%m-%d)
+            echo "start_date=$start_date" >> $GITHUB_OUTPUT
+            echo "end_date=$end_date" >> $GITHUB_OUTPUT
           fi
       
       - name: Run Ingest Agent
@@ -122,7 +122,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add briefs/
-          git diff --staged --quiet || git commit -m "🤖 Auto-generated weekly briefs (systems thinking + context orchestration) for ${{ steps.dates.outputs.start_date }}"
+          git diff --staged --quiet || git commit -m "🤖 Auto-generated weekly briefs for ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
           git push
         continue-on-error: true
       

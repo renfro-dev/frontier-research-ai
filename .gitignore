@@ -3,6 +3,12 @@
 .env.local
 .env.*.local
 
+# Credentials (Google service account, etc.)
+credentials/
+*.json
+!package.json
+!package-lock.json
+
 # Dependencies
 node_modules/
 __pycache__/

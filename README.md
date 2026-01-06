@@ -1,12 +1,15 @@
-# Systems Thinking Brief
+# AI Briefing System
 
 An automated briefing system that aggregates and synthesizes long-form content from leading AI and systems thinkers into accessible weekly essays for non-technical operators and founders.
 
 ## Overview
 
-This system automatically collects, analyzes, and synthesizes new content from trusted sources (e.g., Simon Willison, Eugene Yan, Nathan Lambert, OpenAI, Anthropic, LangChain, Weaviate) into weekly, monthly, and quarterly briefings that translate abstract AI concepts into concrete mental models and actionable insights.
+This system automatically collects, analyzes, and synthesizes new content from trusted sources (e.g., Simon Willison, Eugene Yan, Nathan Lambert, OpenAI, Anthropic, LangChain, Weaviate) into two types of weekly briefings:
 
-**Status:** v1 (Python scripts, manual execution, 6 agents with 5 implemented)
+1. **Systems Thinking Briefs**: Traditional weekly summaries that translate abstract AI concepts into concrete mental models and actionable insights
+2. **Context Orchestration Briefs**: Executive-focused analysis on how AI changes work patterns, specifically the meta-skill of context curation and orchestration
+
+**Status:** v1 (Python scripts, automated via GitHub Actions, 6 agents with 5 implemented)
 
 ## Target Audience
 
@@ -292,15 +295,16 @@ See [AUTOMATION_SETUP.md](file:///Users/JoshR/Desktop/fun/Frontier%20AI/AUTOMATI
 
 ### Schedule
 
-- **Automatic**: Every Monday at 9:00 AM UTC
+- **Automatic**: Every Monday at 11:00 AM PST (7:00 PM UTC)
 - **Manual**: Trigger from GitHub Actions UI with custom date ranges
-- **Cost**: ~$0.25-0.35 per weekly run
+- **Cost**: ~$0.40-0.60 per weekly run (both brief types)
 
 The workflow automatically:
 1. Ingests new content from RSS feeds
 2. Processes and analyzes articles
-3. Generates weekly brief
-4. Commits brief to repository
+3. Generates Systems Thinking weekly brief
+4. Generates Context Orchestration weekly brief
+5. Commits both briefs to repository
 
 
 ## Risk Mitigation
@@ -365,17 +369,18 @@ The workflow automatically:
    # Step 4: Analyze content
    python scripts/analysis_agent.py
 
-   # Step 5a: Generate monthly brief
-   python scripts/synthesis_agent.py --start-date 2025-11-01 --end-date 2025-11-30
+   # Step 5a: Generate Systems Thinking brief
+   python scripts/synthesis_agent.py --start-date 2025-12-29 --end-date 2026-01-04
 
-   # Step 5b: Generate quarterly report (after all monthly briefs are complete)
-   python scripts/synthesis_agent.py --start-date 2025-10-01 --end-date 2025-12-31
+   # Step 5b: Generate Context Orchestration brief
+   python scripts/synthesis_agent_orchestration.py --start-date 2025-12-29 --end-date 2026-01-04
    ```
 
 6. **Review Output**
    - Generated briefs saved to `briefs/` directory
-   - Also stored in Supabase `weekly_briefs` table
-   - Weekly briefs: `weekly_brief_2025-12-28.md`
+   - Also stored in Supabase database tables
+   - Systems Thinking briefs: `briefs/systems_thinking/weekly_brief_2025-12-29.md`
+   - Context Orchestration briefs: `briefs/context_orchestration/weekly_brief_2025-12-29.md`
 
 ## Contributing
 

@@ -43,6 +43,20 @@ What is context orchestration?
 
 Target audience: Non-technical leaders (founders, RevOps, product managers) who need leverage, not technical details.
 
+Importance calibration - CRITICAL:
+- Use MEASURED language - distinguish groundbreaking from incremental from routine developments
+- Groundbreaking: Fundamental shifts in how leaders can orchestrate context (rare)
+- Incremental: New tools/features that extend existing patterns (most developments)
+- Routine: Announcements, integrations, minor updates (common)
+- Match your language to actual significance:
+  - Groundbreaking: "fundamentally changes how", "represents a new approach"
+  - Incremental: "extends the toolset", "adds to existing options", "builds on"
+  - Routine: "announced", "released", "now available"
+- AVOID hyperbolic framing for routine updates: Don't use "critical", "revolutionary", "game-changing" unless truly warranted
+- DEFAULT to understated framing - let the leverage speak for itself
+- It's okay to note when a week has routine updates rather than forcing importance
+- Focus on PRACTICAL utility over breathless excitement
+
 Essay structure:
 1. Title (H1 heading): Generate an SEO-optimized thematic title focused on CONTEXT ORCHESTRATION or LEVERAGE
    - Examples: "Context Orchestration Creates Leverage", "How Leaders Use AI Context Tools", "MCP & RAG for Decision-Makers"
@@ -51,7 +65,7 @@ Essay structure:
    - Reframe news as examples of context orchestration in action
    - Focus on: MCP, RAG, vector databases, agent frameworks, memory systems
    - **MANDATORY**: Define technical concepts in plain language on first use
-   - Lead each section with why this matters for leaders before diving into details
+   - When appropriate, provide context on practical utility before diving into technical details (but don't force importance framing if the development is routine)
 3. Practical Applications: How leaders can use these tools TODAY
    - Concrete examples from the articles
    - Reframe "coding agents" as "context orchestration training grounds"
@@ -83,7 +97,7 @@ GOOD: "The breakthrough isn't coding agents—it's the meta-skill they expose: c
 
 Another example:
 BAD: "Commonwealth Bank is rolling out ChatGPT Enterprise to 50,000 employees."
-GOOD: "Commonwealth Bank's real innovation isn't deploying ChatGPT—it's the context orchestration problem they solved: which 50,000 employees get access to which organizational knowledge? This is the critical question for every enterprise: not 'should we use AI?' but 'what context should we give it access to?' [33]"
+GOOD: "Commonwealth Bank's deployment of ChatGPT to 50,000 employees highlights a context orchestration question every enterprise faces: which employees should have access to which organizational knowledge? The challenge isn't just adopting AI—it's deciding what context to give it access to [33]."
 
 Conservative principles:
 1. ONLY synthesize what is in the source material - NO speculation
@@ -91,6 +105,23 @@ Conservative principles:
 3. SURFACE conflicts - do NOT resolve them
 4. When uncertain, say "Unknown" or "Insufficient Evidence"
 5. Define ALL technical jargon on first use in plain language
+
+Importance calibration examples:
+
+ROUTINE update (measured language):
+BAD: "This game-changing MCP server will revolutionize how leaders work."
+GOOD: "A new MCP server was released that connects to Slack, adding to the growing ecosystem of context integration tools [12]."
+
+INCREMENTAL update (appropriate framing):
+BAD: "This critical breakthrough transforms context orchestration forever."
+GOOD: "This extends RAG capabilities to include web search results, building on existing patterns for surfacing external context at query time [8]."
+
+GROUNDBREAKING shift (warranted emphasis):
+BAD: "Another agent framework was announced."
+GOOD: "This represents a fundamental shift from single-shot queries to persistent context management—allowing leaders to build long-running processes that maintain state across sessions [15]. The implications extend beyond technical implementation to how organizations structure decision-making workflows."
+
+When week is quiet (honest assessment):
+"This week saw steady progress in tooling—new integrations and feature releases—rather than fundamental shifts in context orchestration patterns. The most notable update was [X], which continues the trend toward [Y]."
 
 Return ONLY the markdown essay. No JSON, no explanations, no meta-commentary."""
 
@@ -454,6 +485,74 @@ class ContextOrchestrationSynthesisAgent:
 
         # Also save to file
         self._save_to_file(essay_content, start_date, period_type)
+
+        # Generate LinkedIn posts (if enabled)
+        if not self.dry_run and not os.getenv('SKIP_LINKEDIN_POSTS'):
+            try:
+                self.logger.info("Generating LinkedIn posts from brief...")
+                from scripts.linkedin import generate_linkedin_posts
+                from scripts.linkedin.post_generator import PostGenerator
+                from scripts.linkedin.google_docs_creator import GoogleDocsCreator
+                from scripts.linkedin.google_sheets_tracker import GoogleSheetsTracker
+                from scripts.linkedin.db_helper import LinkedInPostsDB
+
+                # Initialize services
+                generator = PostGenerator(dry_run=False)
+                docs_creator = GoogleDocsCreator()
+                sheets_tracker = GoogleSheetsTracker()
+                db = LinkedInPostsDB()
+
+                # Generate posts with Claude
+                result = generator.generate_posts_from_brief(
+                    brief_id=brief_id,
+                    brief_content=essay_content,
+                    brief_title=brief_data['title'],
+                    brief_date=f"{start_date} to {end_date}",
+                    num_posts=2
+                )
+
+                posts = result['posts']
+                self.logger.info(f"Generated {len(posts)} LinkedIn posts (cost: ${result['cost']:.4f})")
+
+                # Save to database and create Google Docs/Sheets
+                spreadsheet_id = sheets_tracker.get_or_create_tracking_sheet()
+
+                for post in posts:
+                    # Save to database
+                    post_id = db.create_post_record(post)
+
+                    # Create Google Doc
+                    post_with_meta = {
+                        **post,
+                        'brief_title': brief_data['title'],
+                        'generated_at': datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
+                    }
+                    doc_result = docs_creator.create_post_draft(post_with_meta)
+
+                    # Add to tracking sheet
+                    row_number = sheets_tracker.add_post_row(
+                        spreadsheet_id=spreadsheet_id,
+                        post_data={
+                            'doc_url': doc_result['doc_url'],
+                            'section_title': post['section_title'],
+                            'brief_title': brief_data['title'],
+                            'generated_at': post_with_meta['generated_at'],
+                            'word_count': post['word_count']
+                        }
+                    )
+
+                    # Update database with Google info
+                    db.update_google_doc_info(post_id, doc_result['doc_id'], doc_result['doc_url'])
+                    db.update_sheets_row(post_id, row_number)
+
+                    self.logger.info(f"Created LinkedIn post: {post['section_title']}")
+
+                sheet_url = sheets_tracker.get_sheet_url(spreadsheet_id)
+                self.logger.info(f"LinkedIn posts ready for review: {sheet_url}")
+
+            except Exception as e:
+                self.logger.error(f"Failed to generate LinkedIn posts: {e}")
+                # Don't fail the whole pipeline if LinkedIn generation fails
 
         return brief_id
 

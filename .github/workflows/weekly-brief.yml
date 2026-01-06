@@ -1,4 +1,4 @@
-name: Weekly Context Orchestration Brief Pipeline
+name: Weekly Briefs Pipeline (Systems Thinking & Context Orchestration)
 
 on:
   # Run every Monday at 11:00 AM PST (7:00 PM UTC / 2:00 PM EST)
@@ -93,19 +93,17 @@ jobs:
           echo "🤖 Running Analysis Agent..."
           python3 scripts/analysis_agent.py
 
-      # Systems Thinking Synthesis Agent - PAUSED
-      # Focusing exclusively on Context Orchestration briefs
-      # - name: Run Systems Thinking Synthesis Agent
-      #   env:
-      #     SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      #     SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      #     PYTHONPATH: ${{ github.workspace }}
-      #   run: |
-      #     echo "✍️ Running Systems Thinking Synthesis Agent..."
-      #     python3 scripts/synthesis_agent.py \
-      #       --start-date ${{ steps.dates.outputs.start_date }} \
-      #       --end-date ${{ steps.dates.outputs.end_date }}
+      - name: Run Systems Thinking Synthesis Agent
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          echo "✍️ Running Systems Thinking Synthesis Agent..."
+          python3 scripts/synthesis_agent.py \
+            --start-date ${{ steps.dates.outputs.start_date }} \
+            --end-date ${{ steps.dates.outputs.end_date }}
 
       - name: Run Context Orchestration Synthesis Agent
         env:
@@ -124,13 +122,14 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add briefs/
-          git diff --staged --quiet || git commit -m "🤖 Auto-generated Context Orchestration brief for ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
+          git diff --staged --quiet || git commit -m "🤖 Auto-generated weekly briefs for ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
           git push
         continue-on-error: true
 
       - name: Summary
         run: |
-          echo "✅ Context Orchestration brief pipeline completed!"
+          echo "✅ Weekly briefs pipeline completed!"
           echo "📅 Date range: ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
           echo "📊 Generated:"
+          echo "  - Systems Thinking Brief → briefs/systems_thinking/"
           echo "  - Context Orchestration Brief → briefs/context_orchestration/"

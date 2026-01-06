@@ -51,26 +51,27 @@ Add the following secrets:
 
 The workflow is located at `.github/workflows/weekly-brief.yml`
 
-**Schedule:** Runs every Monday at 9:00 AM UTC (1:00 AM PST / 4:00 AM EST)
+**Schedule:** Runs every Monday at 11:00 AM PST (7:00 PM UTC / 2:00 PM EST)
 
 **What it does:**
 1. Ingests new content from RSS feeds
 2. Extracts and cleans text
 3. Generates embeddings
 4. Analyzes content with Claude
-5. Synthesizes weekly brief
-6. Commits generated brief to repository
+5. Synthesizes Systems Thinking weekly brief
+6. Synthesizes Context Orchestration weekly brief
+7. Commits both generated briefs to repository
 
 ## Manual Triggering
 
 You can manually trigger the workflow at any time:
 
 1. Go to **Actions** tab in your GitHub repository
-2. Click **"Weekly Brief Pipeline"** in the left sidebar
+2. Click **"Weekly Briefs Pipeline (Systems Thinking & Context Orchestration)"** in the left sidebar
 3. Click **"Run workflow"** button
 4. Optionally specify custom date range:
-   - Start date: `YYYY-MM-DD` (e.g., `2025-12-08`)
-   - End date: `YYYY-MM-DD` (e.g., `2025-12-14`)
+   - Start date: `YYYY-MM-DD` (e.g., `2025-12-29`)
+   - End date: `YYYY-MM-DD` (e.g., `2026-01-04`)
 5. Click **"Run workflow"**
 
 ## Monitoring
@@ -106,8 +107,8 @@ The workflow uses `date -d` command which works on Linux (GitHub Actions). If yo
 
 Each weekly run will incur API costs:
 - OpenAI (embeddings): ~$0.02-0.05
-- Anthropic (analysis + synthesis): ~$0.20-0.30
-- **Total per week**: ~$0.25-0.35
+- Anthropic (analysis + synthesis for both briefs): ~$0.35-0.55
+- **Total per week**: ~$0.40-0.60
 
 Monitor your API usage in the respective dashboards.
 
@@ -119,14 +120,14 @@ Edit the cron expression in `.github/workflows/weekly-brief.yml`:
 
 ```yaml
 schedule:
-  - cron: '0 9 * * 1'  # Every Monday at 9 AM UTC
+  - cron: '0 19 * * 1'  # Every Monday at 7 PM UTC (11 AM PST)
 ```
 
 Cron format: `minute hour day-of-month month day-of-week`
 
 Examples:
-- `0 14 * * 1` - Every Monday at 2 PM UTC
-- `0 9 * * 5` - Every Friday at 9 AM UTC
+- `0 14 * * 1` - Every Monday at 2 PM UTC (6 AM PST)
+- `0 9 * * 5` - Every Friday at 9 AM UTC (1 AM PST)
 - `0 0 1 * *` - First day of every month at midnight UTC
 
 ### Disable Auto-Commit
@@ -135,4 +136,6 @@ If you don't want briefs automatically committed to the repo, remove or comment 
 
 ## Next Steps
 
-Once set up, your weekly briefs will be generated automatically every Monday. You can find them in the `briefs/` directory of your repository.
+Once set up, both weekly briefs will be generated automatically every Monday. You can find them in the `briefs/` directory of your repository:
+- Systems Thinking briefs: `briefs/systems_thinking/weekly_brief_YYYY-MM-DD.md`
+- Context Orchestration briefs: `briefs/context_orchestration/weekly_brief_YYYY-MM-DD.md`

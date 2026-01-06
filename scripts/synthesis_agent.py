@@ -50,6 +50,19 @@ Accessibility principles:
 4. SURFACE IMPLICATIONS - Distinguish specialized breakthroughs from general utility; note geopolitical/economic context when relevant
 5. EXPLAIN DYNAMICS - Clarify why parties are aligned or competing; explain shared incentives in partnerships
 
+Importance calibration - CRITICAL:
+- Use MEASURED language - distinguish groundbreaking from incremental from routine updates
+- Groundbreaking: Fundamental shifts in capability, cost, or access (rare - maybe 1-2 per year)
+- Incremental: Steady improvements, new features, version releases (most developments fall here)
+- Routine: Announcements, partnerships, minor updates (common)
+- Match your language to the actual significance:
+  - Groundbreaking: "represents a fundamental shift", "changes the landscape"
+  - Incremental: "extends the capability", "adds to the toolset", "continues the trend"
+  - Routine: "announced", "released", "introduced"
+- AVOID hyperbolic language for routine updates: Don't use "critical", "game-changing", "revolutionary" unless truly warranted
+- DEFAULT to understated framing - let the facts speak for themselves
+- It's okay to note something is incremental or routine rather than overselling it
+
 Essay structure:
 1. Title (H1 heading): Generate an SEO-optimized thematic title (3-6 words) that captures the key developments
    - Use keyword-rich, descriptive phrases (e.g., "Open Models & Safety Tools", "AI Reasoning Breakthroughs", "Enterprise AI Adoption")
@@ -61,7 +74,7 @@ Essay structure:
 2. Key Developments (3-6 sections): What actually happened with citations
    - **MANDATORY**: Define ALL jargon on first use (open model, RL, MoE, parameters, fine-tuning, etc.)
    - Example: "Reinforcement learning (RL)—a training method where AI learns through trial and error, similar to how humans learn from rewards and penalties—is becoming..."
-   - Lead each section with why this development matters before diving into details
+   - When appropriate, provide context on significance before details (but don't force importance framing if the development is routine)
 3. Tensions & Conflicts (1 section): Contradictions or debates surfaced
 4. Implications (optional, 1 paragraph): Concrete takeaways and practical significance
 5. Source Cards (at end): APA-style citations
@@ -101,6 +114,23 @@ Parameters GOOD example: "The model has 27 billion parameters—the individual n
 
 Geopolitical BAD example: "Qwen has surpassed Llama in downloads."
 Geopolitical GOOD example: "China's Qwen has surpassed Meta's Llama in downloads, marking a significant shift in AI leadership [27]. This represents more than a technical milestone—it signals China's growing dominance in open AI development, which has implications for where innovation happens and who controls foundational AI infrastructure."
+
+Importance calibration examples:
+
+ROUTINE update (measured language):
+BAD: "This release is a critical advancement that will transform how developers work."
+GOOD: "The team released version 2.3 with improved error handling and faster response times [5]."
+
+INCREMENTAL update (appropriate framing):
+BAD: "This revolutionary breakthrough will change everything."
+GOOD: "This extends existing capabilities by adding support for longer context windows, continuing the industry trend toward handling more information at once [8]."
+
+GROUNDBREAKING update (warranted emphasis):
+BAD: "Another model release was announced."
+GOOD: "This represents a fundamental shift in how AI systems handle reasoning—moving from pattern matching to genuine step-by-step problem solving [12]. The implications extend beyond narrow benchmarks to general-purpose tasks."
+
+When week is quiet (honest assessment):
+"This week saw relatively routine updates—version releases and partnership announcements—rather than major capability shifts. The most notable development was [X], which continues the trend of [Y]."
 
 Return ONLY the markdown essay. No JSON, no explanations, no meta-commentary."""
 

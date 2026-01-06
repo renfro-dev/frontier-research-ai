@@ -72,7 +72,17 @@ Essay structure:
    - Reframe "enterprise AI adoption" as "organizational context management"
 4. Tensions & Tradeoffs: Privacy vs. context richness, curation cost vs. AI utility
 5. Your Context Orchestration Stack: What to evaluate this quarter
-6. Source Cards (at end): APA-style citations
+6. Source Cards (at end): APA-style citations with clickable URLs
+
+Citation format - CRITICAL:
+- In-text citations: Use clickable numbered citations that jump to source cards
+  - Format: [[1]](#ref-1), [[2]](#ref-2), etc.
+  - Example: "Boris Cherny shipped 259 PRs in 30 days [[27]](#ref-27) by mastering context orchestration."
+- Source cards: Use markdown links with anchor IDs
+  - Format: <a id="ref-1"></a>[1] [Author. (Year). Title](URL)
+  - Example: <a id="ref-1"></a>[1] [Willison, S. (2025). Software Heritage archiving](https://simonwillison.net/2025/Dec/30/software-heritage/)
+- Make the entire citation (author, year, title) clickable as one markdown link
+- Keep APA-style formatting for author names, dates, and publication
 
 Reframing guidelines:
 - "Coding agents" → "Tools that teach context management skills"
@@ -122,6 +132,18 @@ GOOD: "This represents a fundamental shift from single-shot queries to persisten
 
 When week is quiet (honest assessment):
 "This week saw steady progress in tooling—new integrations and feature releases—rather than fundamental shifts in context orchestration patterns. The most notable update was [X], which continues the trend toward [Y]."
+
+Citation format example:
+
+In the body of the essay:
+"Boris Cherny shipped 259 PRs in 30 days [[1]](#ref-1) not by typing faster, but by mastering context orchestration. This same meta-skill applies to enterprise leaders deciding what organizational knowledge to surface to their teams [[2]](#ref-2)."
+
+In the Sources section at the end:
+## Sources
+
+<a id="ref-1"></a>[1] [Willison, S. (2026, January 4). Quoting Jaana Dogan on context orchestration](https://simonwillison.net/2026/Jan/4/jaana-dogan/)
+
+<a id="ref-2"></a>[2] [Weaviate Blog. (2025, December 29). Weaviate 1.35 Release: Multimodal and memory features](https://weaviate.io/blog/weaviate-1-35-release)
 
 Return ONLY the markdown essay. No JSON, no explanations, no meta-commentary."""
 

@@ -77,7 +77,17 @@ Essay structure:
    - When appropriate, provide context on significance before details (but don't force importance framing if the development is routine)
 3. Tensions & Conflicts (1 section): Contradictions or debates surfaced
 4. Implications (optional, 1 paragraph): Concrete takeaways and practical significance
-5. Source Cards (at end): APA-style citations
+5. Source Cards (at end): APA-style citations with clickable URLs
+
+Citation format - CRITICAL:
+- In-text citations: Use clickable numbered citations that jump to source cards
+  - Format: [[1]](#ref-1), [[2]](#ref-2), etc.
+  - Example: "OpenAI released a new model [[1]](#ref-1) that improves reasoning capabilities."
+- Source cards: Use markdown links with anchor IDs
+  - Format: <a id="ref-1"></a>[1] [Author. (Year). Title](URL)
+  - Example: <a id="ref-1"></a>[1] [Willison, S. (2025). TIL: Downloading archived Git repositories](https://simonwillison.net/2025/Dec/30/software-heritage/)
+- Make the entire citation (author, year, title) clickable as one markdown link
+- Keep APA-style formatting for author names, dates, and publication
 
 Style guide - CRITICAL:
 - Write for SEMI-TECHNICAL readers (product managers, analysts, educated non-developers), NOT software engineers
@@ -131,6 +141,18 @@ GOOD: "This represents a fundamental shift in how AI systems handle reasoning—
 
 When week is quiet (honest assessment):
 "This week saw relatively routine updates—version releases and partnership announcements—rather than major capability shifts. The most notable development was [X], which continues the trend of [Y]."
+
+Citation format example:
+
+In the body of the essay:
+"OpenAI announced a new reasoning model [[1]](#ref-1) that extends their previous work [[2]](#ref-2). The model shows improvements in mathematical problem-solving, though as the authors note, these gains are primarily in specialized domains [[1]](#ref-1)."
+
+In the Sources section at the end:
+## Sources
+
+<a id="ref-1"></a>[1] [OpenAI. (2025, January 5). Introducing o3-mini: Advanced reasoning at lower cost](https://openai.com/blog/o3-mini-release)
+
+<a id="ref-2"></a>[2] [OpenAI. (2024, December 20). o1 System Card](https://openai.com/research/o1-system-card)
 
 Return ONLY the markdown essay. No JSON, no explanations, no meta-commentary."""
 

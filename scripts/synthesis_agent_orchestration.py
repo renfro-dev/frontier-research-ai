@@ -700,7 +700,8 @@ def main():
     result = agent.run()
 
     # Exit with appropriate code
-    sys.exit(0 if result['status'] == 'success' else 1)
+    # Note: 'no_summaries' is not an error - it just means there's nothing new to synthesize
+    sys.exit(0 if result['status'] in ['success', 'no_summaries'] else 1)
 
 
 if __name__ == '__main__':

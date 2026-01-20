@@ -52,6 +52,7 @@ jobs:
             echo "start_date=$start_date" >> $GITHUB_OUTPUT
             echo "end_date=$end_date" >> $GITHUB_OUTPUT
           fi
+          echo "Calculated date range: $start_date to $end_date"
       
       - name: Run Ingest Agent
         env:
@@ -101,6 +102,7 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: |
           echo "✍️ Running Systems Thinking Synthesis Agent..."
+          echo "Date range: ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
           python3 scripts/synthesis_agent.py \
             --start-date ${{ steps.dates.outputs.start_date }} \
             --end-date ${{ steps.dates.outputs.end_date }}

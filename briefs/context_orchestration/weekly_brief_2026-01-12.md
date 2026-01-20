@@ -4,49 +4,61 @@ This week brought a significant development in context orchestration tools with 
 
 ## The Agent as Context Orchestrator
 
-Claude Cowork, now available to Max subscribers on $100 or $200 per month plans, demonstrates how agent systems are becoming general-purpose context orchestration tools [[1]](#ref-1). The interface maintains consistency with Claude Code, appearing as a new tab alongside existing Chat and Code tabs in the Claude desktop app [[1]](#ref-1).
+Claude Cowork, now available to Max subscribers on $100 or $200 per month plans, extends the context orchestration capabilities previously limited to coding tasks [[1]](#ref-1). The tool operates through a new tab in the Claude desktop app, sitting alongside the existing Chat and Code tabs [[1]](#ref-1).
 
-What makes this development notable for context orchestration is how it handles file access and system interactions. Files are mounted into a containerized environment, as evidenced by paths like "/sessions/zealous-bold-ramanujan/mnt/blog-drafts" [[1]](#ref-1). This containerization represents a specific approach to context management—giving the AI access to your files while maintaining security boundaries.
+What makes this development notable for context orchestration is how it handles file access and information flow. Files appear to be mounted into a containerized environment, as evidenced by file paths like "/sessions/zealous-bold-ramanujan/mnt/blog-drafts" [[1]](#ref-1). This containerization represents a specific approach to context management—giving the AI access to selected information while maintaining boundaries.
+
+The system can only access files you explicitly grant it permission to see [[1]](#ref-1). This design choice highlights a fundamental principle of context orchestration: curation happens at the access level, not just at the query level.
 
 ## Practical Context Orchestration in Action
 
-Simon Willison's test of Cowork reveals the practical mechanics of context orchestration [[1]](#ref-1). He asked the system to "Look at my drafts that were started within the last three months and then check that I didn't publish them on simonwillison.net using a search against content on that site and then suggest the ones that are most close to being ready" [[1]](#ref-1).
+Simon Willison tested Cowork with a complex context orchestration task: "Look at my drafts that were started within the last three months and then check that I didn't publish them on simonwillison.net using a search against content on that site and then suggest the ones that are most close to being ready" [[1]](#ref-1).
 
-This single request triggered multiple context orchestration actions:
-- File system exploration using find commands
-- 44 individual web searches against site:simonwillison.net
-- Analysis and recommendation generation
+This single request demonstrates multiple layers of context orchestration:
+- **Temporal filtering**: Finding files from the last three months
+- **Cross-context verification**: Checking web content against local files
+- **Synthesis**: Evaluating readiness based on multiple data sources
 
-The system executed commands like `find /sessions/zealous-bold-ramanujan/mnt/blog-drafts -type f \( -name "*.md" -o -name "*.txt" -o -name "*.html" \) -mtime -90 -exec ls -la {} \;` [[1]](#ref-1). This shows how modern agents orchestrate context by combining file access, web search, and analytical capabilities in a single workflow.
+Cowork executed this by running system commands to find files, then performing 44 individual searches against site:simonwillison.net [[1]](#ref-1). This shows how modern context orchestration tools sequence operations—first gathering local context, then enriching it with external data.
 
-## Security as Context Boundary Management
+## The Security-Context Tradeoff
 
-Anthropic's approach to security reveals a fundamental tension in context orchestration. The company states that Cowork can only access files you grant it access to, and it runs in a filesystem sandbox by default [[1]](#ref-1). However, they also warn users about the risk of prompt injections in their announcement [[1]](#ref-1).
+Anthropic explicitly warns about prompt injection risks in their announcement [[1]](#ref-1). This surfaces a critical tension in context orchestration: the more context you give an AI system, the larger the attack surface for prompt injections.
 
-The summarization applied by WebFetch in Claude Code and Cowork serves partly as a prompt injection protection layer, according to Claude Code creator Boris Cherny [[1]](#ref-1). This highlights how context orchestration isn't just about what information to include—it's also about filtering and protecting against malicious context.
+The summarization applied by WebFetch in Claude Code and Cowork serves partly as a prompt injection protection layer, according to Claude Code creator Boris Cherny [[1]](#ref-1). This reveals how context orchestration tools must balance information richness with security filtering.
+
+Anthropic's approach shifts some security responsibility to users, asking them to monitor for "suspicious actions that may indicate prompt injection" [[1]](#ref-1). Willison challenges this approach: "I do not think it is fair to tell regular non-programmer users to watch out for 'suspicious actions that may indicate prompt injection'!" [[1]](#ref-1).
+
+## Containerization as Context Boundary
+
+Cowork runs in a filesystem sandbox by default [[1]](#ref-1). This architectural choice represents a specific philosophy of context orchestration: rather than giving the AI unrestricted access and trying to filter at the query level, the system creates hard boundaries at the infrastructure level.
+
+This approach trades flexibility for security. Leaders using such tools must decide upfront which contexts to make available, rather than dynamically adjusting access during use.
+
+## Visual Context Generation
+
+Beyond text and file manipulation, Cowork can generate visual content. Willison tested this by asking for "exciting animated encouragements," which Cowork created as an artifact [[1]](#ref-1). This capability extends context orchestration beyond information retrieval to content creation, though display issues were noted [[1]](#ref-1).
 
 ## Tensions & Tradeoffs
 
-The release surfaces a critical tension in context orchestration: security responsibility. Anthropic asks users to monitor for "suspicious actions that may indicate prompt injection" [[1]](#ref-1). Willison challenges this approach: "I do not think it is fair to tell regular non-programmer users to watch out for 'suspicious actions that may indicate prompt injection'!" [[1]](#ref-1).
+This week's developments highlight several context orchestration tensions:
 
-This represents a broader challenge in context orchestration tools. As Willison notes, "Anthropic are being honest here with their warnings: they can attempt to filter out potential attacks all they like but the one thing they can't provide is guarantees that no future attack will be found that sneaks through their defenses and steals your data" [[1]](#ref-1).
+1. **Access vs. Security**: Granting file access enables powerful workflows but increases prompt injection risks [[1]](#ref-1)
 
-## The Evolution from Specialized to General Agents
+2. **User Responsibility vs. System Guarantees**: Anthropic acknowledges they "can't provide guarantees that no future attack will be found that sneaks through their defenses" [[1]](#ref-1)
 
-Willison suggests that "Claude Code is a 'general agent' disguised as a developer tool" [[1]](#ref-1). This observation points to a trend in context orchestration: tools initially designed for specific domains (like coding) are revealing broader capabilities for general knowledge work.
-
-The naming choices in this space also matter. Willison suggests OpenAI may regret using the name "ChatGPT Agent" for their browser automation tool [[1]](#ref-1), implying strategic considerations in how these context orchestration tools are positioned and understood by users.
+3. **Generalization vs. Specialization**: Moving from "Claude Code" to "Claude Cowork" suggests a trend toward general-purpose context orchestration, though the interface remains similar [[1]](#ref-1)
 
 ## Your Context Orchestration Stack
 
 Based on this week's developments, leaders should evaluate:
 
-1. **Agent Selection**: Consider whether specialized agents (like Claude Code) or general agents (like Cowork) better serve your context orchestration needs
-2. **Security Boundaries**: Assess your comfort level with containerized file access versus the security risks of prompt injection
-3. **Workflow Integration**: Evaluate how agent systems can combine file access, web search, and analysis in single workflows
-4. **User Training**: Determine whether your team can effectively monitor for security issues in agent interactions
+1. **Access Control Systems**: How do you grant and revoke context access to AI tools?
+2. **Containerization Strategy**: Should sensitive contexts be isolated in sandboxed environments?
+3. **Security Monitoring**: Who in your organization can realistically monitor for prompt injection attempts?
+4. **Cross-Context Workflows**: Which tasks require combining local and web-based context?
 
-The shift from Claude Code to Cowork demonstrates that context orchestration tools are rapidly evolving from specialized to general-purpose systems. The challenge for leaders isn't just adopting these tools—it's understanding the tradeoffs between access, security, and usability in their context orchestration strategies.
+The evolution from specialized coding agents to general-purpose work agents represents a shift in how we think about context orchestration. The challenge isn't just what information to surface, but how to maintain security boundaries while enabling powerful cross-context workflows.
 
 ## Sources
 

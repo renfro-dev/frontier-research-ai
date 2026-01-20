@@ -374,7 +374,7 @@ class SynthesisAgent:
         response = call_claude_api(
             system_prompt=SYNTHESIS_SYSTEM_PROMPT,
             user_prompt=user_prompt,
-            model="claude-sonnet-4",
+            model="claude-opus-4",
             max_tokens=8192,
             temperature=0.0
         )

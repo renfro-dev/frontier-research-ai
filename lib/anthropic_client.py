@@ -178,7 +178,7 @@ def extract_json_from_response(response_text: str) -> Dict[str, Any]:
 def analyze_text(
     text: str,
     metadata: Dict[str, Any],
-    model: str = "claude-3-7-sonnet-20250219",  # Latest Claude 3.7 Sonnet model
+    model: str = "claude-3-5-sonnet-20241022",  # Latest Claude Sonnet model
     max_tokens: int = 4096,
     temperature: float = 0.0,
     max_retries: int = 3
@@ -329,8 +329,8 @@ def call_claude_api(
 
     # Map friendly model name to actual model ID
     model_map = {
-        "claude-sonnet-4": "claude-3-7-sonnet-20250219",
-        "claude-3-7-sonnet": "claude-3-7-sonnet-20250219",
+        "claude-sonnet-4": "claude-3-5-sonnet-20241022",
+        "claude-3-7-sonnet": "claude-3-5-sonnet-20241022",
         "claude-opus-4": "claude-opus-4-20250514",
         "claude-haiku-4": "claude-3-5-haiku-20241022"
     }

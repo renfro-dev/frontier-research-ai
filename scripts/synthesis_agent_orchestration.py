@@ -241,16 +241,19 @@ class ContextOrchestrationSynthesisAgent:
         response = query.execute()
         summaries = response.data
 
-        # Filter by document published_at date if date range specified
+        # Filter by extraction/analysis date (when article was processed) if date range specified
         if self.date_range:
             start_date, end_date = self.date_range
             filtered_summaries = []
             for summary in summaries:
-                pub_date = summary['extractions']['documents'].get('published_at')
-                if pub_date:
+                # Use analyzed_at (when the analysis was performed) instead of published_at
+                # This ensures we get articles extracted/analyzed during the specified week,
+                # even if they were originally published earlier
+                analyzed_date = summary.get('analyzed_at')
+                if analyzed_date:
                     # Extract date part (YYYY-MM-DD) from ISO timestamp
-                    doc_date = pub_date.split('T')[0]
-                    if start_date <= doc_date <= end_date:
+                    analysis_date = analyzed_date.split('T')[0]
+                    if start_date <= analysis_date <= end_date:
                         filtered_summaries.append(summary)
             summaries = filtered_summaries
 

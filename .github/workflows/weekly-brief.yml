@@ -63,7 +63,7 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: |
           echo "📥 Running Ingest Agent..."
-          python3 scripts/ingest_agent.py
+          python3 scripts/ingest_agent.py --fetch-full-content
       
       - name: Run Extraction Agent
         env:

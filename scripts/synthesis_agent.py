@@ -411,23 +411,28 @@ class SynthesisAgent:
         Returns:
             Brief ID
         """
-        # Extract date range from document published_at dates (not analyzed_at)
-        # This ensures we use the actual publication month, not when we ran analysis
-        pub_dates = []
-        for s in summaries:
-            pub_date = s['extractions']['documents'].get('published_at')
-            if pub_date:
-                pub_dates.append(pub_date)
-
-        if pub_dates:
-            # Use document publication dates
-            start_date = min(pub_dates).split('T')[0]
-            end_date = max(pub_dates).split('T')[0]
+        # Use requested date range if provided, otherwise extract from document dates
+        if self.date_range:
+            start_date = self.date_range[0]
+            end_date = self.date_range[1]
         else:
-            # Fallback to analyzed_at if no published_at available
-            dates = [s['analyzed_at'] for s in summaries]
-            start_date = min(dates).split('T')[0]
-            end_date = max(dates).split('T')[0]
+            # Extract date range from document published_at dates (not analyzed_at)
+            # This ensures we use the actual publication month, not when we ran analysis
+            pub_dates = []
+            for s in summaries:
+                pub_date = s['extractions']['documents'].get('published_at')
+                if pub_date:
+                    pub_dates.append(pub_date)
+
+            if pub_dates:
+                # Use document publication dates
+                start_date = min(pub_dates).split('T')[0]
+                end_date = max(pub_dates).split('T')[0]
+            else:
+                # Fallback to analyzed_at if no published_at available
+                dates = [s['analyzed_at'] for s in summaries]
+                start_date = min(dates).split('T')[0]
+                end_date = max(dates).split('T')[0]
 
         # Extract thematic title from markdown (first # heading) and format with date range
         essay_content = brief_data['brief_markdown']
@@ -472,7 +477,8 @@ class SynthesisAgent:
             'source_document_ids': source_document_ids,
             'word_count': brief_data['word_count'],
             'reading_time_minutes': brief_data['reading_time_minutes'],
-            'status': 'draft'
+            'status': 'published',
+            'published_at': datetime.now().isoformat()
         }
 
         if self.dry_run:

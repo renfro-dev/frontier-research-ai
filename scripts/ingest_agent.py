@@ -21,7 +21,8 @@ class IngestAgent:
     """Main ingest agent class"""
 
     def __init__(self, supabase, dry_run: bool = False, days_back: int = 30,
-                 source_filter: Optional[str] = None, full_history: bool = False):
+                 source_filter: Optional[str] = None, full_history: bool = False,
+                 fetch_full_content: bool = False):
         """
         Initialize ingest agent
 
@@ -31,13 +32,22 @@ class IngestAgent:
             days_back: Only fetch entries from last N days
             source_filter: If provided, only process this source by name
             full_history: If True, fetch all entries regardless of date
+            fetch_full_content: If True, fetch full HTML from URLs instead of RSS summaries
         """
         self.supabase = supabase
         self.dry_run = dry_run
         self.days_back = days_back
         self.source_filter = source_filter
         self.full_history = full_history
+        self.fetch_full_content = fetch_full_content
         self.logger = logging.getLogger(__name__)
+
+        # Initialize URL fetcher if full content fetching enabled
+        if self.fetch_full_content:
+            from lib.url_fetcher import ArticleFetcher
+            self.fetcher = ArticleFetcher(timeout=15, max_retries=3, rate_limit_delay=1.0)
+        else:
+            self.fetcher = None
 
         # Calculate cutoff date
         if full_history:
@@ -176,8 +186,24 @@ class IngestAgent:
             Document ID if successful, None otherwise
         """
         try:
+            # Fetch full content if enabled
+            if self.fetch_full_content and self.fetcher:
+                result = self.fetcher.fetch_url(entry.url, fallback_content=entry.content)
+
+                if result.success:
+                    raw_content = result.html
+                    self.logger.info(f"Fetched full content from {entry.url}: {len(raw_content)} chars")
+                    fetched_via = "url_fetch"
+                else:
+                    raw_content = entry.content  # Fallback to RSS summary
+                    self.logger.warning(f"Fetch failed for {entry.url}, using RSS summary: {result.error}")
+                    fetched_via = "rss_fallback"
+            else:
+                raw_content = entry.content
+                fetched_via = "rss"
+
             # Calculate content hash
-            content_hash = calculate_content_hash(entry.content)
+            content_hash = calculate_content_hash(raw_content)
 
             # Prepare document data
             doc_data = {
@@ -186,11 +212,11 @@ class IngestAgent:
                 "title": entry.title,
                 "author": entry.author,
                 "published_at": entry.published_at.isoformat() if entry.published_at else None,
-                "raw_content": entry.content,
+                "raw_content": raw_content,
                 "content_hash": content_hash,
                 "metadata": {
                     "summary": entry.summary,
-                    "fetched_via": "rss"
+                    "fetched_via": fetched_via
                 }
             }
 
@@ -294,6 +320,8 @@ def main():
                        help="Only process specific source by name")
     parser.add_argument("--full-history", action="store_true",
                        help="Fetch all historical entries (ignores --days-back)")
+    parser.add_argument("--fetch-full-content", action="store_true",
+                       help="Fetch full article HTML from URLs instead of RSS summaries")
     args = parser.parse_args()
 
     # Setup logging
@@ -311,6 +339,10 @@ def main():
         print(f"Timeframe: Last {args.days_back} days")
     if args.source:
         print(f"Source filter: {args.source}")
+    if args.fetch_full_content:
+        print(f"Content: Full HTML from URLs (with RSS fallback)")
+    else:
+        print(f"Content: RSS feed summaries only")
     print()
 
     # Get Supabase client
@@ -328,7 +360,8 @@ def main():
         dry_run=args.dry_run,
         days_back=args.days_back,
         source_filter=args.source,
-        full_history=args.full_history
+        full_history=args.full_history,
+        fetch_full_content=args.fetch_full_content
     )
 
     summary = agent.run()

@@ -76,11 +76,12 @@ Essay structure:
 
 Citation format - CRITICAL:
 - In-text citations: Use clickable numbered citations that jump to source cards
-  - Format: [[1]](#ref-1), [[2]](#ref-2), etc.
-  - Example: "Boris Cherny shipped 259 PRs in 30 days [[27]](#ref-27) by mastering context orchestration."
-- Source cards: Use markdown links with anchor IDs
-  - Format: <a id="ref-1"></a>[1] [Author. (Year). Title](URL)
-  - Example: <a id="ref-1"></a>[1] [Willison, S. (2025). Software Heritage archiving](https://simonwillison.net/2025/Dec/30/software-heritage/)
+  - Format: [1], [2], etc.
+  - Example: "Boris Cherny shipped 259 PRs in 30 days [27] by mastering context orchestration."
+- Source cards: Use clean markdown format WITHOUT anchor tags
+  - Format: [1] [Author. (Year). Title](URL)
+  - Example: [1] [Willison, S. (2025). Software Heritage archiving](https://simonwillison.net/2025/Dec/30/software-heritage/)
+- DO NOT include HTML anchor tags like <a id="ref-1"></a> - use plain markdown only
 - Make the entire citation (author, year, title) clickable as one markdown link
 - Keep APA-style formatting for author names, dates, and publication
 
@@ -136,14 +137,14 @@ When week is quiet (honest assessment):
 Citation format example:
 
 In the body of the essay:
-"Boris Cherny shipped 259 PRs in 30 days [[1]](#ref-1) not by typing faster, but by mastering context orchestration. This same meta-skill applies to enterprise leaders deciding what organizational knowledge to surface to their teams [[2]](#ref-2)."
+"Boris Cherny shipped 259 PRs in 30 days [1] not by typing faster, but by mastering context orchestration. This same meta-skill applies to enterprise leaders deciding what organizational knowledge to surface to their teams [2]."
 
 In the Sources section at the end:
 ## Sources
 
-<a id="ref-1"></a>[1] [Willison, S. (2026, January 4). Quoting Jaana Dogan on context orchestration](https://simonwillison.net/2026/Jan/4/jaana-dogan/)
+[1] [Willison, S. (2026, January 4). Quoting Jaana Dogan on context orchestration](https://simonwillison.net/2026/Jan/4/jaana-dogan/)
 
-<a id="ref-2"></a>[2] [Weaviate Blog. (2025, December 29). Weaviate 1.35 Release: Multimodal and memory features](https://weaviate.io/blog/weaviate-1-35-release)
+[2] [Weaviate Blog. (2025, December 29). Weaviate 1.35 Release: Multimodal and memory features](https://weaviate.io/blog/weaviate-1-35-release)
 
 Return ONLY the markdown essay. No JSON, no explanations, no meta-commentary."""
 

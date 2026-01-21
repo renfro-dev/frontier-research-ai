@@ -80,14 +80,15 @@ Essay structure:
 5. Source Cards (at end): APA-style citations with clickable URLs
 
 Citation format - CRITICAL:
-- In-text citations: Use clickable numbered citations that jump to source cards
-  - Format: [[1]](#ref-1), [[2]](#ref-2), etc.
-  - Example: "OpenAI released a new model [[1]](#ref-1) that improves reasoning capabilities."
-- Source cards: Use markdown links with anchor IDs
-  - Format: <a id="ref-1"></a>[1] [Author. (Year). Title](URL)
-  - Example: <a id="ref-1"></a>[1] [Willison, S. (2025). TIL: Downloading archived Git repositories](https://simonwillison.net/2025/Dec/30/software-heritage/)
+- In-text citations: Use simple bracketed numbers
+  - Format: [1], [2], etc.
+  - Example: "OpenAI released a new model [1] that improves reasoning capabilities."
+- Source cards: Use clean markdown format WITHOUT anchor tags
+  - Format: [1] [Author. (Year). Title](URL)
+  - Example: [1] [Willison, S. (2025). TIL: Downloading archived Git repositories](https://simonwillison.net/2025/Dec/30/software-heritage/)
 - Make the entire citation (author, year, title) clickable as one markdown link
 - Keep APA-style formatting for author names, dates, and publication
+- DO NOT include HTML anchor tags like <a id="ref-1"></a> - use plain markdown only
 
 Style guide - CRITICAL:
 - Write for SEMI-TECHNICAL readers (product managers, analysts, educated non-developers), NOT software engineers
@@ -145,14 +146,14 @@ When week is quiet (honest assessment):
 Citation format example:
 
 In the body of the essay:
-"OpenAI announced a new reasoning model [[1]](#ref-1) that extends their previous work [[2]](#ref-2). The model shows improvements in mathematical problem-solving, though as the authors note, these gains are primarily in specialized domains [[1]](#ref-1)."
+"OpenAI announced a new reasoning model [1] that extends their previous work [2]. The model shows improvements in mathematical problem-solving, though as the authors note, these gains are primarily in specialized domains [1]."
 
 In the Sources section at the end:
 ## Sources
 
-<a id="ref-1"></a>[1] [OpenAI. (2025, January 5). Introducing o3-mini: Advanced reasoning at lower cost](https://openai.com/blog/o3-mini-release)
+[1] [OpenAI. (2025, January 5). Introducing o3-mini: Advanced reasoning at lower cost](https://openai.com/blog/o3-mini-release)
 
-<a id="ref-2"></a>[2] [OpenAI. (2024, December 20). o1 System Card](https://openai.com/research/o1-system-card)
+[2] [OpenAI. (2024, December 20). o1 System Card](https://openai.com/research/o1-system-card)
 
 Return ONLY the markdown essay. No JSON, no explanations, no meta-commentary."""
 

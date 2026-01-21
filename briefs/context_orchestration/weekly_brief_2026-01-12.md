@@ -1,60 +1,93 @@
-# Context Orchestration Through Agent Evolution: From Code to Cowork
+# Context Orchestration: From Code to Traces, From Agents to Leverage
 
-This week brought a significant development in context orchestration tools with Anthropic's release of Claude Cowork [[1]](#ref-1). Described as "Claude Code for the rest of your work," this new agent represents an evolution in how leaders can orchestrate context across different types of tasks [[1]](#ref-1).
+This week saw incremental progress in context orchestration tools, with Anthropic's Claude Cowork extending agent capabilities to non-developers [[1]](#ref-1) and the AI industry grappling with a fundamental shift in how we understand and debug AI systems [[2]](#ref-2). The most notable development: context is no longer just about what information you give AI—it's about understanding the traces AI leaves behind as it makes decisions.
 
-## The Agent as Context Orchestrator
+## The Shift from Code to Traces
 
-Claude Cowork, now available to Max subscribers on $100 or $200 per month plans, extends the context orchestration capabilities previously limited to coding tasks [[1]](#ref-1). The tool operates through a new tab in the Claude desktop app, sitting alongside the existing Chat and Code tabs [[1]](#ref-1).
+Harrison Chase articulated a fundamental reframe this week that changes how leaders should think about AI systems [[2]](#ref-2). In traditional software, code documents the system. In AI agents, the code is just scaffolding—the actual decisions happen in the model at runtime [[2]](#ref-2). This means the source of truth shifts from code to traces: the sequence of steps an agent takes, its reasoning at each step, which tools were called and why [[2]](#ref-2).
 
-What makes this development notable for context orchestration is how it handles file access and system interactions. Files appear to be mounted into a containerized environment, as evidenced by file paths like "/sessions/zealous-bold-ramanujan/mnt/blog-drafts" [[1]](#ref-1). This containerization represents a specific approach to context management—giving the AI access to your files while maintaining security boundaries.
+For leaders, this represents a critical shift in context orchestration. You're not just managing what context goes INTO your AI systems—you need to manage and understand the context that comes OUT. When an AI agent fails, you don't debug code; you analyze traces to see where the reasoning went wrong [[2]](#ref-2). This requires new tools and new meta-skills.
 
-The interface looks very similar to the desktop interface for regular Claude Code, suggesting that Anthropic views context orchestration patterns as transferable across different work domains [[1]](#ref-1). This consistency matters for leaders learning to orchestrate context: the meta-skills developed in one domain can transfer to others.
+## Claude Cowork: Context Access Beyond Developers
 
-## Practical Context Orchestration in Action
+Anthropic released Claude Cowork this week, described as "Claude Code for the rest of your work" [[1]](#ref-1). Currently available only to Max subscribers ($100-$200/month), Cowork extends Claude's capabilities beyond coding to general work tasks [[1]](#ref-1). The system can access files you grant permission to, search the web, and provide recommendations based on complex queries [[1]](#ref-1).
 
-Simon Willison tested Cowork with a complex context orchestration task: "Look at my drafts that were started within the last three months and then check that I didn't publish them on simonwillison.net using a search against content on that site and then suggest the ones that are most close to being ready" [[1]](#ref-1).
+Simon Willison tested Cowork with a revealing prompt: analyze blog drafts from the last three months, check if they were published online, and suggest which are closest to ready [[1]](#ref-1). Cowork executed system commands, ran 44 individual searches against his website, and provided useful recommendations [[1]](#ref-1). This demonstrates sophisticated context orchestration—not just accessing files, but understanding relationships between local and web content.
 
-This single request demonstrates multiple layers of context orchestration:
-- **File system context**: Cowork executed system commands to find relevant files
-- **Temporal context**: Filtering for files modified within 90 days
-- **Web context**: Running 44 individual searches against site:simonwillison.net to verify publication status [[1]](#ref-1)
-- **Synthesis**: Combining all contexts to provide actionable recommendations
+The security architecture reveals important context management principles. Files are mounted into a containerized environment, and Cowork runs in a filesystem sandbox by default [[1]](#ref-1). Anthropic warns about prompt injection risks, acknowledging they cannot guarantee protection against future attacks [[1]](#ref-1). This surfaces a key tension in context orchestration: the more context you provide, the greater the security risk.
 
-The agent handled this by running commands like:
-```
-find /sessions/zealous-bold-ramanujan/mnt/blog-drafts -type f \( -name "*.md" -o -name "*.txt" -o -name "*.html" \) -mtime -90 -exec ls -la {} \;
-```
+## The Meta-Skill of Model Selection
 
-This shows how modern agents orchestrate context by combining file system access, web search, and analytical capabilities [[1]](#ref-1).
+Nathan Lambert highlighted another dimension of context orchestration this week: using multiple models for different tasks [[4]](#ref-4). He uses GPT 5.2 Pro for research accuracy, Claude Opus 4.5 for editing and data processing, and occasionally Grok for X-specific information [[4]](#ref-4). The key insight: "AI is jagged"—models have strong capabilities spread unevenly across tasks [[4]](#ref-4).
 
-## Security as Context Boundary Management
+Lambert's workflow demonstrates advanced context orchestration. When one model gets stuck, he passes the same query to another [[4]](#ref-4). He values intelligence over speed because many tasks are "just starting to be possible" with current models [[4]](#ref-4). This multi-model approach requires leaders to understand not just what context to provide, but which AI system to provide it to.
 
-Anthropic's approach to security reveals important tensions in context orchestration. The company states that Cowork can only access files you grant it access to, and it runs in a filesystem sandbox by default [[1]](#ref-1). However, they also warn about the risk of prompt injections in their announcement [[1]](#ref-1).
+## Enterprise Context at Scale
 
-The summarization applied by WebFetch in Claude Code and Cowork serves partly as a prompt injection protection layer, according to a tweet from Claude Code creator Boris Cherny referenced by Willison [[1]](#ref-1). This highlights a key principle: context orchestration isn't just about what to include—it's also about what to filter out or transform for safety.
+OpenAI announced several enterprise deployments this week that highlight organizational context management challenges. ChatGPT Health connects health data and apps with privacy protections and physician-informed design [[5]](#ref-5). OpenAI for Healthcare enables HIPAA-compliant AI that reduces administrative burden while supporting clinical workflows [[7]](#ref-7).
+
+Netomi's approach to scaling enterprise AI agents combines concurrency, governance, and multi-step reasoning using GPT-4.1 and GPT-5.2 [[8]](#ref-8). Datadog uses Codex for system-level code review [[9]](#ref-9). These deployments raise a critical question: how do you manage context access for thousands of employees while maintaining security and compliance?
+
+## The Sandboxing Revolution
+
+Simon Willison highlighted Luis Cardoso's guide to sandboxing as essential reading this week [[10]](#ref-10). The guide differentiates between containers (which share the host kernel), microVMs (with their own guest kernel), and WebAssembly/isolates (which constrain everything within a runtime) [[10]](#ref-10). Willison calls sandboxing "one of the most important problems to solve in 2026" [[10]](#ref-10).
+
+This connects directly to context orchestration. As Willison predicts in his 2026 forecast, sandboxing will finally be "solved" this year through technologies like containers and WebAssembly [[14]](#ref-14). This enables a new level of context richness—you can give AI access to more systems and data because you can contain the risks.
 
 ## Tensions & Tradeoffs
 
-The release surfaces a critical tension in context orchestration: security responsibility. Willison notes that Anthropic asks users to monitor for prompt injections, but questions whether regular non-programmer users can effectively "watch out for 'suspicious actions that may indicate prompt injection'" [[1]](#ref-1).
+This week's developments surface several context orchestration tensions:
 
-This represents a fundamental tradeoff in context orchestration:
-- **More context access** = More powerful capabilities
-- **More context access** = Greater security risks
-- **Security measures** = Additional complexity for users
+**Security vs. Capability**: Anthropic's warnings about prompt injection in Cowork highlight this fundamental tradeoff [[1]](#ref-1). The more context you provide, the more attack surface you create. As Willison notes, asking regular users to "watch out for suspicious actions that may indicate prompt injection" is unrealistic [[1]](#ref-1).
 
-Anthropic acknowledges they cannot provide guarantees that no future attack will sneak through their defenses and steal user data [[1]](#ref-1). This honest assessment highlights that context orchestration involves accepting and managing risks, not eliminating them entirely.
+**Speed vs. Intelligence**: Lambert's preference for slower but smarter models reflects another tradeoff [[4]](#ref-4). He predicts that as capabilities diffuse in 2026, speed will become more important [[4]](#ref-4). Leaders must decide: do you need the right answer eventually, or a good-enough answer immediately?
+
+**Trace Analysis vs. Privacy**: Chase's framework requires capturing and analyzing traces of AI decisions [[2]](#ref-2). But these traces contain sensitive information about user queries, business logic, and decision patterns. How do you balance the need for observability with privacy requirements?
+
+**Model Diversity vs. Simplicity**: Lambert uses multiple models but acknowledges this creates complexity [[4]](#ref-4). Each model requires different context formatting, has different strengths, and costs different amounts. Is the leverage worth the orchestration overhead?
 
 ## Your Context Orchestration Stack
 
 Based on this week's developments, leaders should evaluate:
 
-1. **Agent selection**: Consider whether your use cases benefit from general agents (like Cowork) versus specialized ones (like Claude Code)
-2. **Security boundaries**: Define what context different tools should access—Cowork's containerized approach offers one model
-3. **Verification workflows**: Cowork's ability to cross-reference file content against web searches demonstrates the value of multi-source verification
-4. **Risk tolerance**: Assess your organization's ability to monitor for security issues versus the productivity gains from broader context access
+1. **Trace Infrastructure**: Do you have tools to capture, search, and analyze AI decision traces? As Chase notes, you need structured tracing that shows full reasoning chains, tool calls, timing, and costs [[2]](#ref-2).
 
-The evolution from Claude Code to Cowork suggests that context orchestration patterns developed for technical tasks can extend to general knowledge work. Leaders who master these patterns in one domain can apply them broadly across their organizations.
+2. **Multi-Model Strategy**: Are you locked into one AI provider, or can you route different contexts to different models based on their strengths? Lambert's approach shows the value of model diversity [[4]](#ref-4).
+
+3. **Sandboxing Architecture**: What isolation technology protects your systems when giving AI broader access? Understanding the tradeoffs between containers, microVMs, and WebAssembly becomes critical [[10]](#ref-10).
+
+4. **Security Monitoring**: How do you detect prompt injections and other context manipulation attempts? Can your team realistically monitor for "suspicious actions" as Anthropic suggests [[1]](#ref-1)?
+
+5. **Context Governance**: For enterprise deployments, who decides which employees get access to which organizational context through AI? The healthcare examples show this isn't just a technical question [[5]](#ref-5)[[7]](#ref-7).
+
+The shift from code to traces represents more than a technical change—it's a fundamental reorientation of how we understand and manage AI systems. Leaders who master trace-based debugging and multi-model orchestration will have significant leverage over those still thinking in terms of single models and static prompts. The tools are evolving rapidly, but the meta-skill remains constant: deciding what context to surface, when to surface it, and how to understand what your AI does with it.
 
 ## Sources
 
 <a id="ref-1"></a>[1] [Willison, S. (2026, January 12). First impressions of Claude Cowork, Anthropic's general agent](https://simonwillison.net/2026/Jan/12/claude-cowork/#atom-everything)
+
+<a id="ref-2"></a>[2] [Chase, H. (2026, January 10). In software, the code documents the app. In AI, the traces do.](https://blog.langchain.com/in-software-the-code-documents-the-app-in-ai-the-traces-do/)
+
+<a id="ref-3"></a>[3] [Lambert, N. (2026, January 9). Claude Code Hits Different](https://www.interconnects.ai/p/claude-code-hits-different)
+
+<a id="ref-4"></a>[4] [Lambert, N. (2026, January 11). Use multiple models](https://www.interconnects.ai/p/use-multiple-models)
+
+<a id="ref-5"></a>[5] [OpenAI Blog. (2026, January 7). Introducing ChatGPT Health](https://openai.com/index/introducing-chatgpt-health)
+
+<a id="ref-6"></a>[6] [OpenAI Blog. (2026, January 7). How Tolan builds voice-first AI with GPT-5.1](https://openai.com/index/tolan)
+
+<a id="ref-7"></a>[7] [OpenAI Blog. (2026, January 8). OpenAI for Healthcare](https://openai.com/index/openai-for-healthcare)
+
+<a id="ref-8"></a>[8] [OpenAI Blog. (2026, January 8). Netomi's lessons for scaling agentic systems into the enterprise](https://openai.com/index/netomi)
+
+<a id="ref-9"></a>[9] [OpenAI Blog. (2026, January 9). Datadog uses Codex for system-level code review](https://openai.com/index/datadog)
+
+<a id="ref-10"></a>[10] [Willison, S. (2026, January 6). A field guide to sandboxes for AI](https://simonwillison.net/2026/Jan/6/a-field-guide-to-sandboxes-for-ai/#atom-everything)
+
+<a id="ref-11"></a>[11] [Willison, S. (2026, January 7). Quoting Robin Sloan](https://simonwillison.net/2026/Jan/7/robin-sloan/#atom-everything)
+
+<a id="ref-12"></a>[12] [Lambert, N. (2026, January 7). 8 plots that explain the state of open models](https://www.interconnects.ai/p/8-plots-that-explain-the-state-of)
+
+<a id="ref-13"></a>[13] [Willison, S. (2026, January 8). How Google Got Its Groove Back and Edged Ahead of OpenAI](https://simonwillison.net/2026/Jan/8/how-google-got-its-groove-back/#atom-everything)
+
+<a id="ref-14"></a>[14] [Willison, S. (2026, January 8). LLM predictions for 2026, shared with Oxide and Friends](https://simonwillison.net/2026/Jan/8/llm-predictions-for-2026/#atom-everything)

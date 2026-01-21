@@ -1,85 +1,59 @@
-# AI Development Shifts: Traces, Sandboxes, and Model Competition
+# Open Models Challenge Closed AI
 
-## AI Development Paradigm Shifts
+This week saw significant developments in open-source AI models, with Chinese and other international teams releasing models that increasingly rival proprietary systems. Multiple organizations launched new architectures and training approaches, while industry observers noted the rapid pace at which AI coding assistants can now replicate complex engineering work.
 
-This week, Harrison Chase from LangChain published an influential analysis of how AI development fundamentally differs from traditional software engineering. In AI systems, particularly agents, "code is just scaffolding" that orchestrates LLM calls, while the actual decision logic happens in the model at runtime [[1]](#ref-1). This creates a profound shift in how developers must approach their work - the source of truth moves from code to "traces" (records of agent actions) [[1]](#ref-1). Unlike traditional software where the same inputs with the same code produce identical outputs, AI agents can generate different outputs each time, making debugging, testing, and monitoring fundamentally different processes [[1]](#ref-1).
+## Open Models Reach New Performance Milestones
 
-This paradigm shift extends to how developers interact with their tools. Nathan Lambert notes that Claude Code with Opus 4.5 has seen a significant performance jump in recent weeks, creating new workflows where developers repeatedly engage with the AI assistant [[2]](#ref-2). Lambert predicts that "software engineering will look very different by the end of 2026" as AI models become increasingly capable of replicating most commonly-used software [[2]](#ref-2). This transition may favor smaller organizations and startups with greater flexibility to adapt to AI-driven development approaches [[2]](#ref-2).
+The open-source AI ecosystem showed no signs of slowing during the holiday period, with several teams releasing models that approach or match the capabilities of closed systems [6]. GLM-4.7 from Chinese company Zhipu represents a particularly notable release, performing well enough that one researcher preferred its website UI generation outputs over Anthropic's Claude Opus in certain cases [6]. While the model doesn't match state-of-the-art performance on academic benchmarks like GPQA or SWE-bench Verified, it maintains strong performance across broader task suites including GPVal-AA and DesignArena [6]. However, the model has limitations in speed and long-context performance, particularly after 100,000 tokens [6].
 
-The shift toward AI-assisted development is accelerating rapidly. Simon Willison predicts that "in 2026, it will become undeniable that LLMs write good code," noting that his own hand-written code has already dropped to a single-digit percentage of his overall output after the release of Claude Opus 4.5 and GPT-5.2 in late 2025 [[13]](#ref-13). Willison suggests that typing code by hand will eventually "go the way of punch cards," becoming an outdated practice as AI assistance becomes the norm [[13]](#ref-13).
+Chinese AI company DeepSeek pushed boundaries further with the release of V3.2 and V3.2 Speciale, with the latter claiming to achieve gold-medal performance on the 2025 International Mathematical Olympiad (IMO) and International Olympiad in Informatics (IOI) [6]. This represents a significant milestone for open models in specialized reasoning tasks. The timing is notable as Zhipu, the company behind GLM-4.7, is set to go public on January 8th [6].
 
-## Secure Sandboxing Solutions
+## New Architectures and Scale Emerge
 
-As AI coding agents become more powerful, the need for secure environments to run them safely has become critical. This week, Fly.io launched Sprites.dev, a new product that addresses both developer sandboxes and API sandboxes simultaneously [[14]](#ref-14). Sprites provides persistent virtual environments with approximately 8GB RAM and 8 CPU that come pre-installed with coding tools including Claude Code, Codex, Gemini CLI, Python 3.13, and Node.js 22.20 [[14]](#ref-14).
+NVIDIA released an update to their Nemotron series featuring a novel Mamba2-Transformer architecture combined with mixture-of-experts (MoE)—a design where multiple specialized sub-models work together, allowing the system to activate only the relevant experts for each task [6]. The company plans to release two additional model sizes in the first half of 2026: Super (~100B-A10B) and Ultra (~500B-A50B), which will incorporate Latent MoE and multi-token prediction capabilities [6].
 
-The timing is significant, as Simon Willison had just predicted that "we're due a Challenger disaster with respect to coding agent security" due to the common practice of running coding agents in "dangerously-skip-permissions mode" (also called "YOLO mode") [[14]](#ref-14). Sprites addresses this risk by providing a robust sandbox where "the worst thing that can happen is the sandbox gets messed up and you have to throw it away and get another one" [[14]](#ref-14).
+Other organizations are also pushing architectural boundaries. LLM360 from MBZUAI released K2-V2, a 70 billion parameter dense model with fully open-source data, including 12 trillion tokens of pre-training data and supervised fine-tuning data generated using GPT-OSS 120B [6]. Arcee released two models—Nano (6B-A1B MoE) and Mini (26B-A3B MoE)—trained on 10 trillion tokens, with plans to release a massive Large model (420B-A13B MoE) trained on 20 trillion tokens in the coming weeks [6].
 
-A particularly innovative feature of Sprites is its checkpoint system, which captures the entire disk state in around 300ms, allowing users to roll back to previous states [[14]](#ref-14). This is especially valuable when running untrusted code, as users can checkpoint a clean environment, run potentially risky code, then roll back when finished [[14]](#ref-14). Sprites also offers a JSON API with client libraries in Go and TypeScript (with Python and Elixir coming soon), allowing programmatic control of sandboxed environments [[14]](#ref-14).
+Xiaomi surprised the community by releasing MiMo-V2-Flash, a 309B-A15B MoE model, a significant jump from their initial 7 billion parameter dense model [6]. Early users praised its writing style but found it lacking in agentic performance and function calling capabilities [6].
 
-The importance of sandboxing technology extends beyond coding agents. Earlier this week, Simon Willison highlighted Luis Cardoso's comprehensive guide to the sandboxing landscape, which differentiates between containers (which share the host kernel), microVMs (with their own guest kernel behind hardware virtualization), gVisor userspace kernels, and WebAssembly/isolates that constrain everything within a runtime [[9]](#ref-9). Willison emphasized that "using the right sandboxes to safely run untrusted code is one of the most important problems to solve in 2026" [[9]](#ref-9).
+## AI Coding Assistants Demonstrate Rapid Development Capabilities
 
-## Open Model Competition Intensifies
+A striking example of AI coding capabilities emerged this week when Jaana Dogan, a Principal Engineer at Google, revealed that Claude Code generated in one hour what her team had built over the course of last year [4]. Dogan had been working on distributed agent orchestrators—systems that coordinate multiple AI agents working together—at Google, where various teams had different approaches without full alignment [4]. Using just a three-paragraph description without proprietary details, she asked Claude Code to build a toy version, and it produced comparable results to a year's worth of engineering effort [4]. While Dogan noted the output wasn't perfect and required iteration, the demonstration highlights the accelerating capabilities of AI coding assistants [4].
 
-The competition in open AI models continues to accelerate, with Chinese models maintaining their lead while new challengers emerge. Nathan Lambert's analysis shows that Qwen dominates adoption metrics among Chinese labs, with its December downloads outnumbering all other tracked organizations combined [[11]](#ref-11). Despite significant media attention to new open frontier model providers, their actual adoption "tends to look like a rounding error in adoption metrics" [[11]](#ref-11).
+## Design Critiques and Software Preservation
 
-This week saw several significant model releases. NVIDIA updated their Nemotron series with a Mamba2-Transformer architecture and Mixture of Experts (MoE) approach, while announcing plans to release two more model sizes in the first half of 2026: Super (~100B-A10B) and Ultra (~500B-A50B) [[15]](#ref-15). Arcee released two models (Nano and Mini) with plans to release a larger 420B-A13B MoE model trained on 20T tokens "in the coming weeks" [[15]](#ref-15).
+In the design world, Nikita Prokopov delivered what one observer called a "devastating critique" of the new menu icons in macOS Tahoe [1]. The critique referenced Apple's own 1992 Human Interface Guidelines rule about not overloading users with complex icons, suggesting that Apple's attempt to add an icon to every menu item was an "impossible task" due to insufficient good metaphors [1]. The criticism extends beyond the concept to execution, with observers noting that Apple did a poor job consistently applying metaphors and designing the icons [1].
 
-Chinese companies continue to make strong contributions to the open model ecosystem. Zhipu released GLM-4.7, which performs well on a broad suite of tasks despite not being close to state-of-the-art on academic benchmarks [[15]](#ref-15). In some areas, particularly UI generation for websites, Lambert found GLM-4.7's outputs superior to Claude Opus, though the model has limitations in speed and long-context performance [[15]](#ref-15). Xiaomi surprised the community by releasing MiMo-V2-Flash, a 309B-A15B MoE model, representing a significant leap from their previous 7B dense model [[15]](#ref-15).
-
-DeepSeek released V3.2 and a "high compute" version called V3.2 Speciale, which claims to achieve gold-medal performance on the 2025 International Mathematical Olympiad (IMO) and International Olympiad in Informatics (IOI) [[15]](#ref-15). This continues the trend of specialized models achieving remarkable results in specific domains.
-
-## Multi-Model Workflows Emerge
-
-As the AI landscape becomes more diverse, power users are developing workflows that leverage multiple models for different tasks. Nathan Lambert describes using different models based on their specific strengths: GPT 5.2 Pro for research when accuracy is important, Claude Opus 4.5 for processing raw data and editing, and occasionally Grok for finding AI news from X (formerly Twitter) [[3]](#ref-3). Lambert notes that while open models haven't been "remotely close" to Claude 4.5 Opus or GPT 5.2 Thinking in his experience, they cost approximately 10 times less than frontier lab plans [[3]](#ref-3).
-
-Lambert observes that as AI capabilities diffuse throughout 2026, speed will become a more important factor in model selection [[3]](#ref-3). Currently, Claude Opus 4.5 "isn't particularly fast compared to many models" but feels faster than GPT Thinking models and is sufficient for his work [[3]](#ref-3). He also notes that GPT 5.2 Thinking "took a big step in long-context capabilities," making it closer to Gemini 3 Pro in this aspect [[3]](#ref-3).
-
-The concept of AI capabilities being "jagged" (unevenly distributed across different tasks) drives this multi-model approach [[3]](#ref-3). Lambert describes how problems with one AI model are often solved by passing the same query to a peer model, illustrating a workflow pattern that maximizes the strengths of different systems [[3]](#ref-3). This approach is particularly valuable for tasks at the "frontier of AI capabilities" where no single model excels at everything [[3]](#ref-3).
-
-## Healthcare AI Expansion
-
-OpenAI made several healthcare-focused announcements this week. They introduced ChatGPT Health, a dedicated experience that securely connects health data and apps with built-in privacy protections and physician-informed design [[4]](#ref-4). They also launched OpenAI for Healthcare, an enterprise-grade AI solution that supports HIPAA compliance while reducing administrative burden and supporting clinical workflows [[6]](#ref-6).
-
-These healthcare initiatives represent part of a broader enterprise strategy from OpenAI. The company also highlighted how Netomi scales enterprise AI agents using GPT-4.1 and GPT-5.2, combining concurrency, governance, and multi-step reasoning for reliable production workflows [[7]](#ref-7). Additionally, they showcased Tolan's voice-first AI companion built with GPT-5.1, which combines low-latency responses, real-time context reconstruction, and memory-driven personalities to enable natural conversations [[5]](#ref-5).
+On the software preservation front, a UK government open-source project highlighted the importance of code archiving. The sqlite-s3vfs repository—a Python library for accessing SQLite databases hosted in S3 buckets that was released as MIT-licensed open source by the UK's Department for Business and Trade—disappeared from GitHub, returning a 404 error [2]. However, the Software Heritage archive had captured a full copy, though the retrieval process proved non-obvious [2]. This led to the creation of a new Software Heritage Repository Retriever tool that takes advantage of the archive's CORS-enabled APIs to simplify the retrieval process [2].
 
 ## Tensions & Conflicts
 
-Several significant tensions emerged across this week's developments. The fundamental shift from code to traces as the source of truth in AI systems conflicts with traditional software engineering perspectives where code is the primary artifact containing system logic [[1]](#ref-1). This creates tension in how developers approach testing, with AI systems requiring continuous evaluation in production due to non-determinism, conflicting with traditional approaches that emphasize pre-deployment verification [[1]](#ref-1).
+The rapid advancement of open models, particularly from Chinese companies, creates tension with the traditional dominance of closed, Western AI systems. While DeepSeek claims gold-medal performance on mathematical olympiads [6], these specialized achievements don't necessarily translate to general-purpose capabilities that most users need.
 
-There's also tension around the value proposition of frontier models versus open models. While Lambert claims that frontier models from companies like Anthropic and OpenAI are worth their high cost due to superior capabilities, this conflicts with the view that open models provide sufficient capabilities at much lower prices [[3]](#ref-3). The rapid improvement of open models, particularly from Chinese companies, creates further tension in this space [[11]](#ref-11).
+There's also an implicit conflict in the AI development landscape between the year-long efforts of established tech giants and the hour-long generation capabilities of modern AI assistants [4]. This raises questions about the future of traditional software development processes and team structures.
 
-A significant conflict exists around the future of software engineering careers. Willison describes the "Jevons paradox for software engineering," presenting two possible futures: either software engineering careers are devalued as code becomes cheaper to produce, or demand increases so much that these skills become more valuable [[13]](#ref-13). This uncertainty creates tension for professionals in the field.
+Apple's design decisions in macOS Tahoe represent a conflict between their historical design principles—specifically their 1992 guideline against icon overload—and their current approach of universal iconography [1].
 
-In the sandboxing space, Fly's approach with persistent sandboxes in Sprites conflicts with the common industry practice of using ephemeral, disposable sandboxes for security [[14]](#ref-14). This represents a fundamental design philosophy difference that may influence how the industry approaches secure environments for AI coding agents.
+## Implications
+
+This week's developments suggest that the gap between open and closed AI models continues to narrow, with open models becoming "good enough" for many practical applications [6]. The ability of AI coding assistants to rapidly prototype complex systems that previously required extensive engineering effort indicates we may be approaching a fundamental shift in how software is developed. Meanwhile, the disappearance of government-funded open-source projects underscores the ongoing need for robust archiving systems to preserve publicly-funded code.
 
 ## Sources
 
-<a id="ref-1"></a>[1] [Chase, H. (2026, January 10). In software, the code documents the app. In AI, the traces do.](https://blog.langchain.com/in-software-the-code-documents-the-app-in-ai-the-traces-do/)
+[1] [Willison, S. (2026, January 5). It's hard to justify Tahoe icons](https://simonwillison.net/2026/Jan/5/its-hard-to-justify-tahoe-icons/#atom-everything)
 
-<a id="ref-2"></a>[2] [Lambert, N. (2026, January 9). Claude Code Hits Different](https://www.interconnects.ai/p/claude-code-hits-different)
+[2] [Willison, S. (2025, December 30). TIL: Downloading archived Git repositories from archive.softwareheritage.org](https://simonwillison.net/2025/Dec/30/software-heritage/#atom-everything)
 
-<a id="ref-3"></a>[3] [Lambert, N. (2026, January 11). Use multiple models](https://www.interconnects.ai/p/use-multiple-models)
+[3] [Willison, S. (2026, January 2). December 2025 sponsors-only newsletter](https://simonwillison.net/2026/Jan/2/december/#atom-everything)
 
-<a id="ref-4"></a>[4] [OpenAI Blog. (2026, January 7). Introducing ChatGPT Health](https://openai.com/index/introducing-chatgpt-health)
+[4] [Willison, S. (2026, January 4). Quoting Jaana Dogan](https://simonwillison.net/2026/Jan/4/jaana-dogan/#atom-everything)
 
-<a id="ref-5"></a>[5] [OpenAI Blog. (2026, January 7). How Tolan builds voice-first AI with GPT-5.1](https://openai.com/index/tolan)
+[5] [Willison, S. (2026, January 5). Oxide and Friends Predictions 2026, today at 4pm PT](https://simonwillison.net/2026/Jan/5/oxide-and-friends-predictions-2026/#atom-everything)
 
-<a id="ref-6"></a>[6] [OpenAI Blog. (2026, January 8). OpenAI for Healthcare](https://openai.com/index/openai-for-healthcare)
+[6] [Brand, F. (2026, January 5). Latest open artifacts (#17): NVIDIA, Arcee, Minimax, DeepSeek, Z.ai and others close an eventful year on a high note](https://www.interconnects.ai/p/latest-open-artifacts-17-nvidia-arcee)
 
-<a id="ref-7"></a>[7] [OpenAI Blog. (2026, January 8). Netomi's lessons for scaling agentic systems into the enterprise](https://openai.com/index/netomi)
+[7] [OpenAI Blog. (2026, January 2). Announcing OpenAI Grove Cohort 2](https://openai.com/index/openai-grove)
 
-<a id="ref-8"></a>[8] [OpenAI Blog. (2026, January 9). Datadog uses Codex for system-level code review](https://openai.com/index/datadog)
+[8] [Raschka, S. (2025, December 30). LLM Research Papers: The 2025 List (July to December)](https://sebastianraschka.com/blog/2025/llm-research-papers-2025-part2.html)
 
-<a id="ref-9"></a>[9] [Willison, S. (2026, January 6). A field guide to sandboxes for AI](https://simonwillison.net/2026/Jan/6/a-field-guide-to-sandboxes-for-ai/#atom-everything)
-
-<a id="ref-10"></a>[10] [Willison, S. (2026, January 7). Quoting Robin Sloan](https://simonwillison.net/2026/Jan/7/robin-sloan/#atom-everything)
-
-<a id="ref-11"></a>[11] [Lambert, N. (2026, January 7). 8 plots that explain the state of open models](https://www.interconnects.ai/p/8-plots-that-explain-the-state-of)
-
-<a id="ref-12"></a>[12] [Willison, S. (2026, January 8). How Google Got Its Groove Back and Edged Ahead of OpenAI](https://simonwillison.net/2026/Jan/8/how-google-got-its-groove-back/#atom-everything)
-
-<a id="ref-13"></a>[13] [Willison, S. (2026, January 8). LLM predictions for 2026, shared with Oxide and Friends](https://simonwillison.net/2026/Jan/8/llm-predictions-for-2026/#atom-everything)
-
-<a id="ref-14"></a>[14] [Willison, S. (2026, January 9). Fly's new Sprites.dev addresses both developer sandboxes and API sandboxes at the same time](https://simonwillison.net/2026/Jan/9/sprites-dev/#atom-everything)
-
-<a id="ref-15"></a>[15] [Brand, F. (2026, January 5). Latest open artifacts (#17): NVIDIA, Arcee, Minimax, DeepSeek, Z.ai and others close an eventful year on a high note](https://www.interconnects.ai/p/latest-open-artifacts-17-nvidia-arcee)
+[9] [Raschka, S. (2025, December 30). The State Of LLMs 2025: Progress, Problems, and Predictions](https://sebastianraschka.com/blog/2025/state-of-llms-2025.html)

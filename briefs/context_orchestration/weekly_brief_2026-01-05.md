@@ -1,156 +1,79 @@
-# Context Orchestration: Traces, Sandboxes, and Multi-Model Strategies
+# Context Orchestration: When AI Recreates a Year's Work in an Hour
 
-This week's developments highlight a critical shift in how leaders should think about AI context management. The focus is moving from simply providing information to AI systems toward orchestrating the entire context ecosystem - from traces that document AI decisions to sandboxes that safely contain AI actions to multi-model strategies that leverage specialized capabilities.
+This week brought a striking example of context orchestration's power: a Google Principal Engineer gave Claude Code a three-paragraph description and watched it recreate in one hour what her team built over a year [4]. This isn't about AI replacing engineers—it's about the meta-skill that made this possible: knowing exactly what context to provide and when.
 
-## The Rise of Trace-Based Orchestration
+## The Context Orchestration Breakthrough
 
-In traditional software, code is the source of truth. When something goes wrong, you read the code. But in AI agents, the code is just scaffolding - the actual decisions happen in the model at runtime [[1]](#ref-1). This represents a fundamental shift in how we understand and debug AI systems.
+Jaana Dogan's experience at Google reveals the core leverage point for leaders. She didn't feed Claude Code thousands of pages of documentation or proprietary details. Instead, she provided a carefully curated three-paragraph description of a distributed agent orchestrator [4]. The result matched what Google's team had built through traditional development processes.
 
-The source of truth in AI agents is shifting from code to traces - the sequence of steps an agent takes. These traces document the logic of your application: the reasoning at each step, which tools were called and why, the outcomes and timing [[1]](#ref-1). This means that operations you would traditionally perform on code (debugging, testing, profiling, monitoring) now happen on traces instead.
+This demonstrates context orchestration in its purest form: the ability to distill complex systems into the essential information an AI needs to be effective. Dogan notes she was "building a toy version on top of some of the existing ideas to evaluate Claude Code" [4]—treating the AI as a rapid prototyping partner rather than a replacement for human judgment.
 
-This shift has profound implications for context orchestration:
+The lesson for leaders is clear: your competitive advantage isn't in hoarding information but in knowing what context to surface. Dogan couldn't share proprietary details, yet Claude Code still generated useful output [4]. This suggests that context orchestration skill—knowing what to include and what to omit—matters more than having access to every possible piece of information.
 
-1. **Debugging becomes trace analysis**: When an AI agent fails, you don't look for bugs in the code - you examine the trace to find where the reasoning went wrong [[1]](#ref-1).
+## Open Models Reach "Good Enough" Territory
 
-2. **Testing requires trace evaluation**: Since the logic exists in traces rather than code, you need to build pipelines to capture traces and evaluate them [[1]](#ref-1).
+This week's model releases signal an important shift for context orchestration: open models are becoming viable alternatives for real work. Florian Brand notes that models like GLM 4.7 and MiniMax M2.1 "are starting to be 'good enough' in the Claude Code form factor" [6]. This matters because it gives leaders more options for where and how they orchestrate context.
 
-3. **Monitoring shifts to decision quality**: An agent can be technically "up" with zero errors but still perform terribly. You need to monitor the quality of decisions, not just system health [[1]](#ref-1).
+GLM-4.7, released by Zhipu just before their January 8th IPO, shows particular promise for practical applications [6]. While it doesn't match closed models on academic benchmarks, Brand found its UI generation for websites "better than Opus in some cases" [6]. The tradeoff: it's slower and struggles with contexts over 100,000 tokens [6].
 
-4. **Collaboration centers on observability**: When the logic isn't in the code, collaboration must happen where the traces are. Teams need to share traces, add comments on specific decision points, and discuss why the agent chose certain paths [[1]](#ref-1).
+These limitations actually highlight a key context orchestration principle: knowing your tool's constraints helps you curate better. If your AI struggles past 100,000 tokens, you learn to be more selective about what context you provide. This forced curation often leads to better results than dumping everything into a massive context window.
 
-For leaders, this means investing in good observability - structured tracing that you can search, filter, and compare. Without this, you're essentially working blind when building AI agents [[1]](#ref-1).
+## The Software Heritage Pattern: Context Preservation
 
-## Sandboxes: The Missing Link in Context Safety
+Simon Willison's experience recovering a lost GitHub repository demonstrates another context orchestration pattern: preservation infrastructure [2]. When the UK government's sqlite-s3vfs repository disappeared from GitHub, Willison found it preserved in the Software Heritage archive [2]. He then built a retrieval tool using Claude Code to make the process easier for others [2].
 
-One of the most significant developments this week is Fly.io's launch of Sprites.dev, addressing a critical gap in context orchestration: safely running AI agents with access to your systems [[14]](#ref-14).
+This highlights an overlooked aspect of context orchestration: ensuring your context remains accessible. As organizations increasingly rely on AI systems that reference external code, documentation, and data, the ability to preserve and retrieve that context becomes critical. Willison's tool takes advantage of Software Heritage's CORS-enabled APIs [2], showing how modern context orchestration often involves chaining together multiple systems.
 
-Running coding agents in "dangerously-skip-permissions" mode (where the agent acts without constantly seeking approval) unlocks tremendous power but creates significant risk. A mistake or malicious prompt injection can damage your system and data [[14]](#ref-14). The safe approach is running these agents in robust sandboxes, where the worst outcome is needing to reset the sandbox [[14]](#ref-14).
+## Practical Applications
 
-Sprites.dev offers:
+Leaders can apply these context orchestration patterns immediately:
 
-1. **Persistent environments**: Each Sprite gets a proper filesystem that persists between sessions, even while the Sprite itself shuts down after inactivity [[14]](#ref-14).
+**For rapid prototyping**: Follow Dogan's approach—write a three-paragraph description of what you need before engaging AI [4]. This forces clarity about objectives and constraints.
 
-2. **Checkpoint capabilities**: You can trigger checkpoints that capture the entire disk state in around 300ms, allowing you to roll back to previous states [[14]](#ref-14).
+**For tool selection**: The availability of "good enough" open models means you can now orchestrate context locally for sensitive projects [6]. Brand's experience using Gemini 3.0 Flash as a subagent to overcome GLM-4.7's text-only limitation shows how leaders can compose multiple AIs for better results [6].
 
-3. **Network policy control**: You can configure network access policies using DNS-based allow/deny lists, controlling what resources your AI agents can access [[14]](#ref-14).
+**For knowledge preservation**: Consider what happens to your orchestrated context over time. The Software Heritage example shows that critical resources can disappear [2]. Building retrieval and preservation into your context orchestration stack prevents future disruption.
 
-This development addresses what Simon Willison predicted earlier this week: "We're due a Challenger disaster with respect to coding agent security" [[14]](#ref-14). Using sandboxes for context orchestration isn't just about technical safety - it's about creating environments where AI can safely experiment with your systems.
+## Tensions & Tradeoffs
 
-Luis Cardoso's guide to sandboxing, highlighted by Willison, provides additional context by differentiating between containers (which share the host kernel), microVMs (with their own guest kernel behind hardware virtualization), gVisor userspace kernels, and WebAssembly/isolates that constrain everything within a runtime [[9]](#ref-9). Understanding these distinctions is crucial for leaders deciding how to safely deploy AI agents.
+This week's developments surface key tensions in context orchestration:
 
-## Multi-Model Orchestration Strategies
+**Speed vs. completeness**: GLM-4.7's slower performance compared to other models [6] illustrates a common tradeoff. More sophisticated context processing often takes longer. Leaders must decide when speed matters more than comprehensive analysis.
 
-Another key development in context orchestration is the growing recognition that no single AI model excels at everything. Nathan Lambert's analysis reveals how leaders can gain leverage by strategically orchestrating multiple models for different tasks [[3]](#ref-3).
+**Open vs. closed models**: While open models are becoming "good enough" [6], they still lag closed models on certain benchmarks. The choice depends on whether you need cutting-edge performance or prefer the control and privacy of running models locally.
 
-Lambert describes using:
-- GPT 5.2 Pro for research when accuracy is important
-- Claude Opus 4.5 for processing raw data and editing
-- Grok monthly for finding AI news from X
-- Open models for cost-effective coding plans [[3]](#ref-3)
-
-This multi-model approach isn't just about having options - it's about recognizing that AI capabilities are "jagged" (unevenly distributed across tasks) and orchestrating the right context for each situation [[3]](#ref-3). Lambert notes that using only one model would mean "taking a substantial haircut in capabilities" [[3]](#ref-3).
-
-For leaders, this suggests a context orchestration strategy where different models are deployed based on task requirements:
-- Frontier models (like GPT 5.2 Pro) for high-stakes research
-- Specialized models for specific domains
-- Cost-effective open models for routine tasks
-
-As AI capabilities diffuse in 2026, Lambert predicts that speed will become more of a determining factor in model selection [[3]](#ref-3). This means leaders should consider not just what context to provide, but how quickly models can process that context.
-
-## The Claude Code Phenomenon
-
-Claude Code with Opus 4.5 has generated significant excitement this week, with Nathan Lambert noting a "meaningful jump in coding agent performance" [[2]](#ref-2). What makes this development particularly interesting from a context orchestration perspective is that the performance improvement seemed to come weeks after the model's integration with Opus, suggesting that product changes may have unlocked massive gains [[2]](#ref-2).
-
-The key insight is that Claude Code isn't restricted to software development - it can control your entire computer, managing email, calendars, decision making, and other functions [[2]](#ref-2). This represents a shift from narrow context orchestration (giving AI access to code) to broad context orchestration (giving AI access to your entire digital environment).
-
-Lambert predicts that software engineering will look very different by the end of 2026, with AI models able to replicate most-used software fairly easily [[2]](#ref-2). This transition will favor small organizations and startups with flexibility, potentially rebalancing the tech industry [[2]](#ref-2).
-
-## Enterprise Context Orchestration
-
-Several enterprise-focused developments this week highlight how organizations are orchestrating context at scale:
-
-1. **OpenAI for Healthcare** enables secure, enterprise-grade AI that supports HIPAA compliance while reducing administrative burden and supporting clinical workflows [[6]](#ref-6). This represents a specialized context orchestration approach for the healthcare sector, where privacy and compliance are paramount.
-
-2. **ChatGPT Health** securely connects health data and apps with privacy protections and physician-informed design [[4]](#ref-4). This shows how context orchestration in healthcare requires specialized knowledge and careful data handling.
-
-3. **Netomi** is scaling enterprise AI agents using GPT-4.1 and GPT-5.2, combining concurrency, governance, and multi-step reasoning for reliable production workflows [[7]](#ref-7). This demonstrates how enterprise context orchestration requires additional layers of governance and reliability.
-
-4. **Tolan** built a voice-first AI companion with GPT-5.1 that combines low-latency responses, real-time context reconstruction, and memory-driven personalities [[5]](#ref-5). This shows how context orchestration extends to voice interfaces, where maintaining conversational context is crucial.
-
-5. **Datadog** is using Codex for system-level code review [[8]](#ref-8), though details of the implementation are limited in the available information.
-
-## Open Model Ecosystem
-
-The open model ecosystem continues to evolve rapidly, with several notable developments this week:
-
-1. **NVIDIA** released an update to their Nemotron series with a Mamba2-Transformer architecture and MoE, and announced plans for two more model sizes in H1 2026: Super (~100B-A10B) and Ultra (~500B-A50B) [[15]](#ref-15).
-
-2. **Arcee** released two models (Nano and Mini) and plans to release a larger model soon [[15]](#ref-15).
-
-3. **GLM-4.7** by Zhipu performs well on broader tasks despite not being close to state-of-the-art on academic benchmarks [[15]](#ref-15).
-
-4. **DeepSeek** released V3.2 and V3.2 Speciale, with the latter claiming to beat the 2025 IMO and IOI with gold-medal performance [[15]](#ref-15).
-
-These developments suggest that open models are becoming increasingly capable, with GLM 4.7 and MiniMax M2.1 starting to be "good enough" in the Claude Code form factor [[15]](#ref-15). This provides leaders with more options for context orchestration, potentially at lower cost.
-
-## Tensions & Tradeoffs in Context Orchestration
-
-Several key tensions emerge from this week's developments:
-
-1. **Code vs. Traces**: Traditional software engineering focuses on code as the source of truth, while AI agent development shifts focus to traces [[1]](#ref-1). Leaders must decide how to balance these approaches in hybrid systems.
-
-2. **Security vs. Autonomy**: Running AI agents with full permissions increases productivity but creates security risks [[14]](#ref-14). Sandboxes provide a middle ground but require additional infrastructure.
-
-3. **Single Model vs. Multi-Model**: Using a single model simplifies orchestration but sacrifices capabilities, while using multiple specialized models increases complexity but maximizes performance [[3]](#ref-3).
-
-4. **Frontier Models vs. Open Models**: Frontier models from major labs offer cutting-edge capabilities at premium prices, while open models provide cost-effective alternatives with some performance tradeoffs [[3]](#ref-3) [[15]](#ref-15).
-
-5. **Speed vs. Intelligence**: As AI capabilities diffuse, speed is becoming more important in model selection, creating a tradeoff between thorough reasoning and quick responses [[3]](#ref-3).
+**Curation effort vs. AI capability**: Dogan's success with a three-paragraph prompt [4] suggests that careful curation can compensate for less sophisticated AI. But this requires human expertise to know what to include and exclude.
 
 ## Your Context Orchestration Stack
 
 Based on this week's developments, leaders should evaluate:
 
-1. **Trace Observability**: Do you have systems in place to capture, analyze, and learn from AI agent traces?
+1. **Rapid prototyping tools**: Can you articulate complex systems in three paragraphs like Dogan did [4]? This skill becomes more valuable as AI capabilities increase.
 
-2. **Sandbox Strategy**: How are you safely running AI agents with system access? Are you using appropriate sandboxing technologies?
+2. **Model flexibility**: With open models reaching practical utility [6], consider whether you need alternatives to closed API models for sensitive contexts.
 
-3. **Multi-Model Approach**: Have you identified which models excel at which tasks for your specific needs?
+3. **Context preservation**: Do you have a plan for when external resources disappear? Willison's Software Heritage tool [2] offers one approach, but every organization needs a context preservation strategy.
 
-4. **Enterprise Governance**: If deploying AI at scale, do you have appropriate governance, concurrency, and reasoning frameworks?
+4. **Composition patterns**: Brand's use of multiple models together [6] points toward a future where leaders orchestrate teams of specialized AIs rather than relying on single systems.
 
-5. **Open Model Integration**: Are you leveraging cost-effective open models where appropriate while maintaining frontier model access for critical tasks?
-
-The context orchestration landscape is evolving rapidly, with traces replacing code as the source of truth, sandboxes enabling safe AI experimentation, and multi-model strategies maximizing capabilities while managing costs. Leaders who master these orchestration patterns will gain significant leverage in 2026.
+The meta-lesson from this week is that context orchestration skill compounds. Dogan's ability to distill a year's work into three paragraphs [4] didn't happen overnight—it required deep understanding of both the problem domain and how to communicate with AI. As these tools proliferate, the leaders who master context orchestration will see exponential returns on their time investment.
 
 ## Sources
 
-<a id="ref-1"></a>[1] [Chase, H. (2026, January 10). In software, the code documents the app. In AI, the traces do.](https://blog.langchain.com/in-software-the-code-documents-the-app-in-ai-the-traces-do/)
+[1] [Willison, S. (2026, January 5). It's hard to justify Tahoe icons](https://simonwillison.net/2026/Jan/5/its-hard-to-justify-tahoe-icons/#atom-everything)
 
-<a id="ref-2"></a>[2] [Lambert, N. (2026, January 9). Claude Code Hits Different](https://www.interconnects.ai/p/claude-code-hits-different)
+[2] [Willison, S. (2025, December 30). TIL: Downloading archived Git repositories from archive.softwareheritage.org](https://simonwillison.net/2025/Dec/30/software-heritage/#atom-everything)
 
-<a id="ref-3"></a>[3] [Lambert, N. (2026, January 11). Use multiple models](https://www.interconnects.ai/p/use-multiple-models)
+[3] [Willison, S. (2026, January 2). December 2025 sponsors-only newsletter](https://simonwillison.net/2026/Jan/2/december/#atom-everything)
 
-<a id="ref-4"></a>[4] [OpenAI Blog. (2026, January 7). Introducing ChatGPT Health](https://openai.com/index/introducing-chatgpt-health)
+[4] [Willison, S. (2026, January 4). Quoting Jaana Dogan](https://simonwillison.net/2026/Jan/4/jaana-dogan/#atom-everything)
 
-<a id="ref-5"></a>[5] [OpenAI Blog. (2026, January 7). How Tolan builds voice-first AI with GPT-5.1](https://openai.com/index/tolan)
+[5] [Willison, S. (2026, January 5). Oxide and Friends Predictions 2026, today at 4pm PT](https://simonwillison.net/2026/Jan/5/oxide-and-friends-predictions-2026/#atom-everything)
 
-<a id="ref-6"></a>[6] [OpenAI Blog. (2026, January 8). OpenAI for Healthcare](https://openai.com/index/openai-for-healthcare)
+[6] [Brand, F. (2026, January 5). Latest open artifacts (#17): NVIDIA, Arcee, Minimax, DeepSeek, Z.ai and others close an eventful year on a high note](https://www.interconnects.ai/p/latest-open-artifacts-17-nvidia-arcee)
 
-<a id="ref-7"></a>[7] [OpenAI Blog. (2026, January 8). Netomi's lessons for scaling agentic systems into the enterprise](https://openai.com/index/netomi)
+[7] [OpenAI Blog. (2026, January 2). Announcing OpenAI Grove Cohort 2](https://openai.com/index/openai-grove)
 
-<a id="ref-8"></a>[8] [OpenAI Blog. (2026, January 9). Datadog uses Codex for system-level code review](https://openai.com/index/datadog)
+[8] [Raschka, S. (2025, December 30). LLM Research Papers: The 2025 List (July to December)](https://sebastianraschka.com/blog/2025/llm-research-papers-2025-part2.html)
 
-<a id="ref-9"></a>[9] [Willison, S. (2026, January 6). A field guide to sandboxes for AI](https://simonwillison.net/2026/Jan/6/a-field-guide-to-sandboxes-for-ai/#atom-everything)
-
-<a id="ref-10"></a>[10] [Willison, S. (2026, January 7). Quoting Robin Sloan](https://simonwillison.net/2026/Jan/7/robin-sloan/#atom-everything)
-
-<a id="ref-11"></a>[11] [Lambert, N. (2026, January 7). 8 plots that explain the state of open models](https://www.interconnects.ai/p/8-plots-that-explain-the-state-of)
-
-<a id="ref-12"></a>[12] [Willison, S. (2026, January 8). How Google Got Its Groove Back and Edged Ahead of OpenAI](https://simonwillison.net/2026/Jan/8/how-google-got-its-groove-back/#atom-everything)
-
-<a id="ref-13"></a>[13] [Willison, S. (2026, January 8). LLM predictions for 2026, shared with Oxide and Friends](https://simonwillison.net/2026/Jan/8/llm-predictions-for-2026/#atom-everything)
-
-<a id="ref-14"></a>[14] [Willison, S. (2026, January 9). Fly's new Sprites.dev addresses both developer sandboxes and API sandboxes at the same time](https://simonwillison.net/2026/Jan/9/sprites-dev/#atom-everything)
-
-<a id="ref-15"></a>[15] [Brand, F. (2026, January 5). Latest open artifacts (#17): NVIDIA, Arcee, Minimax, DeepSeek, Z.ai and others close an eventful year on a high note](https://www.interconnects.ai/p/latest-open-artifacts-17-nvidia-arcee)
+[9] [Raschka, S. (2025, December 30). The State Of LLMs 2025: Progress, Problems, and Predictions](https://sebastianraschka.com/blog/2025/state-of-llms-2025.html)

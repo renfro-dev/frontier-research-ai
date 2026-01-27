@@ -46,8 +46,10 @@ jobs:
             echo "start_date=${{ github.event.inputs.start_date }}" >> $GITHUB_OUTPUT
             echo "end_date=${{ github.event.inputs.end_date }}" >> $GITHUB_OUTPUT
           else
-            # Calculate last 7 days (from 7 days ago to yesterday)
-            end_date=$(date -d "yesterday" +%Y-%m-%d)
+            # Calculate last 7 days (from 7 days ago to today)
+            # Include today since analysis runs during this workflow and creates
+            # summaries with analyzed_at = today
+            end_date=$(date +%Y-%m-%d)
             start_date=$(date -d "7 days ago" +%Y-%m-%d)
             echo "start_date=$start_date" >> $GITHUB_OUTPUT
             echo "end_date=$end_date" >> $GITHUB_OUTPUT

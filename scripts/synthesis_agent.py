@@ -19,7 +19,7 @@ Conservative principles:
 import sys
 import os
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 from typing import Dict, List, Any, Optional
 import logging
@@ -473,6 +473,9 @@ class SynthesisAgent:
                 source_document_ids.append(doc_id)
 
         # Create record matching weekly_briefs schema
+        # Set published_at to the day after the end of the timeframe
+        publish_date = end_dt + timedelta(days=1)
+
         record = {
             'week_start_date': start_date,
             'title': title,
@@ -482,7 +485,7 @@ class SynthesisAgent:
             'word_count': brief_data['word_count'],
             'reading_time_minutes': brief_data['reading_time_minutes'],
             'status': 'published',
-            'published_at': datetime.now().isoformat()
+            'published_at': publish_date.isoformat()
         }
 
         if self.dry_run:

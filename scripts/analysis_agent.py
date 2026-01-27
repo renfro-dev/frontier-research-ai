@@ -387,7 +387,7 @@ def main():
     print("=" * 60)
     mode = "DRY RUN (no database writes)" if args.dry_run else "LIVE (writing to database)"
     print(f"Mode: {mode}")
-    print(f"Model: claude-3-7-sonnet-20250219")
+    print(f"Model: claude-sonnet-4-20250514")
     print(f"Prompt Version: {PROMPT_VERSION}")
 
     if args.extraction_id:

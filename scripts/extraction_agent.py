@@ -34,6 +34,20 @@ class ExtractionAgent:
         self.reprocess = reprocess
         self.logger = logging.getLogger(__name__)
 
+    def _fetch_all_ids(self, table: str, column: str) -> set:
+        """Fetch all values from a single column with pagination to avoid row limits."""
+        all_ids = set()
+        page_size = 1000
+        offset = 0
+        while True:
+            result = self.supabase.table(table).select(column).range(offset, offset + page_size - 1).execute()
+            rows = result.data or []
+            all_ids.update(r[column] for r in rows)
+            if len(rows) < page_size:
+                break
+            offset += page_size
+        return all_ids
+
     def fetch_documents_to_process(self) -> List[Dict[str, Any]]:
         """
         Get documents that need extraction
@@ -42,21 +56,26 @@ class ExtractionAgent:
             List of document records
         """
         if self.reprocess:
-            # Get all documents
             result = self.supabase.table('documents').select('*').execute()
-        else:
-            # Get documents without extractions
-            # First get document IDs that already have extractions
-            existing = self.supabase.table('extractions').select('document_id').execute()
-            existing_ids = [e['document_id'] for e in (existing.data or [])]
+            return result.data if result.data else []
 
-            # Fetch documents not in existing list
-            if existing_ids:
-                result = self.supabase.table('documents').select('*').not_.in_('id', existing_ids).execute()
-            else:
-                result = self.supabase.table('documents').select('*').execute()
+        # Use set difference to avoid not_.in_() with thousands of IDs (causes 400 URL-too-long)
+        all_doc_ids = self._fetch_all_ids('documents', 'id')
+        extracted_ids = self._fetch_all_ids('extractions', 'document_id')
+        unprocessed_ids = list(all_doc_ids - extracted_ids)
 
-        return result.data if result.data else []
+        if not unprocessed_ids:
+            return []
+
+        # Fetch full document records in batches of 50 to stay within URL limits
+        batch_size = 50
+        all_documents = []
+        for i in range(0, len(unprocessed_ids), batch_size):
+            batch = unprocessed_ids[i:i + batch_size]
+            result = self.supabase.table('documents').select('*').in_('id', batch).execute()
+            all_documents.extend(result.data or [])
+
+        return all_documents
 
     def process_document(self, document: Dict[str, Any]) -> Dict[str, Any]:
         """

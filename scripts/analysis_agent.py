@@ -45,6 +45,20 @@ class AnalysisAgent:
         self.limit = limit
         self.logger = logging.getLogger(__name__)
 
+    def _fetch_all_ids(self, table: str, column: str) -> set:
+        """Fetch all values from a single column with pagination to avoid row limits."""
+        all_ids = set()
+        page_size = 1000
+        offset = 0
+        while True:
+            result = self.supabase.table(table).select(column).range(offset, offset + page_size - 1).execute()
+            rows = result.data or []
+            all_ids.update(r[column] for r in rows)
+            if len(rows) < page_size:
+                break
+            offset += page_size
+        return all_ids
+
     def fetch_extractions_to_process(self) -> List[Dict[str, Any]]:
         """
         Get extractions that need analysis
@@ -59,34 +73,37 @@ class AnalysisAgent:
             ).eq('id', self.extraction_id).execute()
             return result.data if result.data else []
 
-        # Determine which extractions to fetch
         if self.reprocess:
-            # Get all extractions
             query = self.supabase.table('extractions').select(
                 'id, document_id, cleaned_text, word_count, documents(title, author, published_at, url)'
             )
-        else:
-            # Get extractions without summaries
-            # First get extraction IDs that already have summaries
-            existing = self.supabase.table('summaries').select('extraction_id').execute()
-            existing_ids = [e['extraction_id'] for e in (existing.data or [])]
+            if self.limit:
+                query = query.limit(self.limit)
+            result = query.execute()
+            return result.data if result.data else []
 
-            # Fetch extractions not in existing list
-            if existing_ids:
-                query = self.supabase.table('extractions').select(
-                    'id, document_id, cleaned_text, word_count, documents(title, author, published_at, url)'
-                ).not_.in_('id', existing_ids)
-            else:
-                query = self.supabase.table('extractions').select(
-                    'id, document_id, cleaned_text, word_count, documents(title, author, published_at, url)'
-                )
+        # Use set difference to avoid not_.in_() with thousands of IDs (causes 400 URL-too-long)
+        all_extraction_ids = self._fetch_all_ids('extractions', 'id')
+        summarized_ids = self._fetch_all_ids('summaries', 'extraction_id')
+        unprocessed_ids = list(all_extraction_ids - summarized_ids)
 
-        # Apply limit if specified
+        if not unprocessed_ids:
+            return []
+
         if self.limit:
-            query = query.limit(self.limit)
+            unprocessed_ids = unprocessed_ids[:self.limit]
 
-        result = query.execute()
-        return result.data if result.data else []
+        # Fetch full extraction records in batches of 50 to stay within URL limits
+        batch_size = 50
+        all_extractions = []
+        for i in range(0, len(unprocessed_ids), batch_size):
+            batch = unprocessed_ids[i:i + batch_size]
+            result = self.supabase.table('extractions').select(
+                'id, document_id, cleaned_text, word_count, documents(title, author, published_at, url)'
+            ).in_('id', batch).execute()
+            all_extractions.extend(result.data or [])
+
+        return all_extractions
 
     def process_extraction(self, extraction: Dict[str, Any]) -> Dict[str, Any]:
         """

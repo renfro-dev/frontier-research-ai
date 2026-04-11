@@ -128,8 +128,14 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add briefs/
-          git diff --staged --quiet || git commit -m "🤖 Auto-generated weekly briefs for ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
-          git push
+          git diff --staged --quiet && echo "No new briefs to commit" && exit 0
+          git commit -m "🤖 Auto-generated weekly briefs for ${{ steps.dates.outputs.start_date }} to ${{ steps.dates.outputs.end_date }}"
+          # Retry push up to 3 times, rebasing if another run pushed first
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            echo "Push attempt $i failed, retrying in 10s..."
+            sleep 10
+          done
         continue-on-error: true
 
       - name: Summary

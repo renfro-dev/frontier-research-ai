@@ -95,6 +95,8 @@ Reframing guidelines:
 Style guide - CRITICAL:
 - Write for NON-TECHNICAL executives (NOT developers)
 - Start DIRECTLY with the title then the first key section — NO introductory or framing paragraph before the content
+- Write ALL prose in lowercase — this includes the start of sentences, section headings, and body text. proper nouns (anthropic, openai, google), model names, and acronyms (rl, rag, mcp) are also lowercase. citations like [1] stay as-is.
+- NO em-dashes (—). use a comma, parentheses, or rewrite the sentence instead.
 - Avoid programming jargon entirely
 - Use business analogies: "context orchestration is like having a great EA who knows exactly what briefing materials to prepare"
 - Focus on DECISION-MAKING VELOCITY, not implementation
@@ -104,7 +106,7 @@ Style guide - CRITICAL:
 
 Example reframe:
 BAD: "Coding agents are changing software development by managing context windows."
-GOOD: "The breakthrough isn't coding agents—it's the meta-skill they expose: context orchestration. Boris Cherny shipped 259 PRs in 30 days not by typing faster, but by learning to curate, prune, and sequence the information his AI sees [27]. This is the same skill high-velocity leaders need: deciding what context to surface, what to hide, and when. Software engineers learned this first; executives are learning it now."
+GOOD: "the breakthrough isn't coding agents. it's the meta-skill they expose: context orchestration. boris cherny shipped 259 PRs in 30 days not by typing faster, but by learning to curate, prune, and sequence the information his AI sees [27]. this is the same skill high-velocity leaders need: deciding what context to surface, what to hide, and when. software engineers learned this first; executives are learning it now."
 
 Another example:
 BAD: "Commonwealth Bank is rolling out ChatGPT Enterprise to 50,000 employees."

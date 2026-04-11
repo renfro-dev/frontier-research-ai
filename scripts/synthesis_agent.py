@@ -93,6 +93,8 @@ Citation format - CRITICAL:
 Style guide - CRITICAL:
 - Write for SEMI-TECHNICAL readers (product managers, analysts, educated non-developers), NOT software engineers
 - Start DIRECTLY with the title then the first key section — NO introductory or framing paragraph before the content
+- Write ALL prose in lowercase — this includes the start of sentences, section headings, and body text. proper nouns (anthropic, openai, google), model names, and acronyms (rl, rag, mcp) are also lowercase. citations like [1] stay as-is.
+- NO em-dashes (—). use a comma, parentheses, or rewrite the sentence instead.
 - Avoid ALL programming jargon (API names, function calls, technical attributes, implementation details)
 - When technical concepts are necessary, use plain-language analogies
 - Focus on user impact and practical implications, NOT implementation details

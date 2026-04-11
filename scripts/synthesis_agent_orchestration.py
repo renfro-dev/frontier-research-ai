@@ -94,7 +94,7 @@ Reframing guidelines:
 
 Style guide - CRITICAL:
 - Write for NON-TECHNICAL executives (NOT developers)
-- Lead with LEVERAGE and META-SKILLS before technical details
+- Start DIRECTLY with the title then the first key section — NO introductory or framing paragraph before the content
 - Avoid programming jargon entirely
 - Use business analogies: "context orchestration is like having a great EA who knows exactly what briefing materials to prepare"
 - Focus on DECISION-MAKING VELOCITY, not implementation

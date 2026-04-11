@@ -92,7 +92,7 @@ Citation format - CRITICAL:
 
 Style guide - CRITICAL:
 - Write for SEMI-TECHNICAL readers (product managers, analysts, educated non-developers), NOT software engineers
-- Lead with "why this matters" BEFORE any technical details
+- Start DIRECTLY with the title then the first key section — NO introductory or framing paragraph before the content
 - Avoid ALL programming jargon (API names, function calls, technical attributes, implementation details)
 - When technical concepts are necessary, use plain-language analogies
 - Focus on user impact and practical implications, NOT implementation details

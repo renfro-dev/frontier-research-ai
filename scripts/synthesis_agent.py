@@ -230,33 +230,39 @@ class SynthesisAgent:
         Returns:
             List of summaries with document metadata
         """
-        # Get all summaries with their documents
-        query = self.supabase.table('summaries').select(
-            'id, analysis_json, analyzed_at, '
-            'extractions(id, cleaned_text, word_count, '
-            'documents(id, title, author, url, published_at, sources(name)))'
-        ).order('analyzed_at', desc=True)
+        # Fetch all summaries with pagination to avoid the default 1000-row limit
+        all_summaries = []
+        page_size = 1000
+        offset = 0
+        while True:
+            response = self.supabase.table('summaries').select(
+                'id, analysis_json, analyzed_at, '
+                'extractions(id, cleaned_text, word_count, '
+                'documents(id, title, author, url, published_at, sources(name)))'
+            ).order('analyzed_at', desc=True).range(offset, offset + page_size - 1).execute()
+            rows = response.data or []
+            all_summaries.extend(rows)
+            if len(rows) < page_size:
+                break
+            offset += page_size
+        summaries = all_summaries
 
         # Apply limit if specified (before filtering by date)
         if self.limit and not self.date_range:
-            query = query.limit(self.limit)
+            summaries = summaries[:self.limit]
 
-        response = query.execute()
-        summaries = response.data
-
-        # Filter by extraction/analysis date (when article was processed) if date range specified
+        # Filter by document publication date if date range specified.
+        # Using published_at (when the article was originally published) rather than
+        # analyzed_at (when we processed it) so that backfill runs correctly assign
+        # articles to the week they were published, not the day we ran the pipeline.
         if self.date_range:
             start_date, end_date = self.date_range
             filtered_summaries = []
             for summary in summaries:
-                # Use analyzed_at (when the analysis was performed) instead of published_at
-                # This ensures we get articles extracted/analyzed during the specified week,
-                # even if they were originally published earlier
-                analyzed_date = summary.get('analyzed_at')
-                if analyzed_date:
-                    # Extract date part (YYYY-MM-DD) from ISO timestamp
-                    analysis_date = analyzed_date.split('T')[0]
-                    if start_date <= analysis_date <= end_date:
+                published_at = (summary.get('extractions') or {}).get('documents', {}).get('published_at')
+                if published_at:
+                    pub_date = published_at.split('T')[0]
+                    if start_date <= pub_date <= end_date:
                         filtered_summaries.append(summary)
             summaries = filtered_summaries
 

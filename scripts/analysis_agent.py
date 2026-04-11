@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from lib.supabase_client import get_supabase_client
-from lib.anthropic_client import analyze_text, get_anthropic_client, PROMPT_VERSION
+from lib.anthropic_client import analyze_text, analyze_text_batch, get_anthropic_client, PROMPT_VERSION
 from lib.json_validator import validate_analysis_json, repair_analysis_json, get_analysis_stats
 
 class AnalysisAgent:
@@ -229,10 +229,9 @@ class AnalysisAgent:
 
     def run(self) -> Dict[str, Any]:
         """
-        Run the full analysis process
-
-        Returns:
-            Summary stats
+        Run the full analysis process.
+        Live runs use the Batch API (50% discount, Haiku 4 model).
+        Dry runs fall back to the sequential single-call path.
         """
         summary = {
             "extractions_processed": 0,
@@ -249,102 +248,124 @@ class AnalysisAgent:
             "failed_extractions": []
         }
 
-        # Fetch extractions
         extractions = self.fetch_extractions_to_process()
-
         if not extractions:
             self.logger.warning("No extractions to process")
             return summary
 
-        self.logger.info(f"Found {len(extractions)} extraction{'s' if len(extractions) != 1 else ''} to process")
-        print(f"📋 Found {len(extractions)} extraction{'s' if len(extractions) != 1 else ''} to process")
+        n = len(extractions)
+        print(f"📋 Found {n} extraction{'s' if n != 1 else ''} to process")
 
-        if not self.dry_run:
-            # Estimate cost
-            avg_input_tokens = 5000  # Conservative estimate
-            avg_output_tokens = 1500
-            estimated_cost = len(extractions) * (
-                (avg_input_tokens / 1_000_000) * 3.00 +
-                (avg_output_tokens / 1_000_000) * 15.00
-            )
-            print(f"💰 Estimated cost: ~${estimated_cost:.2f} ({len(extractions)} × ~$0.038/doc)\n")
-        else:
+        if self.dry_run:
+            # Sequential path — used only for dry-run testing
             print()
+            for i, extraction in enumerate(extractions, 1):
+                doc = extraction.get('documents', {})
+                if isinstance(doc, list):
+                    doc = doc[0] if doc else {}
+                print(f"[{i}/{n}] {doc.get('title','Unknown')[:70]}...")
+                summary["extractions_processed"] += 1
+                stats = self.process_extraction(extraction)
+                if stats["success"]:
+                    summary["successful"] += 1
+                    a = stats["stats"]
+                    print(f"  [DRY RUN] Claims:{a['claims']} Metaphors:{a['metaphors']} Examples:{a['examples']}\n")
+                else:
+                    summary["failed"] += 1
+                    summary["failed_extractions"].append({"title": doc.get('title','?'), "error": stats["error"]})
+                    print(f"  ❌ {stats['error']}\n")
+            return summary
 
-        print("Processing extractions...\n")
+        # --- Live path: Batch API (Haiku 4, 50% discount) ---
+        # Estimate cost: Haiku 4 batch = $0.125/M in + $0.625/M out
+        est_cost = n * ((5_000 / 1_000_000) * 0.125 + (1_500 / 1_000_000) * 0.625)
+        print(f"💰 Estimated batch cost: ~${est_cost:.2f} (Haiku 4 + 50% batch discount)\n")
 
-        # Track stats for averages
-        total_claims = 0
-        total_metaphors = 0
-        total_examples = 0
-        total_uncertainties = 0
-        total_conflicts = 0
-        successful_count = 0
-
-        # Process each extraction
-        for i, extraction in enumerate(extractions, 1):
-            # Extract title for display
+        items = []
+        extraction_map = {}
+        for extraction in extractions:
             doc = extraction.get('documents', {})
             if isinstance(doc, list):
                 doc = doc[0] if doc else {}
-            title = doc.get('title', 'Unknown')[:70]
+            metadata = {
+                "title":        doc.get('title', 'Unknown'),
+                "author":       doc.get('author', 'Unknown'),
+                "published_at": doc.get('published_at', 'Unknown'),
+                "word_count":   extraction.get('word_count', 0),
+            }
+            items.append((extraction['id'], extraction['cleaned_text'], metadata))
+            extraction_map[extraction['id']] = extraction
 
-            print(f"[{i}/{len(extractions)}] {title}...")
+        # Submit batch and wait
+        batch_results = analyze_text_batch(items)
+
+        # Process results
+        total_claims = total_metaphors = total_examples = 0
+        total_uncertainties = total_conflicts = successful_count = 0
+
+        for extraction_id, result in batch_results.items():
+            extraction = extraction_map[extraction_id]
+            doc = extraction.get('documents', {})
+            if isinstance(doc, list):
+                doc = doc[0] if doc else {}
+            title = doc.get('title', 'Unknown')
             summary["extractions_processed"] += 1
 
-            stats = self.process_extraction(extraction)
-
-            if stats["success"]:
-                summary["successful"] += 1
-                summary["total_cost_usd"] += stats["cost_usd"]
-                summary["total_input_tokens"] += stats["input_tokens"]
-                summary["total_output_tokens"] += stats["output_tokens"]
-
-                # Accumulate stats for averages
-                analysis_stats = stats["stats"]
-                total_claims += analysis_stats.get("claims", 0)
-                total_metaphors += analysis_stats.get("metaphors", 0)
-                total_examples += analysis_stats.get("examples", 0)
-                total_uncertainties += analysis_stats.get("uncertainties", 0)
-                total_conflicts += analysis_stats.get("conflicts", 0)
-                successful_count += 1
-
-                if self.dry_run:
-                    print(
-                        f"  ⏱️  [DRY RUN] {stats['input_tokens']:,} input + "
-                        f"{stats['output_tokens']:,} output tokens\n"
-                        f"  💰 ${stats['cost_usd']:.4f}\n"
-                        f"  📊 Claims: {analysis_stats['claims']}, "
-                        f"Metaphors: {analysis_stats['metaphors']}, "
-                        f"Examples: {analysis_stats['examples']}\n"
-                    )
-                else:
-                    print(
-                        f"  ⏱️  {stats['input_tokens']:,} input + "
-                        f"{stats['output_tokens']:,} output tokens\n"
-                        f"  💰 ${stats['cost_usd']:.4f}\n"
-                        f"  📊 Claims: {analysis_stats['claims']}, "
-                        f"Metaphors: {analysis_stats['metaphors']}, "
-                        f"Examples: {analysis_stats['examples']}, "
-                        f"Uncertainties: {analysis_stats['uncertainties']}, "
-                        f"Conflicts: {analysis_stats['conflicts']}\n"
-                        f"  ✅ Summary created\n"
-                    )
-            else:
+            if not result["success"]:
                 summary["failed"] += 1
-                summary["failed_extractions"].append({
-                    "title": title,
-                    "error": stats["error"]
-                })
-                print(f"  ❌ Error: {stats['error']}\n")
+                summary["failed_extractions"].append({"title": title, "error": result.get("error")})
+                self.logger.error(f"Batch result failed for {title}: {result.get('error')}")
+                continue
 
-        # Calculate averages
+            analysis_json = result["analysis_json"]
+
+            # Validate / repair JSON
+            is_valid, errors = validate_analysis_json(analysis_json)
+            if not is_valid:
+                try:
+                    analysis_json = repair_analysis_json(analysis_json)
+                except Exception as repair_err:
+                    summary["failed"] += 1
+                    summary["failed_extractions"].append({"title": title, "error": str(repair_err)})
+                    continue
+
+            analysis_stats = get_analysis_stats(analysis_json)
+            summary_data = {
+                "extraction_id": extraction_id,
+                "analysis_json": analysis_json,
+                "model_used":    "claude-haiku-4-20250514",
+                "prompt_version": PROMPT_VERSION,
+                "analyzed_at":   datetime.now().isoformat(),
+            }
+
+            # Upsert into summaries table
+            existing = self.supabase.table('summaries').select('id').eq(
+                'extraction_id', extraction_id
+            ).execute()
+            if existing.data:
+                self.supabase.table('summaries').update(summary_data).eq(
+                    'extraction_id', extraction_id
+                ).execute()
+            else:
+                self.supabase.table('summaries').insert(summary_data).execute()
+
+            summary["successful"] += 1
+            summary["total_cost_usd"]      += result["cost_usd"]
+            summary["total_input_tokens"]  += result["input_tokens"]
+            summary["total_output_tokens"] += result["output_tokens"]
+            total_claims        += analysis_stats.get("claims", 0)
+            total_metaphors     += analysis_stats.get("metaphors", 0)
+            total_examples      += analysis_stats.get("examples", 0)
+            total_uncertainties += analysis_stats.get("uncertainties", 0)
+            total_conflicts     += analysis_stats.get("conflicts", 0)
+            successful_count    += 1
+
         if successful_count > 0:
-            summary["avg_claims"] = round(total_claims / successful_count, 1)
-            summary["avg_metaphors"] = round(total_metaphors / successful_count, 1)
-            summary["avg_examples"] = round(total_examples / successful_count, 1)
-            summary["avg_uncertainties"] = round(total_uncertainties / successful_count, 1)
-            summary["avg_conflicts"] = round(total_conflicts / successful_count, 1)
+            summary["avg_claims"]       = round(total_claims        / successful_count, 1)
+            summary["avg_metaphors"]    = round(total_metaphors      / successful_count, 1)
+            summary["avg_examples"]     = round(total_examples       / successful_count, 1)
+            summary["avg_uncertainties"]= round(total_uncertainties  / successful_count, 1)
+            summary["avg_conflicts"]    = round(total_conflicts       / successful_count, 1)
 
         return summary
 

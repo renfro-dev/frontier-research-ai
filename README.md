@@ -1,391 +1,97 @@
-# AI Briefing System
+# Frontier Research AI
 
-An automated briefing system that aggregates and synthesizes long-form content from leading AI and systems thinkers into accessible weekly essays for non-technical operators and founders.
+An automated research pipeline that reads long-form writing from leading AI and systems thinkers and turns it into cited weekly briefs for non-technical operators and founders.
 
-## Overview
+Briefs are published at [renfro.dev/research](https://renfro.dev/research), and every generated brief is committed to [`briefs/`](briefs/).
 
-This system automatically collects, analyzes, and synthesizes new content from trusted sources (e.g., Simon Willison, Eugene Yan, Nathan Lambert, OpenAI, Anthropic, LangChain, Weaviate) into two types of weekly briefings:
+## What it produces
 
-1. **Systems Thinking Briefs**: Traditional weekly summaries that translate abstract AI concepts into concrete mental models and actionable insights
-2. **Context Orchestration Briefs**: Executive-focused analysis on how AI changes work patterns, specifically the meta-skill of context curation and orchestration
+Two briefs each week, plus monthly roll-ups:
 
-**Status:** v1 (Python scripts, automated via GitHub Actions, 6 agents with 5 implemented)
+- **Systems Thinking:** translates the week's AI developments into concrete mental models and practical takeaways. See [`briefs/systems_thinking/`](briefs/systems_thinking/).
+- **Context Orchestration:** executive-focused analysis of how AI changes work, centered on the skill of curating and orchestrating context. See [`briefs/context_orchestration/`](briefs/context_orchestration/).
 
-## Target Audience
+Every brief follows the same shape: an executive summary that leads with why it matters, three to six key developments, tensions and disagreements between sources, implications for practitioners, and numbered APA source cards.
 
-Non-technical founders, operators, RevOps leaders, and product managers who:
-- Want to stay current on AI systems thinking
-- Don't want raw research or hype
-- Value clarity, examples, and tradeoffs
-- Need citations they can trust and share
+## Who it's for
 
-## Success Metrics
+Founders, operators, RevOps leaders, and product managers who want to stay current on AI without reading raw research or hype, and who need citations they can check.
 
-- **M1:** Weekly briefs generated with all 5 agents functioning
-- **M2:** Each brief cites primary sources with APA-style citations
-- **M3:** Conservative synthesis maintained (no speculation beyond sources)
-- **M4:** Plain English accessible to semi-technical readers (non-developers)
-- **M5:** Weekly briefs consistently delivered on schedule
+## How it works
 
-## Architecture
+Six agents run in sequence. Five are implemented; the reviewer is planned.
 
-### Hybrid Storage Strategy
+| # | Agent | What it does | Built with |
+|---|-------|--------------|------------|
+| 1 | Ingest | Fetches new posts from curated RSS feeds, skipping URLs already stored | `feedparser` |
+| 2 | Extraction | Strips boilerplate and segments the article body. No interpretation | BeautifulSoup |
+| 3 | Embedding | Creates 1,536-dimension vectors for deduplication and theme clustering | OpenAI `text-embedding-3-small` |
+| 4 | Analysis | Extracts claims, metaphors, examples, uncertainties, and conflicts as structured JSON | Claude Sonnet 4 |
+| 5 | Synthesis | Writes the brief from the structured analysis, with a citation for every claim | Claude Sonnet 4 |
+| 6 | Reviewer (planned) | Gate for citation coverage and hallucination checks before publishing | — |
 
-**Supabase Postgres (Relational)**
-- `sources` — Author metadata, canonical URLs
-- `documents` — Raw HTML/markdown, fetched timestamps
-- `extractions` — Cleaned text, section segmentation
-- `summaries` — Structured LLM outputs (JSON)
-- `weekly_briefs` — Final essays with citations
+A human still reads each brief before it is published.
 
-**pgvector (Semantic)**
-- Embedded extractions for:
-  - Deduplication detection
-  - Theme clustering
-  - "Is this genuinely new?" checks
+Data lives in Supabase: Postgres tables for `sources`, `documents`, `extractions`, `summaries`, and `weekly_briefs`, with pgvector for the embeddings.
 
-### Agent Pipeline
+### Principles
 
-The system uses six specialized agents, five of which are currently implemented:
+- **Conservative synthesis.** Nothing beyond the source material. "Unknown" is a valid answer, and conflicting views are surfaced, not resolved.
+- **Cite everything.** Every claim carries an APA citation and a link to the original.
+- **Plain English.** Jargon is defined on first use. The test: would a product manager with no coding background understand it without searching?
+- **First-party, long-form sources only.** Personal and official engineering blogs. No social posts, podcasts, or video.
 
-#### 1. Ingest Agent
-- **Trigger:** Manual or scheduled execution
-- **Function:** Fetch blog posts from curated RSS feeds
-- **Implementation:** Python script using `feedparser` library
-- **Deduplication:** URL-based (checks existing documents before inserting)
-- **Storage:** Raw content in `documents` table
-- **Sources:** 7 Tier 1 sources (Simon Willison, Eugene Yan, Andrej Karpathy, Lilian Weng, Chip Huyen, Sebastian Raschka, Vicki Boykis)
+## Automation
 
-#### 2. Extraction Agent
-- **Input:** Raw HTML/markdown from documents table
-- **Output:** Cleaned text stored in `extractions` table with metadata
-- **Implementation:** BeautifulSoup-based HTML cleaning
-- **Constraint:** No interpretation, pure text extraction
-- **Processing:** Removes boilerplate, extracts article body, segments by section
+[`.github/workflows/weekly-brief.yml`](.github/workflows/weekly-brief.yml) runs the full pipeline every Monday at 03:00 UTC and commits both briefs to the repository. It can also be triggered manually with a custom date range.
 
-#### 3. Embedding Agent
-- **Input:** Cleaned text from extractions table
-- **Output:** 1,536-dimensional embedding vectors
-- **Implementation:** Calls OpenAI `text-embedding-3-small` API
-- **Purpose:** Enable semantic similarity search, clustering, and deduplication detection
-- **Batch Processing:** Processes up to 2,048 texts per API call for efficiency
-- **Cost:** ~$0.02 per 1M tokens (very inexpensive)
+Typical cost is about $0.40 to $0.60 per weekly run.
 
-#### 4. Analysis Agent
-- **Input:** Cleaned text from extractions table
-- **Output:** Structured JSON stored in `summaries` table containing:
-  - `claims` — Factual assertions from the source
-  - `metaphors` — Analogies and conceptual models used by author
-  - `examples` — Concrete instances cited in article
-  - `uncertainties` — Areas where author expressed doubt
-  - `conflicts` — Claims that might conflict with other views
-- **Implementation:** Calls Claude Sonnet 4 API with conservative analysis prompt
-- **Principle:** No speculation beyond source material, surface uncertainties explicitly
-- **Cost:** ~$0.038 per document (~$1.50/month for typical volume)
+## Run it yourself
 
-#### 5. Synthesis Agent
-- **Input:** Structured JSON from multiple summaries (analysis outputs)
-- **Output:** Readable prose essays (weekly briefs)
-- **Implementation:** Calls Claude Sonnet 4 API with synthesis prompt
-- **Features:**
-  - Plain English writing for semi-technical audiences
-  - Mandatory jargon definitions on first use
-  - Implications-first structure in executive summary
-  - Sequential citation numbering
-- **Tone:** Neutral teacher, accessible to non-developers
-- **Constraint:** Every claim must have citation, no new claims beyond source material
-- **Cost:** ~$0.17-$0.44 per weekly brief
+Requires Python 3.8+, a Supabase project, an OpenAI API key, and an Anthropic API key.
 
-#### 6. Reviewer Agent (Planned)
-- **Status:** Not yet implemented
-- **Function:** Quality control checkpoint before publication
-- **Planned Checks:**
-  - Citation coverage (every idea cited)
-  - Hallucination detection
-  - "Unknown" properly surfaced
-  - Reading time within target
-- **Outcome:** Pass/fail gate before publication
-
-## Brief Output Format
-
-Each weekly brief includes:
-
-1. **Executive Summary: Why This Matters**
-   - Lead with implications and practical significance BEFORE summarizing events
-   - Answer: "Why should a non-technical operator care about these developments?"
-   - Connect technical changes to business, strategy, or decision-making impact
-   - 2-3 paragraphs maximum
-
-2. **Key Developments** (3-6 sections)
-   - What actually happened this week (with citations)
-   - Define ALL jargon on first use - assume reader is semi-technical but not a developer
-   - Terms requiring definition: "open model", "closed model", "RL" (reinforcement learning), "MoE" (Mixture of Experts), "parameters", "fine-tuning", etc.
-   - Example: "Open models—AI systems where the underlying code and model weights are publicly available, unlike closed models like GPT-5 where internals are proprietary—now rival their closed counterparts [3]."
-   - Concrete metaphors and plain-language explanations
-   - Tangible builder examples
-
-3. **Tensions & Conflicts**
-   - Where thinkers disagree or tradeoffs exist
-   - Surface contradictions explicitly
-   - Use first-party sources to show different perspectives
-
-4. **Implications for Practitioners**
-   - Concrete, actionable takeaways (optional - only if not fully covered in Executive Summary)
-   - No prescriptions without evidence from sources
-
-5. **Source Cards (APA)**
-   - Numbered citations matching in-text references
-   - Direct links to originals
-
-## Content Scope
-
-### Included (v1)
-- Personal blogs (Simon Willison's Weblog, Eugene Yan)
-- Official research/engineering blogs (Anthropic, etc.)
-- First-party, long-form content only
-
-### Excluded (v1)
-- Twitter/X posts
-- Podcasts
-- YouTube videos
-- Replies, commentary, reposts
-
-## Core Principles
-
-### Conservative Synthesis
-- No speculation beyond source material
-- "Unknown / Insufficient Evidence" is valid
-- Conflicting views surfaced, not resolved
-
-### Citation Requirements
-- APA style for every claim
-- Paraphrase by default
-- Direct links to originals
-
-### Quality Guardrails
-- Structured intermediate outputs before prose
-- Reviewer gate required
-- Zero tolerance for hallucinated claims
-
-### Writing Principles for Accessibility
-
-**Contextualize with First-Party Sources**
-- Use quotes from sources to provide critical context, not just report findings
-- Surface authors' own observations about limitations, tradeoffs, and practical utility
-- Example: If discussing a breakthrough, include author's own commentary on who benefits and what the constraints are
-
-**Make Abstract Concepts Concrete**
-- Translate technical scale into relatable comparisons
-  - "6 gigawatts" → equivalence in city power consumption or data center capacity
-  - "1M parameters" → explain what this means for speed/cost/capability
-- **ALWAYS define jargon on first use** - this is mandatory, not optional
-  - "Open model" → explain what it is, why it matters, how it differs from closed models
-  - "RL" / "Reinforcement learning" → explain the concept before using the acronym
-  - "MoE" / "Mixture of Experts" → provide plain-language explanation before using acronym
-  - "Parameters" → explain what they are and why more/fewer matters
-  - "Fine-tuning" → explain the process in plain language
-- **Test**: Would a product manager or analyst with no coding background understand this without Googling?
-
-**Surface Practical Implications**
-- Distinguish specialized vs. general-purpose utility
-  - When breakthroughs are in narrow domains (math competitions), note limitations for average users
-  - Highlight "peaks and valleys" of specialization: great at X, still struggles with Y
-- Connect technical developments to economic/geopolitical context when relevant
-  - Chinese models surpassing US models → political/strategic implications
-  - Government-private partnerships → explain shared incentives and power dynamics
-
-**Explain Relationships and Dynamics**
-- Clarify why multiple parties are aligned (or competing)
-  - Infrastructure investments → explain what drives companies to invest in compute together
-  - Open model competition → explain strategic reasons for open vs. closed approaches
-- Note intersectionality between sectors (government, private companies, research institutions)
-
-## Technology Stack
-
-- **Database:** Supabase (Postgres + pgvector extension for embeddings)
-- **LLM APIs:**
-  - Claude Sonnet 4 (via Anthropic API) — Analysis and Synthesis agents
-  - OpenAI text-embedding-3-small — Embedding generation
-- **Libraries:**
-  - `feedparser` — RSS feed parsing
-  - `BeautifulSoup` — HTML cleaning
-  - `anthropic` — Claude API client
-  - `openai` — OpenAI API client
-  - `supabase` — Database client
-- **Development:** Python scripts, manual execution
-- **Content Ingestion:** RSS feed parsers (v1)
-- **Future:** Firecrawl MCP for bot-protected sites (v2)
-
-## Explicitly Out of Scope (v1)
-
-- Text search UI
-- Email newsletter automation
-- Social posting automation
-- Multi-author submissions
-- Tutorials or how-to guides
-
-## Pipeline Flow (Current Implementation)
-
-### Phase 1: Content Collection
-```
-1. Ingest Agent (manual execution)
-   → Fetches RSS feeds from 7 sources
-   → Stores raw HTML/markdown in documents table
-   → URL-based deduplication (skips existing documents)
+```bash
+git clone https://github.com/renfro-dev/frontier-research-ai.git
+cd frontier-research-ai
+pip install -r requirements.txt
+cp .env.example .env   # then add your keys
 ```
 
-### Phase 2: Content Processing
-```
-2. Extraction Agent (manual execution)
-   → Reads raw content from documents table
-   → Cleans HTML, removes boilerplate
-   → Stores cleaned text in extractions table
+Apply the SQL files in [`migrations/`](migrations/) to your Supabase database in order, then load the sources and run the pipeline:
 
-3. Embedding Agent (manual execution)
-   → Reads cleaned text from extractions table
-   → Calls OpenAI API to generate 1,536-dim vectors
-   → Stores embeddings in extractions table
-   → Enables semantic similarity search
-```
+```bash
+python scripts/utils/add_sources.py
 
-### Phase 3: Analysis & Synthesis
-```
-4. Analysis Agent (manual execution)
-   → Reads cleaned text from extractions table
-   → Calls Claude Sonnet 4 API for structured analysis
-   → Extracts claims, metaphors, examples, uncertainties, conflicts
-   → Stores JSON in summaries table
+python scripts/ingest_agent.py
+python scripts/extraction_agent.py
+python scripts/embedding_agent.py
+python scripts/analysis_agent.py
 
-5. Synthesis Agent (manual execution with date range)
-   → Reads structured JSON from summaries table
-   → Calls Claude Sonnet 4 API to generate prose
-   → Creates weekly briefs from analyzed documents
-   → Stores essays in weekly_briefs table
-   → Exports markdown files to briefs/ directory
+python scripts/synthesis_agent.py --start-date 2025-12-29 --end-date 2026-01-04
+python scripts/synthesis_agent_orchestration.py --start-date 2025-12-29 --end-date 2026-01-04
 ```
 
-### Phase 4: Quality Control & Publishing
+Briefs are written to `briefs/` and stored in the `weekly_briefs` table.
+
+## Project structure
+
 ```
-6. Manual Review
-   → Human reads generated brief
-   → Spot-checks citations and accuracy
-   → Verifies accessibility for semi-technical readers
-
-7. Manual Publish
-   → (Future: automation via email/web)
+scripts/            One script per agent, plus utilities
+scripts/linkedin/   Turns Context Orchestration briefs into LinkedIn post drafts
+lib/                Shared clients and helpers (feeds, cleaning, embeddings, Claude, Supabase)
+migrations/         Database schema
+briefs/             Generated briefs
+docs/               Setup guides, planning, and source research
 ```
 
-**Note:** All agents run as standalone Python scripts. No automated scheduling currently implemented.
+## More docs
 
-## Automation (GitHub Actions)
+- [docs/setup/SETUP.md](docs/setup/SETUP.md): full setup walkthrough
+- [docs/setup/AUTOMATION_SETUP.md](docs/setup/AUTOMATION_SETUP.md): GitHub Actions configuration
+- [docs/LINKEDIN_SETUP.md](docs/LINKEDIN_SETUP.md): LinkedIn post automation
+- [docs/planning/PRD.md](docs/planning/PRD.md): product requirements
 
-The pipeline can run automatically on a weekly schedule using GitHub Actions:
+## Status
 
-### Setup
-
-1. **Push to GitHub**: Push this repository to GitHub (public or private)
-2. **Configure Secrets**: Add API keys as repository secrets:
-   - `SUPABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-   - `OPENAI_API_KEY`
-   - `ANTHROPIC_API_KEY`
-3. **Enable Actions**: GitHub Actions will automatically run every Monday at 9 AM UTC
-
-See [AUTOMATION_SETUP.md](file:///Users/JoshR/Desktop/fun/Frontier%20AI/AUTOMATION_SETUP.md) for detailed setup instructions.
-
-### Schedule
-
-- **Automatic**: Every Monday at 11:00 AM PST (7:00 PM UTC)
-- **Manual**: Trigger from GitHub Actions UI with custom date ranges
-- **Cost**: ~$0.40-0.60 per weekly run (both brief types)
-
-The workflow automatically:
-1. Ingests new content from RSS feeds
-2. Processes and analyzes articles
-3. Generates Systems Thinking weekly brief
-4. Generates Context Orchestration weekly brief
-5. Commits both briefs to repository
-
-
-## Risk Mitigation
-
-| Risk | Mitigation |
-|------|------------|
-| Abstract drift | Force concrete example field |
-| Hallucination | Conservative synthesis + Reviewer |
-| Repetition | Vector similarity check |
-| Over-automation | Human publish step retained |
-
-## Getting Started
-
-### Prerequisites
-- Python 3.8+
-- Supabase account
-- OpenAI API key
-- Anthropic API key
-
-### Setup Steps
-
-1. **Database Setup**
-   ```bash
-   # Run schema migration
-   psql -h your-supabase-host -d postgres -f migrations/001_initial_schema.sql
-   ```
-
-2. **Environment Configuration**
-   ```bash
-   # Create .env file
-   cp .env.example .env
-
-   # Add API keys
-   SUPABASE_URL=your-supabase-url
-   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-   OPENAI_API_KEY=your-openai-key
-   ANTHROPIC_API_KEY=your-anthropic-key
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Add Sources**
-   ```bash
-   # Populate sources table with 7 Tier 1 sources
-   python scripts/add_sources.py
-   ```
-
-5. **Run Pipeline (Manual Execution)**
-   ```bash
-   # Step 1: Ingest new content
-   python scripts/ingest_agent.py
-
-   # Step 2: Extract clean text
-   python scripts/extraction_agent.py
-
-   # Step 3: Generate embeddings
-   python scripts/embedding_agent.py
-
-   # Step 4: Analyze content
-   python scripts/analysis_agent.py
-
-   # Step 5a: Generate Systems Thinking brief
-   python scripts/synthesis_agent.py --start-date 2025-12-29 --end-date 2026-01-04
-
-   # Step 5b: Generate Context Orchestration brief
-   python scripts/synthesis_agent_orchestration.py --start-date 2025-12-29 --end-date 2026-01-04
-   ```
-
-6. **Review Output**
-   - Generated briefs saved to `briefs/` directory
-   - Also stored in Supabase database tables
-   - Systems Thinking briefs: `briefs/systems_thinking/weekly_brief_2025-12-29.md`
-   - Context Orchestration briefs: `briefs/context_orchestration/weekly_brief_2025-12-29.md`
-
-## Contributing
-
-This is currently a single-author system. Multi-author support and public contributions are not in scope for v1.
-
-## License
-
-[To be determined]
+Single-author project, v1. Not currently accepting contributions.
